@@ -71,10 +71,17 @@ echo "[3/4] Iniciando servidor..."
 adb shell "pkill -f llama-server" 2>/dev/null || true
 sleep 2
 
-# Iniciar servidor com configuração otimizada
+# Iniciar servidor com configuração otimizada para A54
+# -t 3: threads nos A78 (evita A55 lentos)
+# -b 128: batch pequeno para baixa latência
+# -c 2048: contexto de 2K tokens
+# -ctk q8_0 -ctv q8_0: KV cache quantizado (libera ~300 MB)
+# --mlock: trava modelo em RAM (evita swap)
 adb shell "cd $TARGET && LD_LIBRARY_PATH=. nohup ./llama-server \
     -m $MODEL_DIR/qwen35-ptbr-q4_k_m.gguf \
     -t 3 -b 128 -c 2048 \
+    -ctk q8_0 -ctv q8_0 \
+    --mlock \
     --host 127.0.0.1 --port 8080 \
     > /dev/null 2>&1 &"
 
