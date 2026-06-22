@@ -348,6 +348,11 @@ private suspend fun callChatApi(
                                 if (delta.has("content")) {
                                     val token = delta.getString("content")
                                     responseContent.append(token)
+                                    // Strip think tags: if we collected a full tag, remove it
+                                    val cleaned = responseContent.toString()
+                                        .replace(Regex("<think>[\\s\\S]*?</think>"), "")
+                                    responseContent.clear()
+                                    responseContent.append(cleaned)
                                 }
                             }
                         } catch (_: Exception) {}
@@ -392,11 +397,17 @@ private fun buildRequestJson(
     userMessage: String,
     sessionId: String
 ): JSONObject {
+    // Extract user context from conversation history for memory injection
+    val memoryHints = buildMemoryHints(history)
+
     return JSONObject().apply {
         put("messages", JSONArray().apply {
             put(JSONObject().apply {
                 put("role", "system")
-                put("content", "Voce e um assistente util e amigavel que fala portugues brasileiro. Responda sempre em portugues de forma clara e natural.")
+                put("content", "Voce e um assistente util e amigavel que fala portugues brasileiro. " +
+                    "Responda sempre em portugues de forma clara, direta e natural. " +
+                    "Preste atencao ao historico da conversa e use as informacoes anteriores quando relevante. " +
+                    memoryHints)
             })
             for (msg in history) {
                 put(JSONObject().apply {
@@ -410,8 +421,33 @@ private fun buildRequestJson(
             })
         })
         put("max_tokens", 512)
-        put("temperature", 0.7)
+        put("temperature", 0.4)
+        put("repeat_penalty", 1.05)
         put("stream", true)
         put("id_session", sessionId)
     }
+}
+
+// Extract user name/location from conversation for memory injection
+private fun buildMemoryHints(history: List<ChatMessage>): String {
+    val userMessages = history.filter { it.role == "user" }.takeLast(5)
+    val hints = mutableListOf<String>()
+
+    for (msg in userMessages) {
+        val c = msg.content.lowercase()
+        // Extract name patterns
+        val nameMatch = Regex("(?:meu nome [ée]|me chamo|sou (?:o|a))\\s+(\\w+)").find(c)
+        if (nameMatch != null) {
+            hints.add("O usuario se chama ${nameMatch.groupValues[1].replaceFirstChar { it.uppercase() }}.")
+        }
+        // Extract location
+        if (Regex("moro em|sou de|vivo em").containsMatchIn(c)) {
+            val locMatch = Regex("(?:moro em|sou de|vivo em)\\s+([^.]+)").find(c)
+            if (locMatch != null) {
+                hints.add("O usuario mora em ${locMatch.groupValues[1].trim()}.")
+            }
+        }
+    }
+
+    return if (hints.isNotEmpty()) "Contexto: ${hints.joinToString(" ")}" else ""
 }

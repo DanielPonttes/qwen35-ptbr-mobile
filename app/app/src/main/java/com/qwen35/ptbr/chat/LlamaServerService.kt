@@ -130,6 +130,7 @@ class LlamaServerService : Service() {
                 "-ctk", "q8_0",
                 "-ctv", "q8_0",
                 "--mlock",
+                "--logit-bias", "248068:-100,248069:-100",
                 "--host", "127.0.0.1",
                 "--port", port.toString()
             )
