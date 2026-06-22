@@ -45,16 +45,16 @@
 
 ## 3. 🔄 Vocab Pruning (152K → 32K) — Em Progresso
 
-**Objetivo:** Reduzir vocabulário de 248K para 32K tokens, diminuindo embedding de 254M para 32M parâmetros (-29.4% do modelo total).
+**Objetivo:** Reduzir vocabulário de 152K para 32K tokens (OBS: Qwen3.5-0.8B tem 152064 tokens, nao 248K), diminuindo embedding de 254M para 32M parâmetros (-29.4% do modelo total).
 
 **Progresso:**
 - ✅ Token frequencies analisadas no dataset PT-BR (8.5K tokens únicos)
-- ✅ Mapping old→new criado (32K tokens mantidos)
+- ✅ Mapping old->new criado (32K tokens mantidos)
 - ✅ Modelo podado: 752M → 531M parâmetros (embeddings reduzidas)
-- ❌ Tokenizer BPE quebrado — podar merges BPE é complexo:
-  - 943 tokens inalcançáveis (não decomponíveis pelos merges restantes)
-  - 68 bytes faltando (0x00-0x13 e alguns bytes altos)
-  - BPE tokenizer requer reconstrução completa
+- ✅ Tokenizer BPE 10K treinado, embeddings alinhados (61% match)
+- ✅ Fine-tune de adaptação (3 epochs): eval_loss 2.8, PPL 50 vs 9.4 baseline
+- ❌ Qualidade INADEQUADA para produção (PPL 5x pior que baseline)
+- ❌ Dataset de 2K exemplos insuficiente para adaptar tokenizer novo
 
 **Próximos passos para v2:**
 1. Treinar tokenizer BPE novo (32K) no corpus PT-BR com `tokenizers` library
@@ -82,7 +82,25 @@
 |---|---|---|
 | Thinking fix | ✅ Pronto | -20% tokens |
 | IQ2_XXS | ❌ Rejeitado | Qualidade colapsa |
-| Vocab pruning | 🔄 Adiado v2 | +16-21% velocidade |
+| Vocab pruning | ❌ Adiado v2 | PPL 50, precisa 10K+ exemplos |
 | K/V cache q8_0 | ✅ Pronto | -300 MB RAM |
 | ARM64 -O3 + DotProd | ✅ Pronto | +10-15% |
+
+## 5. ✅ Codex Review Fixes (Jun 2026)
+
+Correções aplicadas após revisão crítica:
+
+| Fix | Arquivo | Descrição |
+|---|---|---|
+| Server readiness | `MainActivity.kt` | Health check com exponential backoff (500ms→5s, 30 tentativas) |
+| Server readiness | `LlamaServerService.kt` | Broadcast de status (loading/ready/error) para Activity |
+| Wakelock | `LlamaServerService.kt` | `PARTIAL_WAKE_LOCK` (24h) para servidor sobreviver com tela bloqueada |
+| Battery exemption | `MainActivity.kt` | `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` flow |
+| Model download | `MainActivity.kt` | `DownloadManager` integrado (HuggingFace → Download/ dir) |
+| Context truncation | `ChatScreen.kt` | `prepareContext()`: mantém últimos ~1500 tokens, descarta resto |
+| Session cache | `ChatScreen.kt` | `id_session` enviado na API para reuso de KV cache no servidor |
+| Home press fix | `MainActivity.kt` | Servidor NÃO para no `onStop()`, só com botão explícito "Parar servidor" |
+| Auto-restart | `LlamaServerService.kt` | Watchdog com exponential backoff (1s→2s→4s→...max 30s) |
+| Double-start guard | `LlamaServerService.kt` | `serverReady` flag previne porta duplicada no `START_STICKY` |
+| deploy.sh fixes | `scripts/deploy.sh` | Shebang `#!/bin/bash`, `SCRIPT_DIR` resolve paths, `$MODEL_DIR` criado, health via `/proc/net/tcp` |
 | CPU affinity (-t 3) | ✅ Pronto | +13% |

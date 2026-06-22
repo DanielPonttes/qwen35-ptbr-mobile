@@ -46,6 +46,10 @@ data class ChatMessage(
     val isStreaming: Boolean = false
 )
 
+// Approximate token count: ~4 chars per token for PT-BR
+private const val CHARS_PER_TOKEN = 4
+private const val MAX_CONTEXT_TOKENS = 1500
+
 @Composable
 fun ChatScreen(
     port: Int,
@@ -58,6 +62,7 @@ fun ChatScreen(
     val listState = rememberLazyListState()
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
+    val sessionId = remember { java.util.UUID.randomUUID().toString().take(8) }
 
     val client = remember {
         OkHttpClient.Builder()
@@ -80,7 +85,8 @@ fun ChatScreen(
         errorMessage.value = null
         focusManager.clearFocus()
 
-        val history = messages.toList()
+        // Build truncated history -- keep only last ~MAX_CONTEXT_TOKENS of context
+        val history = prepareContext(messages.toList())
 
         messages.add(ChatMessage(role = "user", content = text))
         val assistantId = java.util.UUID.randomUUID().toString()
@@ -90,30 +96,22 @@ fun ChatScreen(
 
         scope.launch {
             try {
-                val result = callChatApi(client, port, history, text)
-
+                val result = callChatApi(client, port, history, text, sessionId)
                 val idx = messages.indexOfFirst { it.id == assistantId }
                 if (idx >= 0) {
                     if (result.isNotEmpty()) {
-                        messages[idx] = messages[idx].copy(
-                            content = result,
-                            isStreaming = false
-                        )
+                        messages[idx] = messages[idx].copy(content = result, isStreaming = false)
                     } else {
                         messages.removeAt(idx)
                         errorMessage.value = "Resposta vazia do servidor"
                     }
                 }
                 isLoading.value = false
-
             } catch (e: java.net.ConnectException) {
                 val msg = "Servidor nao disponivel na porta $port"
                 val idx = messages.indexOfFirst { it.id == assistantId }
                 if (idx >= 0) {
-                    messages[idx] = messages[idx].copy(
-                        content = msg,
-                        isStreaming = false
-                    )
+                    messages[idx] = messages[idx].copy(content = msg, isStreaming = false)
                 }
                 errorMessage.value = msg
                 isLoading.value = false
@@ -121,10 +119,7 @@ fun ChatScreen(
                 val msg = e.message ?: "Erro desconhecido"
                 val idx = messages.indexOfFirst { it.id == assistantId }
                 if (idx >= 0) {
-                    messages[idx] = messages[idx].copy(
-                        content = "Erro: $msg",
-                        isStreaming = false
-                    )
+                    messages[idx] = messages[idx].copy(content = "Erro: $msg", isStreaming = false)
                 }
                 errorMessage.value = msg
                 isLoading.value = false
@@ -246,15 +241,29 @@ fun ChatScreen(
                     Icon(
                         imageVector = Icons.Default.Send,
                         contentDescription = "Enviar",
-                        tint = if (inputText.value.isNotBlank())
-                            Color.White
-                        else
-                            MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = if (inputText.value.isNotBlank()) Color.White
+                        else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
         }
     }
+}
+
+// Truncate message history to fit within ~MAX_CONTEXT_TOKENS
+private fun prepareContext(allMessages: List<ChatMessage>): List<ChatMessage> {
+    val result = mutableListOf<ChatMessage>()
+    var totalChars = 0
+    // Walk backwards, keep most recent messages that fit
+    for (msg in allMessages.asReversed()) {
+        val chars = msg.content.length
+        if (totalChars + chars > MAX_CONTEXT_TOKENS * CHARS_PER_TOKEN && result.isNotEmpty()) {
+            break
+        }
+        result.add(0, msg)
+        totalChars += chars
+    }
+    return result
 }
 
 @Composable
@@ -303,14 +312,15 @@ private suspend fun callChatApi(
     client: OkHttpClient,
     port: Int,
     history: List<ChatMessage>,
-    userMessage: String
+    userMessage: String,
+    sessionId: String
 ): String = withContext(Dispatchers.IO) {
     suspendCancellableCoroutine { continuation ->
         val responseContent = StringBuilder()
         var eventSource: EventSource? = null
 
         try {
-            val requestJson = buildRequestJson(history, userMessage)
+            val requestJson = buildRequestJson(history, userMessage, sessionId)
             val requestBody = requestJson.toString()
                 .toRequestBody("application/json".toMediaType())
 
@@ -329,7 +339,6 @@ private suspend fun callChatApi(
                         data: String
                     ) {
                         if (data == "[DONE]") return
-
                         try {
                             val json = JSONObject(data)
                             val choices = json.getJSONArray("choices")
@@ -341,8 +350,7 @@ private suspend fun callChatApi(
                                     responseContent.append(token)
                                 }
                             }
-                        } catch (_: Exception) {
-                        }
+                        } catch (_: Exception) {}
                     }
 
                     override fun onClosed(eventSource: EventSource) {
@@ -369,10 +377,7 @@ private suspend fun callChatApi(
                 })
 
             continuation.invokeOnCancellation {
-                try {
-                    eventSource?.cancel()
-                } catch (_: Exception) {
-                }
+                try { eventSource?.cancel() } catch (_: Exception) {}
             }
         } catch (e: Exception) {
             if (continuation.isActive) {
@@ -384,7 +389,8 @@ private suspend fun callChatApi(
 
 private fun buildRequestJson(
     history: List<ChatMessage>,
-    userMessage: String
+    userMessage: String,
+    sessionId: String
 ): JSONObject {
     return JSONObject().apply {
         put("messages", JSONArray().apply {
@@ -406,5 +412,6 @@ private fun buildRequestJson(
         put("max_tokens", 512)
         put("temperature", 0.7)
         put("stream", true)
+        put("id_session", sessionId)
     }
 }

@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Qwen3.5 PT-BR Chat</string>
-    <string name="model_not_found_title">Modelo não encontrado</string>
-    <string name="model_not_found_message">O arquivo do modelo (qwen35-ptbr-q4_k_m.gguf) não foi encontrado.\n\nCopie o arquivo para:\n%1$s\n\nOu baixe de:\nhttps://huggingface.co</string>
+    <string name="model_not_found_title">Modelo nao encontrado</string>
+    <string name="model_not_found_message">O arquivo do modelo (qwen35-ptbr-q4_k_m.gguf) nao foi encontrado.\n\nCopie o arquivo para:\n%1$s\n\nOu baixe de:\nhttps://huggingface.co</string>
     <string name="server_starting">Iniciando servidor…</string>
-    <string name="server_running">Servidor rodando</string>
+    <string name="server_ready">Servidor pronto</string>
     <string name="server_error">Erro no servidor</string>
-    <string name="download_model">Baixar modelo</string>
+    <string name="download_model">Baixar modelo (505 MB)</string>
+    <string name="downloading_model">Baixando modelo…</string>
+    <string name="download_hint">O download esta em andamento. Feche e reabra o app quando terminar.</string>
+    <string name="retry_button">Tentar novamente</string>
+    <string name="stop_server">Parar servidor</string>
+    <string name="stop_server_dialog_title">Parar servidor?</string>
+    <string name="stop_server_dialog_text">O servidor sera parado e o chat ficara indisponivel.</string>
     <string name="chat_hint">Digite sua mensagem…</string>
     <string name="send">Enviar</string>
     <string name="notification_channel_name">Servidor LLM</string>
-    <string name="notification_channel_desc">Notificação do servidor llama.cpp</string>
-    <string name="notification_running">Qwen3.5 PT-BR em execução</string>
-    <string name="stop_server">Parar servidor</string>
+    <string name="notification_channel_desc">Notificacao do servidor llama.cpp</string>
+    <string name="notification_running">Qwen3.5 PT-BR em execucao</string>
+    <string name="notification_loading">Carregando modelo…</string>
+    <string name="chat_tab">Chat nativo</string>
+    <string name="webview_tab">WebView</string>
+    <string name="server_not_ready_title">Servidor nao iniciou</string>
 </resources>

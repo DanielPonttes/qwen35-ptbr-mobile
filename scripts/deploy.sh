@@ -1,8 +1,8 @@
-#!/system/bin/sh
+#!/bin/bash
 # Qwen3.5 0.8B PT-BR — Deploy rápido no Android via ADB
 #
 # Uso (no PC, com celular conectado via USB):
-#   chmod +x deploy.sh && ./deploy.sh
+#   bash deploy.sh
 #
 # Requisitos:
 #   - ADB instalado e celular com depuração USB ativada
@@ -11,11 +11,15 @@
 #
 # O script:
 #   1. Empurra os binários ARM64 otimizados (llama.cpp + libs)
-#   2. Empurra o modelo Qwen3.5 0.8B Q4_K_M fine-tuned PT-BR (494 MB)
+#   2. Empurra o modelo Qwen3.5 0.8B Q4_K_M fine-tuned PT-BR (505 MB)
 #   3. Inicia o llama-server na porta 8080
 #   4. Mostra instruções para acessar o chat
 
 set -e
+
+# Resolve script directory for safe relative paths
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJ_DIR="$(dirname "$SCRIPT_DIR")"
 
 echo "============================================"
 echo " Qwen3.5 0.8B PT-BR — Deploy Mobile"
@@ -47,25 +51,25 @@ MODEL_DIR=$TARGET/models
 echo ""
 echo "[1/4] Empurrando binários ARM64 otimizados..."
 adb shell "mkdir -p $TARGET"
-adb push binaries/ $TARGET/ 1>&2
+adb push "$PROJ_DIR/binaries/" "$TARGET/" 1>&2
 adb shell "chmod 755 $TARGET/llama-cli $TARGET/llama-server $TARGET/llama-bench"
 echo "✓ Binários instalados ($(adb shell "ls $TARGET/*.so 2>/dev/null | wc -l") .so + 3 executáveis)"
 
 # Passo 2: Modelo
 echo ""
 echo "[2/4] Verificando modelo..."
-if [ -f "model/qwen35-ptbr-q4_k_m.gguf" ]; then
-    echo "  Empurrando modelo (494 MB, ~15s)..."
-    adb push model/qwen35-ptbr-q4_k_m.gguf $MODEL_DIR/ 2>&1 | tail -1
+adb shell "mkdir -p $MODEL_DIR"
+if [ -f "$PROJ_DIR/model/qwen35-ptbr-q4_k_m.gguf" ]; then
+    echo "  Empurrando modelo (505 MB, ~15s)..."
+    adb push "$PROJ_DIR/model/qwen35-ptbr-q4_k_m.gguf" "$MODEL_DIR/" 2>&1 | tail -1
     echo "✓ Modelo instalado"
 else
     echo "  ⚠ Modelo não encontrado em model/qwen35-ptbr-q4_k_m.gguf"
-    echo "  Baixe de: https://huggingface.co/<seu-usuario>/qwen35-ptbr-mobile"
-    echo "  Ou gere com: bash finetune_qwen35_ptbr.sh all"
+    echo "  Baixe de: https://huggingface.co/DanielPonttes/qwen35-ptbr-mobile"
     exit 1
 fi
 
-# Passo 3: Matar servidor antigo
+# Passo 3: Matar servidor antigo e iniciar novo
 echo ""
 echo "[3/4] Iniciando servidor..."
 adb shell "pkill -f llama-server" 2>/dev/null || true
@@ -85,20 +89,20 @@ adb shell "cd $TARGET && LD_LIBRARY_PATH=. nohup ./llama-server \
     --host 127.0.0.1 --port 8080 \
     > /dev/null 2>&1 &"
 
-sleep 5
+echo "✓ Servidor iniciado (carregando modelo...)"
 
-# Verificar se iniciou
-if adb shell "curl -s http://127.0.0.1:8080/health 2>/dev/null" | grep -q ok; then
-    echo "✓ Servidor rodando em http://127.0.0.1:8080"
-else
-    echo "  Aguardando servidor (pode levar ~10s para carregar o modelo)..."
-    sleep 10
-    if adb shell "curl -s http://127.0.0.1:8080/health 2>/dev/null" | grep -q ok; then
-        echo "✓ Servidor rodando!"
-    else
-        echo "⚠ Servidor pode estar carregando. Verifique manualmente."
+# Verificar se iniciou (espera até 30s pelo modelo de 505 MB)
+echo "  Aguardando servidor ficar pronto..."
+for i in $(seq 1 30); do
+    sleep 2
+    if adb shell "grep -q ':081F ' /proc/net/tcp" 2>/dev/null; then
+        echo "✓ Servidor ouvindo na porta 8080"
+        break
     fi
-fi
+    if [ $i -eq 30 ]; then
+        echo "⚠ Timeout: servidor pode ainda estar carregando. Verifique manualmente."
+    fi
+done
 
 # Passo 4: Instruções finais
 echo ""
