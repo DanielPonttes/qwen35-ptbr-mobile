@@ -1,0 +1,192 @@
+{
+  "Galaxy S25 Ultra": {
+    "soc": "Snapdragon 8 Elite",
+    "ram_gb": 12,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 68,
+    "bandwidth_effective_gbs": 57.8,
+    "generation_tok_s": 75.5,
+    "prefill_tok_s": 415.5,
+    "cores": "2x Oryon V2 + 6x Oryon M"
+  },
+  "Galaxy S24 Ultra": {
+    "soc": "Snapdragon 8 Gen 3",
+    "ram_gb": 12,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 64,
+    "bandwidth_effective_gbs": 54.4,
+    "generation_tok_s": 71.1,
+    "prefill_tok_s": 391.0,
+    "cores": "1x X4 + 5x A720 + 2x A520"
+  },
+  "ASUS ROG Phone 9": {
+    "soc": "Snapdragon 8 Elite",
+    "ram_gb": 16,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 68,
+    "bandwidth_effective_gbs": 57.8,
+    "generation_tok_s": 75.5,
+    "prefill_tok_s": 415.5,
+    "cores": "2x Oryon V2 + 6x Oryon M"
+  },
+  "OnePlus 13": {
+    "soc": "Snapdragon 8 Elite",
+    "ram_gb": 12,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 68,
+    "bandwidth_effective_gbs": 57.8,
+    "generation_tok_s": 75.5,
+    "prefill_tok_s": 415.5,
+    "cores": "2x Oryon V2 + 6x Oryon M"
+  },
+  "Pixel 9 Pro": {
+    "soc": "Tensor G4",
+    "ram_gb": 16,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 64,
+    "bandwidth_effective_gbs": 54.4,
+    "generation_tok_s": 71.1,
+    "prefill_tok_s": 391.0,
+    "cores": "1x X4 + 3x A720 + 4x A520"
+  },
+  "Xiaomi 15 Pro": {
+    "soc": "Snapdragon 8 Elite",
+    "ram_gb": 12,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 68,
+    "bandwidth_effective_gbs": 57.8,
+    "generation_tok_s": 75.5,
+    "prefill_tok_s": 415.5,
+    "cores": "2x Oryon V2 + 6x Oryon M"
+  },
+  "Galaxy S23 Ultra": {
+    "soc": "Snapdragon 8 Gen 2",
+    "ram_gb": 12,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 58,
+    "bandwidth_effective_gbs": 49.3,
+    "generation_tok_s": 64.4,
+    "prefill_tok_s": 354.4,
+    "cores": "1x X3 + 4x A715 + 3x A510"
+  },
+  "Pixel 8 Pro": {
+    "soc": "Tensor G3",
+    "ram_gb": 12,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 51,
+    "bandwidth_effective_gbs": 43.4,
+    "generation_tok_s": 56.7,
+    "prefill_tok_s": 311.6,
+    "cores": "1x X3 + 4x A715 + 4x A510"
+  },
+  "Galaxy A55": {
+    "soc": "Exynos 1480",
+    "ram_gb": 8,
+    "ram_type": "LPDDR5",
+    "bandwidth_theoretical_gbs": 44,
+    "bandwidth_effective_gbs": 36.1,
+    "generation_tok_s": 47.2,
+    "prefill_tok_s": 259.3,
+    "cores": "4x A78 + 4x A55"
+  },
+  "POCO X6 Pro": {
+    "soc": "Dimensity 8300",
+    "ram_gb": 8,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 51,
+    "bandwidth_effective_gbs": 43.4,
+    "generation_tok_s": 56.7,
+    "prefill_tok_s": 311.6,
+    "cores": "4x A715 + 4x A510"
+  },
+  "Pixel 8a": {
+    "soc": "Tensor G3",
+    "ram_gb": 8,
+    "ram_type": "LPDDR5X",
+    "bandwidth_theoretical_gbs": 51,
+    "bandwidth_effective_gbs": 43.4,
+    "generation_tok_s": 56.7,
+    "prefill_tok_s": 311.6,
+    "cores": "1x X3 + 4x A715 + 4x A510"
+  },
+  "Redmi Note 13 Pro+": {
+    "soc": "Dimensity 7200",
+    "ram_gb": 8,
+    "ram_type": "LPDDR5",
+    "bandwidth_theoretical_gbs": 34,
+    "bandwidth_effective_gbs": 27.9,
+    "generation_tok_s": 36.4,
+    "prefill_tok_s": 200.4,
+    "cores": "2x A715 + 6x A510"
+  },
+  "Galaxy A54": {
+    "soc": "Exynos 1380",
+    "ram_gb": 8,
+    "ram_type": "LPDDR4X",
+    "bandwidth_theoretical_gbs": 15,
+    "bandwidth_effective_gbs": 12.0,
+    "generation_tok_s": 15.7,
+    "prefill_tok_s": 86.3,
+    "cores": "4x A78 + 4x A55"
+  },
+  "Galaxy A35": {
+    "soc": "Exynos 1380",
+    "ram_gb": 6,
+    "ram_type": "LPDDR4X",
+    "bandwidth_theoretical_gbs": 15,
+    "bandwidth_effective_gbs": 12.0,
+    "generation_tok_s": 15.7,
+    "prefill_tok_s": 86.3,
+    "cores": "4x A78 + 4x A55"
+  },
+  "POCO X5 Pro": {
+    "soc": "Snapdragon 778G",
+    "ram_gb": 8,
+    "ram_type": "LPDDR5",
+    "bandwidth_theoretical_gbs": 25,
+    "bandwidth_effective_gbs": 20.5,
+    "generation_tok_s": 26.8,
+    "prefill_tok_s": 147.4,
+    "cores": "4x A78 + 4x A55"
+  },
+  "Galaxy A15 5G": {
+    "soc": "Dimensity 6100+",
+    "ram_gb": 4,
+    "ram_type": "LPDDR4X",
+    "bandwidth_theoretical_gbs": 14,
+    "bandwidth_effective_gbs": 11.2,
+    "generation_tok_s": 14.6,
+    "prefill_tok_s": 80.5,
+    "cores": "2x A76 + 6x A55"
+  },
+  "Moto G84 5G": {
+    "soc": "Snapdragon 695",
+    "ram_gb": 8,
+    "ram_type": "LPDDR4X",
+    "bandwidth_theoretical_gbs": 14,
+    "bandwidth_effective_gbs": 11.2,
+    "generation_tok_s": 14.6,
+    "prefill_tok_s": 80.5,
+    "cores": "2x A78 + 6x A55"
+  },
+  "Redmi 13C": {
+    "soc": "Helio G85",
+    "ram_gb": 4,
+    "ram_type": "LPDDR4X",
+    "bandwidth_theoretical_gbs": 13,
+    "bandwidth_effective_gbs": 10.4,
+    "generation_tok_s": 13.6,
+    "prefill_tok_s": 74.8,
+    "cores": "2x A75 + 6x A55"
+  },
+  "Galaxy A05s": {
+    "soc": "Snapdragon 680",
+    "ram_gb": 4,
+    "ram_type": "LPDDR4X",
+    "bandwidth_theoretical_gbs": 13,
+    "bandwidth_effective_gbs": 10.4,
+    "generation_tok_s": 13.6,
+    "prefill_tok_s": 74.8,
+    "cores": "4x A73 + 4x A53"
+  }
+}
