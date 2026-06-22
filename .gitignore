@@ -4,3 +4,11 @@ __pycache__/
 build/
 .env/
 *.log
+app/**/jniLibs/**/*.so
+app/**/assets/llama-server
+app/**/build/
+app/.gradle/
+app/app/build/
+local.properties
+*.iml
+.idea/
