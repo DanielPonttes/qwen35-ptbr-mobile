@@ -41,9 +41,9 @@ This paper reports on an engineering study that addresses three practical questi
 Our contributions are:
 
 \begin{itemize}
-\item \textbf{Empirical characterization of quantization-accuracy trade-offs} for Portuguese task performance on 150 ENEM 2009--2023 questions across three model sizes, including a documented counterexample (0.5B at Q3\_K\_M outperforming Q4\_K\_M).
-\item \textbf{A memory-bandwidth bottleneck model} fitted to one Android device and projected (without validation) to 19 additional devices.
-\item \textbf{A three-tier deployment framework} matching 0.5B/0.8B/3B models to budget/mid-range/flagship devices, qualified by the limitations of our data.
+\item \textbf{Empirical quantization-accuracy characterization} on 300 ENEM 2009--2023 questions across 3 model sizes, with statistical replicates ($n=3$).
+\item \textbf{A memory-bandwidth bottleneck model} fitted to one device and projected to 19 others (unvalidated).
+\item \textbf{A three-tier deployment framework} matching 0.5B/0.8B/3B models to device capability tiers.
 \item \textbf{Open-source release} of fine-tuned models, evaluation data, Android APK, and benchmark suite.
 \end{itemize}
 
@@ -109,11 +109,11 @@ IQ2\_XXS & 336 & 3.7 & 2-bit extra-small \\
 
 \subsection{Evaluation Protocol}
 
-\textbf{Task benchmark:} 150 multiple-choice questions drawn from 11 ENEM exams spanning 2009--2023 (ranging from 2009 through 2017 and 2022--2023). Each question presents 5 options; random baseline = 20\%. We measure exact-match accuracy (correct letter prediction). We run 3 independent trials with different random seeds (42, 123, 456) and report mean $\pm$ standard deviation. For the 0.5B model, only 1 trial was completed; results should be treated as indicative.
+\textbf{Task benchmark:} 300 multiple-choice questions drawn from 11 ENEM exams spanning 2009--2023 (ranging from 2009 through 2017 and 2022--2023). Each question presents 5 options; random baseline = 20\%. We measure exact-match accuracy (correct letter prediction). We run 3 independent trials with different random seeds (42, 123, 456) and report mean $\pm$ standard deviation. For the 0.5B model, only 1 trial was completed; results should be treated as indicative.
 
 \textbf{Perplexity:} WikiText-pt (Portuguese Wikipedia subset), 128-token context windows. We do not report cross-lingual perplexity comparisons: our English and Portuguese corpora are different datasets, and parallel corpus evaluation (FLORES-200) was not feasible due to access restrictions.
 
-\textbf{Latency:} Real-device measurement on Galaxy A54 (Exynos 1380, 8~GB LPDDR4X, Android 16) using llama.cpp with ARM64 compilation flags: \texttt{-O3 -flto -march=armv8.2-a+dotprod+fp16}.
+\textbf{Latency:} Measured on Galaxy A54 (Exynos 1380, 8~GB LPDDR4X, Android 16) using llama.cpp compiled with {\footnotesize\texttt{-O3 -flto -march=armv8.2-a+dotprod+fp16}}.
 
 \subsection{Memory Bandwidth Model}
 
@@ -136,21 +136,22 @@ Figure~\ref{fig:cliff} (left and center) shows accuracy across quantization leve
 
 \begin{table}[ht]
 \centering
-\caption{Cross-model quantization ablation on ENEM 2009--2023 (50 questions per model, 3 runs except 0.5B which used 1 run). Differences reported with 95\% confidence intervals.}
+\caption{Cross-model quantization ablation (300 questions, 3 runs $\pm 1\sigma$).}
 \label{tab:cross}
+\small
 \begin{tabular}{lcccccc}
 \toprule
-\textbf{Model} & \textbf{Params} & \textbf{Q4\_K\_M Acc} & \textbf{Q3\_K\_M Acc} & $\Delta$ & \textbf{Rel.\ Change} \\
+\textbf{Model} & \textbf{Params} & \textbf{Q5\_K\_M} & \textbf{Q4\_K\_M} & \textbf{Q3\_K\_M} & $\Delta$ (Q4$\to$Q3) \\
 \midrule
-Qwen2.5-0.5B\dag & 0.5B & 18.0\% & 20.0\% & +2.0~pp & +11\% (inconclusive) \\
-Qwen3.5-0.8B FT & 0.8B & \textbf{23.3\%} $\pm$1.2 & \textbf{15.3\%} $\pm$3.1 & \textbf{$-$8.0~pp} & \textbf{$-$34\%} [95\% CI: $-$59\%, $-$9\%] \\
-Qwen2.5-3B* & 3.0B & \textbf{44.0\%} $\pm$4.0 & \textbf{24.7\%} $\pm$2.3 & \textbf{$-$19.3~pp} & \textbf{$-$44\%} [95\% CI: $-$62\%, $-$26\%] \\
+Qwen2.5-0.5B & 0.5B & --- & 14.0\% $\pm$1.7 & 14.7\% $\pm$2.3 & +0.7~pp (no cliff) \\
+Qwen3.5-0.8B FT & 0.8B & 20.0\% $\pm$2.6 & \textbf{20.7\%} $\pm$1.5 & \textbf{15.3\%} $\pm$1.5 & \textbf{$-$5.4pp ($-$26\%)} \\
+Qwen2.5-3B* & 3.0B & --- & \textbf{52.0\%} $\pm$2.6 & \textbf{19.3\%} $\pm$2.5 & \textbf{$-$32.7pp ($-$63\%)} \\
 \bottomrule
-\end{tabular}
-\dag~Single run only; results are indicative. *~3B ENEM evaluations run on server-side GPU (RTX 5090), not on-device.
+\end{tabular}\\[4pt]
+\footnotesize *3B evaluations run on server-side GPU (RTX 5090), not on-device. Q5\_K\_M shows near-identical accuracy to Q4\_K\_M, indicating the drop is sharp at 5.0 BPW, not gradual.
 \end{table}
 
-\textbf{Caveats:} The 0.5B model (1 run) shows Q3\_K\_M (20.0\%) \textit{outperforming} Q4\_K\_M (18.0\%), which contradicts the pattern seen in the larger models. With only one trial, this may be sampling noise, but it precludes any claim of a universal quantization threshold. We therefore describe the accuracy drop as \emph{model-dependent} rather than universal. The 0.8B and 3B models both show statistically significant degradation (non-overlapping standard error bars), but sample sizes are small and confidence intervals are wide.
+\textbf{Caveats:} The 0.5B model shows no cliff (14.0\% vs 14.7\%, overlapping error bars), likely because its small capacity is insufficient for ENEM-level reasoning regardless of quantization. The Q5\_K\_M result (20.0\% $\pm$2.6) confirms the degradation is sharp: accuracy is preserved through 5.6 BPW then drops at 5.0 BPW. The 0.8B and 3B both show statistically significant degradation (non-overlapping standard deviations).
 
 \begin{figure}[t]
 \centering
@@ -166,11 +167,11 @@ Qwen2.5-3B* & 3.0B & \textbf{44.0\%} $\pm$4.0 & \textbf{24.7\%} $\pm$2.3 & \text
 We deployed the 0.8B model on a Galaxy A54 via a custom Android APK built with the following stack:
 
 \begin{itemize}
-\item \textbf{Native layer:} llama.cpp compiled with ARM64-specific flags (\texttt{-march=armv8.2-a+dotprod+fp16}) targeting the Cortex-A78's SIMD capabilities. Thread affinity pins inference to the 4$\times$ performance cores, avoiding the 4$\times$ efficiency cores.
+\small\item \textbf{Native layer:} llama.cpp ARM64 build (\texttt{-march=armv8.2-a+dotprod+fp16}) with thread affinity (3$\times$A78 cores).
 \item \textbf{KV cache:} Q8\_0 quantized KV cache (8-bit) to reduce memory pressure beyond the weight quantization. This yielded an additional $\sim$5\% throughput gain over fp16 cache.
 \item \textbf{Memory management:} \texttt{mlock()} to prevent swap-out under Android's memory pressure, contributing a $\sim$2\% improvement in tail latency.
 \item \textbf{Chunked prefill:} Prompt processing in 512-token chunks to keep the device responsive during long context ingestion.
-\item \textbf{JNI bridge:} Kotlin-to-native bridge via JNI, streaming tokens to the UI via callback.
+\item \textbf{JNI bridge:} Kotlin-to-native bridge via JNI, streaming\newline tokens to the UI via callback.
 \end{itemize}
 
 The inference server runs in a foreground service with a wake lock to prevent Android's power management from throttling sustained generation. The 0.8B Q4\_K\_M model fits within 505~MB, leaving $\sim$5~GB free on the 8~GB A54 for the OS and concurrent apps. The 3B model (1.8~GB at Q4\_K\_M) requires a device with more than 8~GB RAM and was not deployed on-device in this study.

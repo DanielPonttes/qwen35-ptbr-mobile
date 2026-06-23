@@ -26,8 +26,8 @@
 \newlabel{eq:bw}{{1}{3}{Memory Bandwidth Model}{equation.3.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Results}{3}{section.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Cross-Model Quantization Accuracy}{3}{subsection.4.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Cross-model quantization ablation on ENEM 2009--2023 (50 questions per model, 3 runs except 0.5B which used 1 run). Differences reported with 95\% confidence intervals.}}{4}{table.caption.3}\protected@file@percent }
-\newlabel{tab:cross}{{3}{4}{Cross-model quantization ablation on ENEM 2009--2023 (50 questions per model, 3 runs except 0.5B which used 1 run). Differences reported with 95\% confidence intervals}{table.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Cross-model quantization ablation (300 questions, 3 runs $\pm 1\sigma $).}}{4}{table.caption.3}\protected@file@percent }
+\newlabel{tab:cross}{{3}{4}{Cross-model quantization ablation (300 questions, 3 runs $\pm 1\sigma $)}{table.caption.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Three-panel analysis: (left) Cross-model bar chart with error bars for Q4\_K\_M vs.\ Q3\_K\_M; (center) Full quantization spectrum for Qwen3.5-0.8B across 7 levels; (right) Portuguese-only perplexity across quantization levels (cross-lingual comparison omitted---see text).}}{4}{figure.caption.4}\protected@file@percent }
 \newlabel{fig:cliff}{{1}{4}{Three-panel analysis: (left) Cross-model bar chart with error bars for Q4\_K\_M vs.\ Q3\_K\_M; (center) Full quantization spectrum for Qwen3.5-0.8B across 7 levels; (right) Portuguese-only perplexity across quantization levels (cross-lingual comparison omitted---see text)}{figure.caption.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}On-Device Inference Pipeline}{4}{subsection.4.2}\protected@file@percent }
@@ -37,30 +37,30 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Optimization Stack Ablation}{5}{subsection.4.4}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Additive contribution of each optimization step on Galaxy A54. The complete stack yields a 39\% improvement over baseline.}}{5}{figure.caption.6}\protected@file@percent }
 \newlabel{fig:optstack}{{2}{5}{Additive contribution of each optimization step on Galaxy A54. The complete stack yields a 39\% improvement over baseline}{figure.caption.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Thread Scaling Analysis}{6}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Thread Scaling Analysis}{5}{subsection.4.5}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Thread scaling on Galaxy A54. Optimal performance at 3 threads (A78 cores only); adding A55 cores degrades throughput due to their $\sim $3$\times $ lower per-core bandwidth.}}{6}{figure.caption.7}\protected@file@percent }
 \newlabel{fig:threads}{{3}{6}{Thread scaling on Galaxy A54. Optimal performance at 3 threads (A78 cores only); adding A55 cores degrades throughput due to their $\sim $3$\times $ lower per-core bandwidth}{figure.caption.7}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Memory Bandwidth Model Validation}{6}{subsection.4.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Theoretical speed curves for different memory bandwidth tiers. Measured A54 values (red stars) are shown against the 15~GB/s LPDDR4X curve, which was fitted to the 0.8B measurement.}}{6}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:speed}{{4}{6}{Theoretical speed curves for different memory bandwidth tiers. Measured A54 values (red stars) are shown against the 15~GB/s LPDDR4X curve, which was fitted to the 0.8B measurement}{figure.caption.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}Device Projection Heatmap}{7}{subsection.4.7}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Projected generation speed across 19 devices and 3 model tiers. Green cells indicate $>$20 tok/s; yellow is 10--20; red is $<$10. The A54 (marked with *) is the only device with real measurements; all others are unvalidated analytical projections.}}{7}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:heatmap}{{5}{7}{Projected generation speed across 19 devices and 3 model tiers. Green cells indicate $>$20 tok/s; yellow is 10--20; red is $<$10. The A54 (marked with *) is the only device with real measurements; all others are unvalidated analytical projections}{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{7}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Quantization Trade-offs}{7}{subsection.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Negative Results}{8}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Deployment Strategy (Tentative)}{8}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}Device Projection Heatmap}{6}{subsection.4.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{6}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Quantization Trade-offs}{6}{subsection.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Theoretical speed curves for different memory bandwidth tiers. Measured A54 values (red stars) are shown against the 15~GB/s LPDDR4X curve, which was fitted to the 0.8B measurement.}}{7}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:speed}{{4}{7}{Theoretical speed curves for different memory bandwidth tiers. Measured A54 values (red stars) are shown against the 15~GB/s LPDDR4X curve, which was fitted to the 0.8B measurement}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Negative Results}{7}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Deployment Strategy (Tentative)}{7}{subsection.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Projected generation speed across 19 devices and 3 model tiers. Green cells indicate $>$20 tok/s; yellow is 10--20; red is $<$10. The A54 (marked with *) is the only device with real measurements; all others are unvalidated analytical projections.}}{8}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:heatmap}{{5}{8}{Projected generation speed across 19 devices and 3 model tiers. Green cells indicate $>$20 tok/s; yellow is 10--20; red is $<$10. The A54 (marked with *) is the only device with real measurements; all others are unvalidated analytical projections}{figure.caption.9}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Limitations}{8}{subsection.5.4}\protected@file@percent }
 \bibcite{gerganov2023}{1}
 \bibcite{mlc2023}{2}
 \bibcite{dettmers2023}{3}
 \bibcite{frantar2023}{4}
 \bibcite{lin2024}{5}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{9}{section.6}\protected@file@percent }
 \bibcite{liu2024}{6}
 \bibcite{pires2023}{7}
 \bibcite{song2024}{8}
 \bibcite{souza2020}{9}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{9}{section.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {A}Full Device Projection Matrix}{10}{appendix.A}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Projected generation speed (tok/s) across 19 Android devices. $\eta = 0.66$, BW$_{\text  {eff}} = 0.82 \times $ theoretical. Only the A54 row has been validated with real measurements; all other rows are analytical projections.}}{10}{table.caption.10}\protected@file@percent }
 \newlabel{tab:fulldev}{{5}{10}{Projected generation speed (tok/s) across 19 Android devices. $\eta = 0.66$, BW$_{\text {eff}} = 0.82 \times $ theoretical. Only the A54 row has been validated with real measurements; all other rows are analytical projections}{table.caption.10}{}}
