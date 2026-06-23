@@ -1,0 +1,82 @@
+[
+  {
+    "model": "0.8B",
+    "quant": "Q3",
+    "params_b": 0.8,
+    "size_mb": 444.6,
+    "bpw": 0.0,
+    "mean_accuracy": 15.3,
+    "std_accuracy": 3.1,
+    "runs": [
+      18.0,
+      16.0,
+      12.0
+    ]
+  },
+  {
+    "model": "0.8B",
+    "quant": "Q4",
+    "params_b": 0.8,
+    "size_mb": 504.8,
+    "bpw": 0.0,
+    "mean_accuracy": 23.3,
+    "std_accuracy": 1.2,
+    "runs": [
+      24.0,
+      22.0,
+      24.0
+    ]
+  },
+  {
+    "model": "3B",
+    "quant": "Q3",
+    "params_b": 3.0,
+    "size_mb": 1516.8,
+    "bpw": 0.0,
+    "mean_accuracy": 24.7,
+    "std_accuracy": 2.3,
+    "runs": [
+      22.0,
+      26.0,
+      26.0
+    ]
+  },
+  {
+    "model": "3B",
+    "quant": "Q4",
+    "params_b": 3.0,
+    "size_mb": 1840.5,
+    "bpw": 0.0,
+    "mean_accuracy": 44.0,
+    "std_accuracy": 4.0,
+    "runs": [
+      48.0,
+      40.0,
+      44.0
+    ]
+  },
+  {
+    "model": "0.5B",
+    "quant": "Q4_K_M",
+    "params_b": 0.5,
+    "size_mb": 379.4,
+    "bpw": 0.0,
+    "mean_accuracy": 18.0,
+    "std_accuracy": 0,
+    "runs": [
+      18.0
+    ]
+  },
+  {
+    "model": "0.5B",
+    "quant": "Q3_K_M",
+    "params_b": 0.5,
+    "size_mb": 339.0,
+    "bpw": 0.0,
+    "mean_accuracy": 20.0,
+    "std_accuracy": 0,
+    "runs": [
+      20.0
+    ]
+  }
+]
