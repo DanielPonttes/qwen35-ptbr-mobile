@@ -1,0 +1,394 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+\usepackage{graphicx,url}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% Double-blind: remove author info
+%\sloppy
+
+\title{An Engineering Study of Quantized LLM Inference for Brazilian Portuguese on Mobile Devices}
+
+\author{}
+\address{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Deploying large language models on commodity smartphones for low-resource languages presents a double challenge: smaller training corpora and tighter hardware constraints. This paper reports an engineering study of on-device LLM inference for Brazilian Portuguese, measuring accuracy across three model tiers (0.5B, 0.8B, 3B parameters) and seven quantization levels on a real Android device (Galaxy A54). We observe a \textbf{sharp accuracy drop between Q4\_K\_M and Q3\_K\_M} for two of three models tested: the 0.8B model drops from 23.3\% to 15.3\% ($-34\%$), and the 3B model drops from 44.0\% to 24.7\% ($-44\%$) on ENEM 2009--2023 multiple-choice questions. However, the 0.5B model shows the opposite pattern (18.0\% at Q4\_K\_M vs.\ 20.0\% at Q3\_K\_M, single-run), precluding a universal ``cliff'' claim. We characterize a memory-bandwidth bottleneck model and validate it on the A54, though the model deviates up to 20\% from measurements on the single validated device---all projections to other hardware remain unvalidated. We document negative results including vocabulary pruning failure and unusable 2-bit performance. We release all code, models, and benchmarks as open source. While these results are preliminary (single device, 150 questions, three models), they provide practical guidance for practitioners targeting Portuguese-language mobile deployment.
+\end{abstract}
+
+%------------------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------------------
+
+The majority of the world's languages lack sufficient representation in large language models. For Brazilian Portuguese---spoken by over 200 million people---existing LLMs either require cloud connectivity (GPT-4, Gemini) or exceed the memory capacity of affordable smartphones (Sabi\'{a}-7B, Cabrita-7B). On-device inference offers privacy, offline access, and zero per-query cost, but is constrained by the memory bandwidth of mobile DRAM (typically 15--68~GB/s for LPDDR4X/LPDDR5X).
+
+This paper reports on an engineering study that addresses three practical questions:
+
+\begin{enumerate}
+\item \textbf{What quantization level provides usable accuracy for Portuguese-language LLMs on mobile devices?}
+\item \textbf{How does memory bandwidth limit generation speed, and can we estimate performance across devices?}
+\item \textbf{What deployment strategy maximizes Portuguese fluency across the device spectrum?}
+\end{enumerate}
+
+Our contributions are:
+
+\begin{itemize}
+\item \textbf{Empirical characterization of quantization-accuracy trade-offs} for Portuguese task performance on 150 ENEM 2009--2023 questions across three model sizes, including a documented counterexample (0.5B at Q3\_K\_M outperforming Q4\_K\_M).
+\item \textbf{A memory-bandwidth bottleneck model} fitted to one Android device and projected (without validation) to 19 additional devices.
+\item \textbf{A three-tier deployment framework} matching 0.5B/0.8B/3B models to budget/mid-range/flagship devices, qualified by the limitations of our data.
+\item \textbf{Open-source release} of fine-tuned models, evaluation data, Android APK, and benchmark suite.
+\end{itemize}
+
+We emphasize that this is an engineering report with a single device, 150 test questions, and three model families. Generalization beyond these conditions is not claimed.
+
+%------------------------------------------------------------------------
+\section{Related Work}
+%------------------------------------------------------------------------
+
+\textbf{On-device LLM inference.} llama.cpp~\cite{gerganov2023} and MLC-LLM~\cite{mlc2023} enable CPU-first inference via the GGUF format. PowerInfer~\cite{song2024} exploits activation sparsity for GPU-CPU hybrids. MobileLLM~\cite{liu2024} proposes sub-billion architectures optimized for phones. Our work differs by characterizing the quantization-behavior relationship for Brazilian Portuguese on real mobile hardware.
+
+\textbf{Quantization limits.} QLoRA~\cite{dettmers2023} established 4-bit as viable for adapter fine-tuning of 7B+ models. GPTQ~\cite{frantar2023} and AWQ~\cite{lin2024} push post-training quantization below 4 bits. In our experiments, Q4\_K\_M ($\sim$5.6 BPW) preserves task accuracy for the 0.8B and 3B models, while Q3\_K\_M ($\sim$5.0 BPW) causes substantial degradation---though the 0.5B model does not follow this pattern.
+
+\textbf{Portuguese NLP.} BERTimbau~\cite{souza2020} provides PT-BR representations. Sabi\'{a}~\cite{pires2023} fine-tunes LLaMA for Portuguese. None target on-device deployment. Our work is the first to evaluate quantized Portuguese LLMs on mobile hardware, albeit at small scale.
+
+%------------------------------------------------------------------------
+\section{Methodology}
+%------------------------------------------------------------------------
+
+\subsection{Model Selection and Fine-Tuning}
+
+We evaluate three model tiers spanning two orders of magnitude in memory footprint:
+
+\begin{table}[ht]
+\centering
+\caption{Model tiers evaluated in this study. The 3B model's ENEM evaluation was performed on a server-class GPU (NVIDIA RTX 5090, 32~GB) due to RAM constraints on the A54.}
+\label{tab:models}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Tier} & \textbf{Model} & \textbf{Params} & \textbf{Q4\_K\_M Size} & \textbf{Target Device} \\
+\midrule
+Light & Qwen2.5-0.5B & 0.5B & 268~MB & $<$4~GB RAM \\
+Standard & Qwen3.5-0.8B & 0.8B & 505~MB & 4--8~GB RAM \\
+Premium & Qwen2.5-3B-Instruct & 3.0B & 1,800~MB & $>$8~GB RAM \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The 0.8B model was fine-tuned for Brazilian Portuguese using 2,248 synthetic conversations generated via self-instruct from the base Qwen3.5-0.8B checkpoint. Training used 3 epochs on an NVIDIA RTX 5090 (32~GB), with learning rate $2\times10^{-5}$, batch size 2, gradient accumulation 4, and bf16 precision. Final perplexity on held-out PT-BR data: 9.38 (Q4\_K\_M).
+
+\subsection{Quantization Levels}
+
+We evaluate seven GGUF quantization types:
+
+\begin{table}[ht]
+\centering
+\caption{Quantization levels evaluated.}
+\label{tab:quants}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Quant} & \textbf{Size (MB)} & \textbf{BPW} & \textbf{Description} \\
+\midrule
+Q8\_0 & 774 & 8.6 & 8-bit round-to-nearest \\
+Q6\_K & 601 & 6.7 & 6-bit K-quant \\
+Q5\_K\_M & 551 & 6.2 & 5-bit K-quant medium \\
+Q4\_K\_M & 505 & 5.6 & 4-bit K-quant medium \\
+Q3\_K\_M & 445 & 5.0 & 3-bit K-quant medium \\
+IQ2\_XS & 347 & 3.9 & 2-bit importance-aware \\
+IQ2\_XXS & 336 & 3.7 & 2-bit extra-small \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Evaluation Protocol}
+
+\textbf{Task benchmark:} 150 multiple-choice questions drawn from 11 ENEM exams spanning 2009--2023 (ranging from 2009 through 2017 and 2022--2023). Each question presents 5 options; random baseline = 20\%. We measure exact-match accuracy (correct letter prediction). We run 3 independent trials with different random seeds (42, 123, 456) and report mean $\pm$ standard deviation. For the 0.5B model, only 1 trial was completed; results should be treated as indicative.
+
+\textbf{Perplexity:} WikiText-pt (Portuguese Wikipedia subset), 128-token context windows. We do not report cross-lingual perplexity comparisons: our English and Portuguese corpora are different datasets, and parallel corpus evaluation (FLORES-200) was not feasible due to access restrictions.
+
+\textbf{Latency:} Real-device measurement on Galaxy A54 (Exynos 1380, 8~GB LPDDR4X, Android 16) using llama.cpp with ARM64 compilation flags: \texttt{-O3 -flto -march=armv8.2-a+dotprod+fp16}.
+
+\subsection{Memory Bandwidth Model}
+
+Generation throughput is fundamentally limited by memory bandwidth, not compute:
+
+\begin{equation}
+\text{gen\_tok\_s} = \frac{\text{BW}_{\text{eff}}}{\text{model\_size\_GB}} \times \eta
+\label{eq:bw}
+\end{equation}
+
+We estimate effective bandwidth as $0.82 \times$ theoretical (accounting for real-world overhead) and fit efficiency $\eta = 0.66$ from the 0.8B A54 measurement. This is a single-point calibration: the model has not been validated across multiple devices, and the $\eta$ parameter may vary with model size, batch size, and chipset architecture.
+
+%------------------------------------------------------------------------
+\section{Results}
+%------------------------------------------------------------------------
+
+\subsection{Cross-Model Quantization Accuracy}
+
+Figure~\ref{fig:cliff} (left and center) shows accuracy across quantization levels. Table~\ref{tab:cross} reports the Q4\_K\_M vs.\ Q3\_K\_M comparison, which reveals a substantial drop for two models but not the third.
+
+\begin{table}[ht]
+\centering
+\caption{Cross-model quantization ablation on ENEM 2009--2023 (50 questions per model, 3 runs except 0.5B which used 1 run). Differences reported with 95\% confidence intervals.}
+\label{tab:cross}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Model} & \textbf{Params} & \textbf{Q4\_K\_M Acc} & \textbf{Q3\_K\_M Acc} & $\Delta$ & \textbf{Rel.\ Change} \\
+\midrule
+Qwen2.5-0.5B\dag & 0.5B & 18.0\% & 20.0\% & +2.0~pp & +11\% (inconclusive) \\
+Qwen3.5-0.8B FT & 0.8B & \textbf{23.3\%} $\pm$1.2 & \textbf{15.3\%} $\pm$3.1 & \textbf{$-$8.0~pp} & \textbf{$-$34\%} [95\% CI: $-$59\%, $-$9\%] \\
+Qwen2.5-3B* & 3.0B & \textbf{44.0\%} $\pm$4.0 & \textbf{24.7\%} $\pm$2.3 & \textbf{$-$19.3~pp} & \textbf{$-$44\%} [95\% CI: $-$62\%, $-$26\%] \\
+\bottomrule
+\end{tabular}
+\dag~Single run only; results are indicative. *~3B ENEM evaluations run on server-side GPU (RTX 5090), not on-device.
+\end{table}
+
+\textbf{Caveats:} The 0.5B model (1 run) shows Q3\_K\_M (20.0\%) \textit{outperforming} Q4\_K\_M (18.0\%), which contradicts the pattern seen in the larger models. With only one trial, this may be sampling noise, but it precludes any claim of a universal quantization threshold. We therefore describe the accuracy drop as \emph{model-dependent} rather than universal. The 0.8B and 3B models both show statistically significant degradation (non-overlapping standard error bars), but sample sizes are small and confidence intervals are wide.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{quantization_cliff_v2.png}
+\caption{Three-panel analysis: (left) Cross-model bar chart with error bars for Q4\_K\_M vs.\ Q3\_K\_M; (center) Full quantization spectrum for Qwen3.5-0.8B across 7 levels; (right) Portuguese-only perplexity across quantization levels (cross-lingual comparison omitted---see text).}
+\label{fig:cliff}
+\end{figure}
+
+\textbf{Note on Figure~\ref{fig:cliff} (right):} The third panel originally included an English-vs.-Portuguese perplexity comparison. We have removed cross-lingual claims from this paper because the English and Portuguese corpora differ in composition, and the parallel corpus (FLORES-200) was not available for controlled comparison. Perplexity numbers from different corpora are not directly comparable; any observed divergence may reflect corpus differences rather than language-specific quantization sensitivity.
+
+\subsection{On-Device Inference Pipeline}
+
+We deployed the 0.8B model on a Galaxy A54 via a custom Android APK built with the following stack:
+
+\begin{itemize}
+\item \textbf{Native layer:} llama.cpp compiled with ARM64-specific flags (\texttt{-march=armv8.2-a+dotprod+fp16}) targeting the Cortex-A78's SIMD capabilities. Thread affinity pins inference to the 4$\times$ performance cores, avoiding the 4$\times$ efficiency cores.
+\item \textbf{KV cache:} Q8\_0 quantized KV cache (8-bit) to reduce memory pressure beyond the weight quantization. This yielded an additional $\sim$5\% throughput gain over fp16 cache.
+\item \textbf{Memory management:} \texttt{mlock()} to prevent swap-out under Android's memory pressure, contributing a $\sim$2\% improvement in tail latency.
+\item \textbf{Chunked prefill:} Prompt processing in 512-token chunks to keep the device responsive during long context ingestion.
+\item \textbf{JNI bridge:} Kotlin-to-native bridge via JNI, streaming tokens to the UI via callback.
+\end{itemize}
+
+The inference server runs in a foreground service with a wake lock to prevent Android's power management from throttling sustained generation. The 0.8B Q4\_K\_M model fits within 505~MB, leaving $\sim$5~GB free on the 8~GB A54 for the OS and concurrent apps. The 3B model (1.8~GB at Q4\_K\_M) requires a device with more than 8~GB RAM and was not deployed on-device in this study.
+
+\subsection{Real-Device Measurements}
+
+Table~\ref{tab:realm} reports generation speed on the Galaxy A54:
+
+\begin{table}[ht]
+\centering
+\caption{Real-device measurements on Galaxy A54. *Projected from bandwidth model (RAM and thermal constraints prevented on-device measurement of 3B).}
+\label{tab:realm}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model} & \textbf{Size} & \textbf{Gen (tok/s)} & \textbf{Prefill (tok/s)} & \textbf{Context} \\
+\midrule
+Qwen2.5-0.5B Q4\_K\_M & 268~MB & \textbf{33.3} & 180 & 2K \\
+Qwen3.5-0.8B FT Q4\_K\_M & 505~MB & \textbf{19.7} & 108 & 2K \\
+Qwen2.5-3B-Instruct Q4\_K\_M\textsuperscript{*} & 1,800~MB & 4.2* & 28* & 1K \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All measurements represent a single device (Galaxy A54). Performance on other hardware is estimated analytically.
+
+\subsection{Optimization Stack Ablation}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_optimization_stack.png}
+\caption{Additive contribution of each optimization step on Galaxy A54. The complete stack yields a 39\% improvement over baseline.}
+\label{fig:optstack}
+\end{figure}
+
+Starting from a baseline of 14.2~tok/s (unoptimized build), each optimization contributes additively: ARM64 compiler flags (+15\%), thread affinity on A78 cores (+13\%), KV cache quantization (+5\%), and mlock anti-swap (+2\%), yielding a final 19.7~tok/s---a 39\% total improvement.
+
+\subsection{Thread Scaling Analysis}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{fig_thread_scaling.png}
+\caption{Thread scaling on Galaxy A54. Optimal performance at 3 threads (A78 cores only); adding A55 cores degrades throughput due to their $\sim$3$\times$ lower per-core bandwidth.}
+\label{fig:threads}
+\end{figure}
+
+The optimal thread count is 3, utilizing only the 4$\times$Cortex-A78 performance cores at 2.4~GHz. Adding the 4$\times$Cortex-A55 efficiency cores reduces throughput by 6--28\% due to their lower per-core memory bandwidth.
+
+\subsection{Memory Bandwidth Model Validation}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.75\textwidth]{fig_speed_vs_size.png}
+\caption{Theoretical speed curves for different memory bandwidth tiers. Measured A54 values (red stars) are shown against the 15~GB/s LPDDR4X curve, which was fitted to the 0.8B measurement.}
+\label{fig:speed}
+\end{figure}
+
+Figure~\ref{fig:speed} shows the bandwidth model (Equation~\ref{eq:bw}) overlaid with A54 measurements. We note two important limitations:
+
+\begin{enumerate}
+\item \textbf{Single-point calibration:} The efficiency parameter $\eta = 0.66$ was derived from the 0.8B measurement. Applying this same $\eta$ to the 0.5B model yields a prediction of $\sim$30~tok/s vs.\ the measured 33.3~tok/s---a 10\% discrepancy.
+\item \textbf{Model error:} The bandwidth model deviates by up to $\sim$20\% from the two real measurements on the only validated device, and has not been validated on any other hardware. All values in Table~\ref{tab:fulldev} beyond the A54 row should be treated as rough estimates.
+\end{enumerate}
+
+\subsection{Device Projection Heatmap}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{fig_device_heatmap.png}
+\caption{Projected generation speed across 19 devices and 3 model tiers. Green cells indicate $>$20 tok/s; yellow is 10--20; red is $<$10. The A54 (marked with *) is the only device with real measurements; all others are unvalidated analytical projections.}
+\label{fig:heatmap}
+\end{figure}
+
+Using the bandwidth model, Figure~\ref{fig:heatmap} projects performance across the Android device spectrum. Flagship devices (Snapdragon 8 Elite, 68~GB/s) are projected to achieve 73--137~tok/s on the 0.5B--0.8B models, while budget devices (Helio G85, 13~GB/s) project to 14--25~tok/s. We emphasize that these are analytical projections, not measurements; real-device validation on a wider range of hardware is needed.
+
+%------------------------------------------------------------------------
+\section{Discussion}
+%------------------------------------------------------------------------
+
+\subsection{Quantization Trade-offs}
+
+For the 0.8B and 3B models evaluated in this study, Q4\_K\_M (5.6~BPW) preserves accuracy while Q3\_K\_M (5.0~BPW) causes a statistically significant drop. However, the 0.5B counterexample---where Q3\_K\_M yields 20.0\% vs.\ 18.0\% for Q4\_K\_M---prevents us from asserting a universal threshold. The relationship between quantization level and downstream task accuracy appears to be model-dependent.
+
+A practical recommendation: for the Qwen 0.8B model fine-tuned on Portuguese, Q4\_K\_M provides a 35\% size reduction from Q8\_0 with no measured accuracy loss (23.3\% at both levels). The 3B model similarly retains its accuracy at Q4\_K\_M (44.0\%). Below this level, the 0.8B and 3B models degrade significantly; whether this generalizes to other architectures or languages requires further study.
+
+\subsection{Negative Results}
+
+We document three approaches that did not work, which may inform future efforts:
+
+\textbf{IQ2 quantization (below 4 BPW).} Task accuracy collapsed below random baseline for the 0.8B model (IQ2\_XS: 12.0\% $\pm$4.0, IQ2\_XXS: 8.7\% $\pm$3.1). Portuguese perplexity on WikiText-pt reached 65.6 at IQ2\_XXS, compared to 9.4 at Q4\_K\_M. At these extreme compression levels, the model's output is unusable for any practical application.
+
+\textbf{Vocabulary pruning (152K $\rightarrow$ 10K tokens).} We attempted to reduce the embedding table (which accounts for $\sim$40\% of the 0.8B model's memory at Q4\_K\_M) by pruning to a 10K-token vocabulary and fine-tuning on 2,248 examples. The resulting model produced PPL 50 on held-out Portuguese text, far above usable thresholds. We estimate that 50K+ training examples may be needed for stable embedding realignment under vocabulary pruning.
+
+\textbf{0.5B model at Q3\_K\_M.} Contrary to the pattern observed for larger models, the 0.5B model achieved 20.0\% at Q3\_K\_M vs.\ 18.0\% at Q4\_K\_M (single run). This may be statistical noise, a genuine reflection of the 0.5B model's different knowledge representation, or an artifact of the model already performing near the random baseline (20\%). Follow-up with multiple runs is needed.
+
+\subsection{Deployment Strategy (Tentative)}
+
+Based on our single-device measurements and unvalidated projections, we suggest a provisional three-tier strategy:
+
+\begin{itemize}
+\item \textbf{Budget ($<$4~GB RAM):} Qwen2.5-0.5B Q4\_K\_M (268~MB, $\sim$33~tok/s on A54-class hardware). Suitable for single-turn Q\&A.
+\item \textbf{Mid-range (4--8~GB):} Qwen3.5-0.8B FT PT-BR Q4\_K\_M (505~MB, $\sim$20~tok/s on A54-class hardware). Best all-around for this study.
+\item \textbf{Flagship ($>$8~GB):} Qwen2.5-3B-Instruct Q4\_K\_M (1.8~GB). Multi-turn capability projected, but not validated on-device.
+\end{itemize}
+
+These recommendations are provisional and based on one device model. Actual performance will vary with chipset, cooling, Android version, and concurrent workload.
+
+\subsection{Limitations}
+
+We enumerate limitations candidly to set appropriate expectations:
+
+\begin{enumerate}
+\item \textbf{Single device validation.} All real measurements come from one Galaxy A54. The bandwidth projections across 19 devices have not been validated on any additional hardware. The model itself was calibrated to the A54 and shows $\sim$20\% error even on that device.
+\item \textbf{Small evaluation set.} 150 questions, unevenly distributed across 11 exam years (2009--2023). For the cross-model ablation, each model was tested on 50 questions, and the 0.5B model used a single run. This limits statistical power; confidence intervals are wide.
+\item \textbf{Single model family.} Only Qwen-derived models were tested. Architectural effects on quantization sensitivity (e.g., LLaMA vs.\ Qwen, GQA vs.\ MHA) remain unexplored.
+\item \textbf{Server-side 3B evaluation.} The 3B model's ENEM accuracy was measured on an RTX 5090, not on-device. On-device inference introduces additional variables (thermal throttling, background processes, swap) that we did not measure for this model.
+\item \textbf{No cross-lingual controls.} Our Portuguese and English perplexity numbers used different corpora (WikiText-pt vs.\ WikiText-2), making direct comparison invalid. We lacked access to FLORES-200 for controlled parallel evaluation.
+\item \textbf{No battery, thermal, or sustained-performance data.} All measurements are burst-mode; real-world usage involves thermal throttling and battery drain that we did not characterize.
+\item \textbf{No human evaluation.} ENEM accuracy is a proxy for Portuguese capability; we did not conduct fluency or preference studies with native speakers.
+\item \textbf{Out-of-distribution tasks.} The ENEM benchmark covers a specific distribution (academic exam questions). Generalization to other Portuguese tasks (chat, summarization, translation) is unknown.
+\end{enumerate}
+
+Given these constraints, this work is best understood as an \textbf{engineering report} documenting the feasibility and practical trade-offs of on-device Portuguese LLM inference, not as a definitive empirical study.
+
+%------------------------------------------------------------------------
+\section{Conclusion}
+%------------------------------------------------------------------------
+
+We report on the engineering challenges of deploying quantized LLMs for Brazilian Portuguese on mobile devices. Using a Galaxy A54, 150 ENEM 2009--2023 questions, and three Qwen-family models at seven quantization levels, we find that Q4\_K\_M ($\sim$5.6 BPW) preserves task accuracy for the 0.8B and 3B models, while Q3\_K\_M ($\sim$5.0 BPW) degrades accuracy by 34--44\%. However, the 0.5B model shows the opposite pattern, preventing a universal claim. Our bandwidth model, calibrated to one device, projects performance across 19 devices but has $\sim$20\% error even on the calibration point. We document negative results (2-bit failure, vocabulary pruning failure) and release all artifacts. Substantially more evaluation data, more devices, and formal cross-lingual comparisons are needed before general conclusions can be drawn.
+
+%------------------------------------------------------------------------
+%------------------------------------------------------------------------
+
+\begin{thebibliography}{9}
+
+\bibitem{gerganov2023}
+G.~Gerganov.
+\newblock llama.cpp: {LLM} inference in {C/C++}.
+\newblock GitHub, 2023.
+
+\bibitem{mlc2023}
+{MLC}~team.
+\newblock {MLC-LLM}: Universal {LLM} deployment engine.
+\newblock GitHub, 2023.
+
+\bibitem{dettmers2023}
+T.~Dettmers, A.~Pagnoni, A.~Holtzman, and L.~Zettlemoyer.
+\newblock {QLoRA}: Efficient finetuning of quantized language models.
+\newblock In \textit{NeurIPS}, 2023.
+
+\bibitem{frantar2023}
+E.~Frantar, S.~Ashkboos, T.~Hoefler, and D.~Alistarh.
+\newblock {GPTQ}: Accurate post-training quantization for generative pre-trained transformers.
+\newblock In \textit{ICLR}, 2023.
+
+\bibitem{lin2024}
+J.~Lin, J.~Tang, H.~Tang, S.~Yang, W.-M.~Chen, W.-C.~Wang, G.~Xiao, X.~Dang, S.~Gan, and S.~Han.
+\newblock {AWQ}: Activation-aware weight quantization for on-device {LLM} compression and acceleration.
+\newblock In \textit{MLSys}, 2024.
+
+\bibitem{liu2024}
+Z.~Liu, C.~Zhao, F.~Iandola, C.~Lai, Y.~Tian, I.~Fedorov, Y.~Xiong, E.~Chang, Y.~Shi, R.~Krishnamoorthi, et~al.
+\newblock {MobileLLM}: Optimizing sub-billion parameter models for on-device use cases.
+\newblock In \textit{ICML}, 2024.
+
+\bibitem{pires2023}
+R.~Pires, H.~Abreu, T.~N{\'o}brega, J.~Almeida, and R.~Lotufo.
+\newblock {Sabi{\'a}}: {P}ortuguese large language models.
+\newblock In \textit{BRACIS}, 2023.
+
+\bibitem{song2024}
+Y.~Song, Z.~Mi, H.~Xie, and H.~Chen.
+\newblock {PowerInfer}: Fast large language model serving with a consumer-grade {GPU}.
+\newblock In \textit{SOSP}, 2024.
+
+\bibitem{souza2020}
+F.~Souza, R.~Nogueira, and R.~Lotufo.
+\newblock {BERTimbau}: Pretrained {BERT} models for {B}razilian {P}ortuguese.
+\newblock In \textit{BRACIS}, 2020.
+
+\end{thebibliography}
+
+%------------------------------------------------------------------------
+\appendix
+\section{Full Device Projection Matrix}
+%------------------------------------------------------------------------
+
+\begin{table}[ht]
+\centering
+\caption{Projected generation speed (tok/s) across 19 Android devices. $\eta = 0.66$, BW$_{\text{eff}} = 0.82 \times$ theoretical. Only the A54 row has been validated with real measurements; all other rows are analytical projections.}
+\label{tab:fulldev}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Device} & \textbf{SoC} & \textbf{RAM} & \textbf{BW (eff)} & \textbf{0.5B} & \textbf{0.8B} & \textbf{3B} \\
+\midrule
+Galaxy S25 Ultra & SD 8 Elite & 12 GB & 56 & 137 & 73 & 20 \\
+ASUS ROG Phone 9 & SD 8 Elite & 16 GB & 56 & 137 & 73 & 20 \\
+OnePlus 13 & SD 8 Elite & 12 GB & 56 & 137 & 73 & 20 \\
+Xiaomi 15 Pro & SD 8 Elite & 12 GB & 56 & 137 & 73 & 20 \\
+Galaxy S24 Ultra & SD 8 Gen 3 & 12 GB & 52 & 129 & 69 & 19 \\
+Pixel 9 Pro & Tensor G4 & 16 GB & 52 & 129 & 69 & 19 \\
+Galaxy S23 Ultra & SD 8 Gen 2 & 12 GB & 48 & 117 & 62 & 17 \\
+Pixel 8 Pro & Tensor G3 & 12 GB & 43 & 103 & 55 & 15 \\
+POCO X6 Pro & Dimensity 8300 & 8 GB & 42 & 103 & 55 & 15 \\
+Pixel 8a & Tensor G3 & 8 GB & 42 & 103 & 55 & 15 \\
+Galaxy A55 & Exynos 1480 & 8 GB & 36 & 89 & 47 & 13 \\
+RN 13 Pro+ & Dimensity 7200 & 8 GB & 28 & 69 & 36 & 10 \\
+POCO X5 Pro & SD 778G & 8 GB & 20 & 50 & 27 & 8 \\
+\textbf{Galaxy A54*} & \textbf{Exynos 1380} & \textbf{8 GB} & \textbf{12} & \textbf{33.3*} & \textbf{19.7*} & \textbf{4} \\
+Galaxy A35 & Exynos 1380 & 6 GB & 12 & 30 & 16 & 4 \\
+Galaxy A15 5G & Dimensity 6100+ & 4 GB & 11 & 28 & 15 & 4 \\
+Moto G84 5G & SD 695 & 8 GB & 11 & 28 & 15 & 4 \\
+Redmi 13C & Helio G85 & 4 GB & 10 & 25 & 14 & 3 \\
+Galaxy A05s & SD 680 & 4 GB & 10 & 25 & 14 & 3 \\
+\bottomrule
+\end{tabular}
+*Measured on real device. All others are unvalidated projections.
+\end{table}
+
+\end{document}
