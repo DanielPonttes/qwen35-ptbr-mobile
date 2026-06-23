@@ -25,6 +25,7 @@ Deploying large language models on commodity smartphones for low-resource langua
 \end{abstract}
 
 %------------------------------------------------------------------------
+
 \section{Introduction}
 %------------------------------------------------------------------------
 
@@ -50,6 +51,7 @@ Our contributions are:
 We emphasize that this is an engineering report with a single device, 150 test questions, and three model families. Generalization beyond these conditions is not claimed.
 
 %------------------------------------------------------------------------
+
 \section{Related Work}
 %------------------------------------------------------------------------
 
@@ -60,6 +62,7 @@ We emphasize that this is an engineering report with a single device, 150 test q
 \textbf{Portuguese NLP.} BERTimbau~\cite{souza2020} provides PT-BR representations. Sabi\'{a}~\cite{pires2023} fine-tunes LLaMA for Portuguese. None target on-device deployment. Our work is the first to evaluate quantized Portuguese LLMs on mobile hardware, albeit at small scale.
 
 %------------------------------------------------------------------------
+
 \section{Methodology}
 %------------------------------------------------------------------------
 
@@ -127,6 +130,7 @@ Generation throughput is fundamentally limited by memory bandwidth, not compute:
 We estimate effective bandwidth as $0.82 \times$ theoretical (accounting for real-world overhead) and fit efficiency $\eta = 0.66$ from the 0.8B A54 measurement. This is a single-point calibration: the model has not been validated across multiple devices, and the $\eta$ parameter may vary with model size, batch size, and chipset architecture.
 
 %------------------------------------------------------------------------
+
 \section{Results}
 %------------------------------------------------------------------------
 
@@ -247,6 +251,7 @@ Figure~\ref{fig:speed} shows the bandwidth model (Equation~\ref{eq:bw}) overlaid
 Using the bandwidth model, Figure~\ref{fig:heatmap} projects performance across the Android device spectrum. Flagship devices (Snapdragon 8 Elite, 68~GB/s) are projected to achieve 73--137~tok/s on the 0.5B--0.8B models, while budget devices (Helio G85, 13~GB/s) project to 14--25~tok/s. We emphasize that these are analytical projections, not measurements; real-device validation on a wider range of hardware is needed.
 
 %------------------------------------------------------------------------
+
 \section{Discussion}
 %------------------------------------------------------------------------
 
@@ -296,6 +301,7 @@ We enumerate limitations candidly to set appropriate expectations:
 Given these constraints, this work is best understood as an \textbf{engineering report} documenting the feasibility and practical trade-offs of on-device Portuguese LLM inference, not as a definitive empirical study.
 
 %------------------------------------------------------------------------
+
 \section{Conclusion}
 %------------------------------------------------------------------------
 
@@ -355,6 +361,7 @@ F.~Souza, R.~Nogueira, and R.~Lotufo.
 
 %------------------------------------------------------------------------
 \appendix
+
 \section{Full Device Projection Matrix}
 %------------------------------------------------------------------------
 
