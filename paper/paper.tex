@@ -235,12 +235,12 @@ Figure~\ref{fig:speed} shows the bandwidth model (Equation~\ref{eq:bw}) overlaid
 \item \textbf{Model error:} The bandwidth model deviates by up to $\sim$20\% from the two real measurements on the only validated device, and has not been validated on any other hardware. All values in Table~\ref{tab:fulldev} beyond the A54 row should be treated as rough estimates.
 \end{enumerate}
 
-\subsection{Device Projection Heatmap}
+\subsection{Device Projections (Estimates)}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{fig_device_heatmap.png}
-\caption{Projected generation speed across 19 devices and 3 model tiers. Green cells indicate $>$20 tok/s; yellow is 10--20; red is $<$10. The A54 (marked with *) is the only device with real measurements; all others are unvalidated analytical projections.}
+\caption{\textbf{Estimates} (not measurements) of generation speed (estimates based on bandwidth formula, validated only on A54*) and 3 model tiers. Green cells indicate $>$20 tok/s; yellow is 10--20; red is $<$10. The A54 (marked with *) is the only device with real measurements; all others are unvalidated analytical projections.}
 \label{fig:heatmap}
 \end{figure}
 
@@ -360,7 +360,7 @@ F.~Souza, R.~Nogueira, and R.~Lotufo.
 
 \begin{table}[ht]
 \centering
-\caption{Projected generation speed (tok/s) across 19 Android devices. $\eta = 0.66$, BW$_{\text{eff}} = 0.82 \times$ theoretical. Only the A54 row has been validated with real measurements; all other rows are analytical projections.}
+\caption{\textbf{Estimates} (not measurements) of generation speed (tok/s) across 19 Android devices. $\eta = 0.66$, BW$_{\text{eff}} = 0.82 \times$ theoretical. Only the A54 row has been validated with real measurements; all other rows are analytical projections.}
 \label{tab:fulldev}
 \small
 \begin{tabular}{lcccccc}
