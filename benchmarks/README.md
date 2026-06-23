@@ -136,3 +136,21 @@ Para adicionar seus resultados ao repositório, faça um PR com o JSON gerado.
 - Benchmarks projetados usam eficiência de 66% (medida no A54). Dispositivos com cache L3 maior ou melhor controlador de memória podem ter eficiência maior.
 - Modelos com NPU (Hexagon, MediaTek APU) podem acelerar prefill via delegação de matmul, mas llama.cpp ainda não suporta (WIP).
 - Dispositivos com UFS 4.0 carregam o modelo em ~0.5s vs ~2s em UFS 2.2.
+
+---
+
+## Atualizacao Jun 2026: Comparativo Multi-Modelo
+
+| Modelo | Tamanho | PPL | Multi-turn | A54 | A55 | S25U | Indicado para |
+|---|---|---|---|---|---|---|---|
+| Qwen3.5 0.8B FT PT-BR | 505 MB | 9.4 | Nao | **19.7*** | 47 | 73 | Mid-range (4-8 GB) |
+| Qwen2.5 0.5B | 268 MB | 15.2 | Nao | **33.3*** | 89 | 137 | Budget (<4 GB) |
+| Qwen2.5 3B Instruct | 1.8 GB | 10.0 | **Sim** | 4 | 13 | 20 | Flagship (8+ GB) |
+
+*Valores com * são medições reais no Galaxy A54. Demais são projeções teóricas.*
+
+### Recomendação por perfil de usuário
+
+- **Celular basico (4 GB RAM)**: Qwen2.5 0.5B Q4_K_M — 33 tok/s, cabe em qq aparelho
+- **Intermediario (6-8 GB RAM)**: Qwen3.5 0.8B FT PT-BR Q4_K_M — 20 tok/s, PT-BR nativo
+- **Premium (8+ GB RAM)**: Qwen2.5 3B Instruct Q4_K_M — multi-turn, 20 tok/s no S25U

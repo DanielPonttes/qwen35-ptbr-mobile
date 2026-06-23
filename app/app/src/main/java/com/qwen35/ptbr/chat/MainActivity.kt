@@ -43,6 +43,9 @@ class MainActivity : ComponentActivity() {
         const val MODEL_FILENAME = "qwen35-ptbr-q4_k_m.gguf"
         const val LOCAL_PORT = 8080
         const val MODEL_DOWNLOAD_URL = "https://huggingface.co/DanielPonttes/qwen35-ptbr-mobile/resolve/main/qwen35-ptbr-q4_k_m.gguf"
+        // Modelos alternativos (detectados automaticamente):
+        //   qwen25-0.5b-q4_k_m.gguf (268 MB) — budget
+        //   qwen25-3b-q4_k_m.gguf  (1.8 GB) — premium multi-turn
         val MODEL_SEARCH_PATHS = listOf(
             Environment.getExternalStorageDirectory().absolutePath + "/models/" + MODEL_FILENAME,
             Environment.getExternalStorageDirectory().absolutePath + "/Download/" + MODEL_FILENAME,
@@ -128,14 +131,26 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun findModelFile(): String? {
-        for (dir in listOf(filesDir, getExternalFilesDir(null))) {
-            if (dir == null) continue
-            val f = File(dir, MODEL_FILENAME)
-            if (f.exists()) return f.absolutePath
-        }
-        for (path in MODEL_SEARCH_PATHS) {
-            val f = File(path)
-            if (f.exists()) return f.absolutePath
+        // Busca varios nomes de modelo possiveis
+        val modelNames = listOf(
+            "qwen35-ptbr-q4_k_m.gguf",    // 0.8B FT PT-BR (505 MB) - recomendado
+            "qwen25-0.5b-q4_k_m.gguf",    // 0.5B (268 MB) - leve
+            "qwen25-3b-q4_k_m.gguf",      // 3B Instruct (1.8 GB) - premium
+        )
+        for (name in modelNames) {
+            for (dir in listOf(filesDir, getExternalFilesDir(null))) {
+                if (dir == null) continue
+                val f = File(dir, name)
+                if (f.exists()) return f.absolutePath
+            }
+            for (base in listOf(
+                Environment.getExternalStorageDirectory().absolutePath + "/models/",
+                Environment.getExternalStorageDirectory().absolutePath + "/Download/",
+                Environment.getExternalStorageDirectory().absolutePath + "/",
+            )) {
+                val f = File(base + name)
+                if (f.exists()) return f.absolutePath
+            }
         }
         return null
     }
