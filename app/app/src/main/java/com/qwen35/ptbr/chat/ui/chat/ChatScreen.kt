@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -251,7 +252,8 @@ fun ChatScreen(
 }
 
 // Truncate message history to fit within ~MAX_CONTEXT_TOKENS
-private fun prepareContext(allMessages: List<ChatMessage>): List<ChatMessage> {
+@VisibleForTesting
+internal fun prepareContext(allMessages: List<ChatMessage>): List<ChatMessage> {
     val result = mutableListOf<ChatMessage>()
     var totalChars = 0
     // Walk backwards, keep most recent messages that fit
@@ -348,11 +350,6 @@ private suspend fun callChatApi(
                                 if (delta.has("content")) {
                                     val token = delta.getString("content")
                                     responseContent.append(token)
-                                    // Strip think tags: if we collected a full tag, remove it
-                                    val cleaned = responseContent.toString()
-                                        .replace(Regex("<think>[\\s\\S]*?</think>"), "")
-                                    responseContent.clear()
-                                    responseContent.append(cleaned)
                                 }
                             }
                         } catch (_: Exception) {}
@@ -392,7 +389,8 @@ private suspend fun callChatApi(
     }
 }
 
-private fun buildRequestJson(
+@VisibleForTesting
+internal fun buildRequestJson(
     history: List<ChatMessage>,
     userMessage: String,
     sessionId: String
@@ -429,7 +427,8 @@ private fun buildRequestJson(
 }
 
 // Extract user name/location from conversation for memory injection
-private fun buildMemoryHints(history: List<ChatMessage>): String {
+@VisibleForTesting
+internal fun buildMemoryHints(history: List<ChatMessage>): String {
     val userMessages = history.filter { it.role == "user" }.takeLast(5)
     val hints = mutableListOf<String>()
 

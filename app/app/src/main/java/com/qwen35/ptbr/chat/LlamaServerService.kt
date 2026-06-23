@@ -100,22 +100,24 @@ class LlamaServerService : Service() {
     }
 
     private fun startServer(modelPath: String, port: Int) {
-        try {
-            retryDelayMs = BASE_RETRY_MS
+        retryDelayMs = BASE_RETRY_MS
+        var shouldRetry = true
 
-            val workspaceDir = prepareWorkspace()
-            if (workspaceDir == null) {
-                Log.e(TAG, "Failed to prepare workspace")
-                broadcastStatus(STATUS_ERROR)
-                return
-            }
+        while (shouldRetry && !Thread.currentThread().isInterrupted) {
+            try {
+                val workspaceDir = prepareWorkspace()
+                if (workspaceDir == null) {
+                    Log.e(TAG, "Failed to prepare workspace")
+                    broadcastStatus(STATUS_ERROR)
+                    return
+                }
 
-            val serverBinary = File(workspaceDir, "llama-server")
-            if (!serverBinary.exists()) {
-                Log.e(TAG, "llama-server binary not found at ${serverBinary.absolutePath}")
-                broadcastStatus(STATUS_ERROR)
-                return
-            }
+                val serverBinary = File(workspaceDir, "llama-server")
+                if (!serverBinary.exists()) {
+                    Log.e(TAG, "llama-server binary not found at ${serverBinary.absolutePath}")
+                    broadcastStatus(STATUS_ERROR)
+                    return
+                }
             serverBinary.setExecutable(true, false)
 
             val nativeLibDir = applicationInfo.nativeLibraryDir
@@ -130,7 +132,7 @@ class LlamaServerService : Service() {
                 "-ctk", "q8_0",
                 "-ctv", "q8_0",
                 "--mlock",
-                "--logit-bias", "248068:-100,248069:-100",
+                "--logit-bias", "248068:-100,248069:-100,100000:-50,101000:-50,102000:-50,103000:-50,104000:-50,105000:-50,106000:-50,107000:-50,108000:-50,109000:-50,110000:-50,111000:-50,112000:-50,113000:-50,114000:-50,115000:-50,116000:-50,117000:-50,118000:-50,119000:-50,120000:-50,121000:-50,122000:-50,123000:-50,124000:-50,125000:-50,126000:-50,127000:-50,128000:-50,129000:-50,130000:-50,131000:-50,132000:-50,133000:-50,134000:-50,135000:-50,136000:-50,137000:-50,138000:-50,139000:-50,140000:-50,141000:-50,142000:-50,143000:-50,144000:-50,145000:-50,146000:-50,147000:-50,148000:-50,149000:-50,150000:-50",
                 "--host", "127.0.0.1",
                 "--port", port.toString()
             )
@@ -174,24 +176,27 @@ class LlamaServerService : Service() {
             Log.i(TAG, "Server exited with code $exitCode")
             serverReady = false
 
-            // Auto-restart with exponential backoff
-            if (exitCode != 0 && !Thread.currentThread().isInterrupted) {
+            if (exitCode == 0 || Thread.currentThread().isInterrupted) {
+                shouldRetry = false
+                broadcastStatus(STATUS_ERROR)
+            } else {
                 Log.i(TAG, "Restarting in ${retryDelayMs}ms")
                 broadcastStatus(STATUS_LOADING)
                 updateNotification(STATUS_LOADING)
                 Thread.sleep(retryDelayMs)
                 retryDelayMs = (retryDelayMs * 2).coerceAtMost(MAX_RETRY_MS)
-                startServer(modelPath, port)
-            } else {
-                broadcastStatus(STATUS_ERROR)
+                // Loop continues
             }
 
         } catch (e: InterruptedException) {
             Log.i(TAG, "Server thread interrupted")
+            shouldRetry = false
         } catch (e: Exception) {
             Log.e(TAG, "Error starting server", e)
             broadcastStatus(STATUS_ERROR)
+            shouldRetry = false
         }
+        } // end while
     }
 
     private fun ensureServerRunning() {
