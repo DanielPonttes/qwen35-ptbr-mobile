@@ -1,0 +1,39 @@
+{
+  "record": {
+    "id": "neg_missing_target_08_00",
+    "locale": "pt-BR",
+    "metadata": {
+      "case_id": "missing_target:08",
+      "generator_version": "fc-android-ptbr/0.2.0-case-split",
+      "kind": "abstain",
+      "tool": null,
+      "variant_id": 0
+    },
+    "split": "test",
+    "target": {
+      "action": "abstain",
+      "arguments": {},
+      "tool": null
+    },
+    "text": "Por favor, deixe mais alto."
+  },
+  "prediction": {
+    "action": "abstain",
+    "tool": null,
+    "arguments": {}
+  },
+  "json_parseable": true,
+  "validation_errors": [],
+  "raw_stdout": "{\"action\":\"abstain\",\"tool\":null,\"arguments\":{} } [end of text]\n\n\n",
+  "stderr": "",
+  "returncode": 0,
+  "timed_out": false,
+  "elapsed_ms": 1861.99,
+  "command": [
+    "/home/daniel/llama.cpp/build/bin/llama-completion",
+    "-m",
+    "/home/daniel/models/qwen35-2b-q4_k_m.gguf",
+    "--lora",
+    "results/qwen35_2b_lora_fc_seed20260830.gguf"
+  ]
+}

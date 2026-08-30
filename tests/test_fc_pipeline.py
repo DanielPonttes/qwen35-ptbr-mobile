@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from fc_common import load_registry, parse_prediction_record, validate_target  # noqa: E402
+from compare_fc_predictions import exact_mcnemar_p_value  # noqa: E402
+from fc_eval import wilson_interval  # noqa: E402
 from generate_fc_dataset import build_dataset  # noqa: E402
 from validate_fc_dataset import validate_record  # noqa: E402
 
@@ -31,13 +33,22 @@ class FunctionCallingPipelineTests(unittest.TestCase):
         first = build_dataset(self.registry, 20260830)
         second = build_dataset(self.registry, 20260830)
         self.assertEqual(first, second)
-        self.assertEqual(len(first), 720)
-        self.assertEqual(sum(r["metadata"]["kind"] == "call" for r in first), 360)
-        self.assertEqual(sum(r["metadata"]["kind"] == "abstain" for r in first), 360)
+        self.assertEqual(len(first), 1200)
+        self.assertEqual(sum(r["metadata"]["kind"] == "call" for r in first), 600)
+        self.assertEqual(sum(r["metadata"]["kind"] == "abstain" for r in first), 600)
         self.assertEqual(
             {split: sum(r["split"] == split for r in first) for split in ("train", "dev", "test")},
-            {"train": 480, "dev": 120, "test": 120},
+            {"train": 720, "dev": 240, "test": 240},
         )
+
+    def test_case_families_do_not_cross_splits(self) -> None:
+        records = build_dataset(self.registry, 20260830)
+        case_splits: dict[str, set[str]] = {}
+        for record in records:
+            case_id = record["metadata"]["case_id"]
+            case_splits.setdefault(case_id, set()).add(record["split"])
+        self.assertTrue(case_splits)
+        self.assertTrue(all(len(splits) == 1 for splits in case_splits.values()))
 
     def test_generated_records_validate(self) -> None:
         records = build_dataset(self.registry, 20260830)
@@ -56,6 +67,12 @@ class FunctionCallingPipelineTests(unittest.TestCase):
         self.assertIsNone(error)
         self.assertFalse(is_json)
         self.assertEqual(parsed, {"action": "call", "tool": "wifi_set_state", "arguments": {"enabled": True}})
+
+    def test_statistical_helpers(self) -> None:
+        interval = wilson_interval(10, 10)
+        self.assertIsNotNone(interval)
+        self.assertGreater(interval["lower"], 0.7)
+        self.assertEqual(exact_mcnemar_p_value(0, 3), 0.25)
 
 
 if __name__ == "__main__":

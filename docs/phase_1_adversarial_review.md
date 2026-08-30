@@ -1,98 +1,77 @@
-# Revisão adversarial da Fase 1
+# Revisão adversarial e correção da Fase 1
 
 **Data:** 2026-08-30
-**Branch auditada:** `codex/phase1-fc`
-**HEAD auditado:** `737bbf7233404e7b3d1fc738b25f6e647eba9daa`
-**Escopo:** desenho experimental e evidências produzidas até agora
+**Branch:** `codex/phase1-fc`
+**HEAD da revisão inicial:** `5e311b5`
+**Escopo:** desenho experimental, pipeline de function calling e evidências produzidas até a correção.
 
-## 1. Veredito consolidado
+## 1. Veredito da revisão inicial
 
-| Camada | Veredito |
+| Camada | Veredito inicial |
 |---|---|
 | Infraestrutura de engenharia | **PASS com ressalvas** |
 | Desenho formal documentado | **CONDITIONAL PASS** |
 | Evidência científica para artigo | **FAIL** |
 | Prontidão do protótipo Android FC | **FAIL** |
 
-O contrato JSON, o catálogo, o validador, o treinamento LoRA na RTX 5090, a exportação GGUF, o smoke test no `llama.cpp`, os testes automatizados e a compilação da base Android funcionam. Isso não torna o piloto uma demonstração de generalização nem permite submeter o resultado como artigo experimental.
+O contrato JSON, o catálogo, o validador, o treinamento LoRA na RTX 5090, a exportação GGUF, o smoke test no `llama.cpp`, os testes automatizados e a compilação da base Android funcionavam. A revisão concluiu que isso não demonstrava generalização nem autorizava submissão do piloto como resultado final.
 
 ## 2. Revisores acionados
 
-Foi solicitada uma revisão independente do `HEAD` atual, sem edição de arquivos, com o mesmo dossiê e critérios.
+Foi enviado o mesmo dossiê factual, sem autorização para editar o repositório.
 
 | Revisor | Configuração | Resultado |
 |---|---|---|
-| Gemini | `gemini-3.7-flash`, esforço alto, modo plan | respondeu: **CONDITIONAL PASS** |
-| Grok | `cursor-grok-4.6-xhigh-fast`, modo ask | respondeu: **FAIL** |
-| Muse | `opencode-go/muse-spark-1.2-contributor` e fallback `opencode/muse-spark-1.2-contributor-free` | timeout sem parecer; não contado como aprovação |
+| Gemini | `gemini-3.7-flash`, esforço alto, modo plan | **CONDITIONAL PASS** |
+| Grok | `cursor-grok-4.6-xhigh` expirou; fallback `cursor-grok-4.6-xhigh-fast`, modo ask | **FAIL** |
+| Muse | `opencode-go/muse-spark-1.2-contributor` e fallback gratuito | timeout sem parecer; não contado como aprovação |
+| GLM solicitado em substituição ao Muse | `opencode-go/glm-5.3-flash` | modelo listado no Neuromancer, mas timeout tanto no dossiê completo quanto no teste mínimo `PONG`; sem parecer utilizável |
 
-O identificador exato `cursor-grok-4.6-xhigh` também expirou antes de responder; o fallback operacional foi usado e identificado acima. A indisponibilidade do Muse é uma falha de cobertura da revisão, não evidência positiva.
+A indisponibilidade do GLM é registrada como limitação operacional da revisão, não como aprovação ou reprovação. As correções abaixo foram aplicadas com base no consenso Gemini/Grok e nas auditorias determinísticas do próprio pipeline.
 
-## 3. Evidências confirmadas
+## 3. Falhas encontradas
 
-- dataset sintético: 720 registros, 360 chamadas e 360 abstenções;
-- B0/B1 avaliados no mesmo teste de 120 exemplos;
-- exact match: 64,17% no B0 e 99,17% no B1;
-- LoRA BF16 treinado na NVIDIA GeForce RTX 5090;
-- adapter GGUF F16 de 33.664.704 bytes;
-- smoke `llama.cpp` com um caso de chamada e um caso de abstenção, ambos válidos;
-- cinco testes automatizados, validação do dataset e `git diff --check` aprovados;
-- projeto Android legado compilado com `test assembleDebug` após configurar SDK 35 no servidor;
-- branch limpo, `master` inalterado e sem push.
+### P1 — leakage por identidade de caso
 
-Esses itens são evidências de execução de pipeline, não de desempenho on-device. Não há medições no A54, nem dispatcher FC no app atual.
-
-## 4. Bloqueador crítico: leakage do dataset
-
-O gerador usa quatro variantes de texto no treino, uma no dev e uma no teste. Essa separação é útil para testar superfície textual, mas não separa a identidade semântica do caso.
-
-Auditoria direta do JSONL atual:
-
-```text
-unique_case_ids = 120
-case_ids presentes em train, dev e test = 120
-unique_targets = 41
-targets presentes em train, dev e test = 41
-variant 0–3 = train; variant 4 = dev; variant 5 = test
-```
-
-Assim, os mesmos casos, ferramentas e valores de argumentos atravessam os splits. O número de 99,17% deve ser tratado como **não interpretável para generalização**; no máximo, é um teste de pipeline em um corpus controlado. Não deve aparecer como resultado principal de artigo, mesmo acompanhado de uma ressalva.
-
-## 5. Problemas metodológicos adicionais
+A versão antiga usava quatro variantes no treino, uma no desenvolvimento e uma no teste, mas todos os 120 `case_id` apareciam nos três splits. Também havia 41 targets repetidos entre os splits. O exact match de 99,17% era, portanto, um teste de pipeline em corpus controlado, não evidência válida de generalização.
 
 ### P1 — inferência estatística ausente
 
-O `scripts/fc_eval.py` calcula métricas pontuais, mas não IC95%, McNemar, bootstrap, p-value ou effect size. Uma execução e uma seed não separam efeito de especialização, overfit e variação aleatória.
+A avaliação anterior apresentava apenas métricas pontuais e uma seed. Não havia IC95%, comparação pareada, bootstrap de F1 ou verificação da variabilidade do treinamento.
 
-### P1 — escopo medido menor que o escopo declarado
+### P1 — escopo maior que a evidência
 
-As seis RQs cobrem especialização, quantidade de dados, quantização, eficiência on-device, robustez linguística e comparação com modelos menores. O estado atual só sustenta uma comparação preliminar B0/B1 em dataset sintético com holdout de formulação. Não sustenta conclusões sobre Android real, energia, OOD humano, quantização em lote ou baselines externos.
+O app compilado era a aplicação legada de chat. Não existiam parser FC Kotlin, camada de segurança, allowlist executável ou dispatcher Android integrado. Também não havia dados humanos, ruído, OOD, grid completo de quantização ou baselines externos.
 
-### P1 — app Android ainda não é um protótipo FC
+## 4. Correções aplicadas
 
-O APK que compila é a aplicação legada de chat. Ainda não há carregamento do adapter no app, parser/validador Kotlin, camada de segurança, allowlist executável ou dispatcher de intents/APIs. O smoke test no servidor confirma somente a cadeia GGUF + `llama.cpp`.
+1. Dataset e resultados antigos foram preservados em `data/archive/fc_dataset_variant_holdout_v1/` e `results/archive/variant_holdout_v1/`.
+2. O gerador passou a usar `fc-android-ptbr/0.2.0-case-split`, com 200 `case_id` únicos, 1.200 registros, split 720/240/240 e balanceamento chamada/abstenção. A validação agora falha se um caso cruzar splits ou se houver texto duplicado.
+3. `scripts/fc_eval.py` passou a emitir IC95% de Wilson e bootstrap determinístico para F1 de abstenção.
+4. `scripts/compare_fc_predictions.py` foi adicionado para alinhar predições por `id`, calcular IC95% e McNemar exato bilateral; p-values muito pequenos não são arredondados para zero.
+5. O treinamento foi repetido com três seeds (`20260830`, `20260831`, `20260832`) no RTX 5090 e todos os adapters foram avaliados no mesmo teste corrigido.
+6. O adapter representativo foi reexportado para GGUF e validado no `llama.cpp` com uma chamada e uma abstenção.
+7. A documentação passou a separar explicitamente piloto sintético, integração de servidor e benchmark Android. O celular não foi usado.
 
-### P2 — contrato de execução precisa de confirmação documental
+## 5. Evidência após a correção
 
-O catálogo é adequado como contrato experimental, mas algumas superfícies (`settings_panel`, `direct_or_permissioned` e `media_session`) podem exigir interação, permissões ou serviços específicos nas versões atuais do Android. O artigo não deve chamar essas ferramentas de execução automática antes da verificação por API e aparelho.
+No teste de 240 exemplos, o B0 obteve 71,67% de exact match `[65,66%, 76,99%]` pelo IC95% Wilson. As três execuções LoRA obtiveram 99,17%, 99,17% e 97,08%, com IC95% `[97,01%, 99,77%]`, `[97,01%, 99,77%]` e `[94,10%, 98,58%]`, respectivamente.
 
-### P2 — baselines e quantização incompletos
+O McNemar exato bilateral para exact match, comparando cada seed com B0, resultou em `p=2,71e-20`, `p=2,71e-20` e `p=6,80e-16`. Esses p-values confirmam diferença no corpus sintético pareado; não eliminam risco de viés de template, nem substituem avaliação humana.
 
-LFM2.5, Octopus-V2 e o grid Q8/Q4/Q3 ainda não foram avaliados em lote com o mesmo contrato. O GGUF e o smoke test são integração, não uma ablação de qualidade.
+O teste de integridade executou sete testes unitários, compilação Python, geração/validação do dataset, três treinamentos CUDA, quatro avaliações HF, três comparações pareadas, exportação GGUF e dois smoke tests `llama.cpp` válidos.
 
-## 6. Pontos fortes
+## 6. Veredito revisado
 
-1. O projeto abandonou corretamente os resultados antigos de ENEM/chat como proxy de function calling.
-2. B0 e B1 isolam o efeito do adapter no mesmo checkpoint, prompt e catálogo.
-3. O contrato canônico, o validador em duas camadas e a política explícita de abstenção tornam a avaliação auditável.
-4. O uso do RTX 5090, hashes, manifestos, branch separado e artefatos ignorados pelo Git está rastreável.
-5. As limitações principais estão explicitamente registradas, reduzindo risco de overclaim.
+| Camada | Estado após correção |
+|---|---|
+| Infraestrutura de engenharia | **PASS com ressalvas** |
+| Controle de leakage e estatística do piloto | **PASS para o escopo sintético corrigido** |
+| Evidência para o artigo final | **CONDITIONAL / ainda não pronta** |
+| Protótipo Android FC e claims on-device | **FAIL; fase posterior** |
 
-## 7. Ações necessárias antes de declarar aprovação
+O artigo pode descrever este material como piloto metodológico/engenharia, desde que não o apresente como validação de comandos Android reais. Para um artigo experimental completo ainda são necessários dataset humano independente, split por família semântica, teste OOD/noisy/compositional, baselines comparáveis, quantização e benchmark físico.
 
-1. Reconstruir o split com `case_id`, combinação de argumentos e, idealmente, famílias de templates disjuntas; classificar o teste atual como inválido para generalização.
-2. Congelar um plano estatístico e implementar IC95%, comparação pareada e múltiplas seeds antes de voltar a treinar.
-3. Reduzir o artigo a perguntas que possam ser respondidas pelos dados disponíveis ou executar os experimentos adicionais: conjunto humano/semântico, baselines, quantização e Android real.
-4. Se o escopo incluir on-device, implementar e testar o dispatcher FC no APK antes de usar “execução Android” no título, resumo ou conclusão.
+## 7. Registro de não aprovação
 
-Até essas ações, o resultado deve ser descrito como **piloto de engenharia interno**. A revisão atual não aprova submissão ao ERAMIA nem autoriza tratar 99,17% como resultado científico final.
+Nenhum revisor externo aprovou o artigo para submissão. Gemini deu aprovação condicional da infraestrutura, Grok apontou falha científica antes da correção e o GLM não entregou parecer por timeout. A aplicação das correções melhora a validade do piloto, mas não deve ser descrita como revisão posterior positiva sem um novo ciclo de revisão.

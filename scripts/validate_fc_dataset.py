@@ -72,6 +72,7 @@ def validate_dataset(
     texts: set[str] = set()
     splits: Counter[str] = Counter()
     kinds: Counter[str] = Counter()
+    case_splits: dict[str, set[str]] = {}
     with dataset_path.open("r", encoding="utf-8") as handle:
         for line_number, line in enumerate(handle, start=1):
             if not line.strip():
@@ -96,6 +97,15 @@ def validate_dataset(
                 metadata = record.get("metadata", {})
                 if isinstance(metadata, dict):
                     kinds[metadata.get("kind")] += 1
+                    case_id = metadata.get("case_id")
+                    split = record.get("split")
+                    if isinstance(case_id, str) and isinstance(split, str):
+                        case_splits.setdefault(case_id, set()).add(split)
+    for case_id, case_split_values in sorted(case_splits.items()):
+        if len(case_split_values) > 1:
+            errors.append(
+                f"case_id atravessa splits: {case_id} -> {sorted(case_split_values)}"
+            )
     if expected_total is not None and len(ids) != expected_total:
         errors.append(f"total esperado {expected_total}, encontrado {len(ids)}")
     return errors, splits, kinds

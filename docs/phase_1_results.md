@@ -1,90 +1,108 @@
-# Fase 1 — Resultados do piloto no Neuromancer
+# Fase 1 — Resultados do piloto corrigido no Neuromancer
 
-**Data:** 2026-08-30  
-**GPU:** NVIDIA GeForce RTX 5090 (32.607 MiB)  
-**Modelo base:** Qwen3.5-2B do snapshot local `15852e8c16360a2fea060d615a32b45270f8a8fc`  
-**Dataset:** `data/generated/fc_dataset.jsonl`, SHA-256 `3fe6a38e9232b744817ae9987682f1631465f99ec5ba30b04402d804380bc98f`  
+**Data de fechamento:** 2026-08-30
+**GPU:** NVIDIA GeForce RTX 5090 (32.607 MiB)
+**Modelo base:** Qwen3.5-2B, snapshot local `15852e8c16360a2fea060d615a32b45270f8a8fc`
+**Dataset:** `data/generated/fc_dataset.jsonl`, SHA-256 `43e88020821b46cb741367bfcfda8eac5ccb1cef57d0e8b053ec02c7ebfacd1b`
 **Aparelho Android:** não utilizado nesta fase.
 
-## 1. Comparação pareada
+Este documento registra um piloto de engenharia corrigido após a revisão adversarial. Ele ainda não é o resultado final do artigo.
 
-Os dois modelos abaixo usam o mesmo prompt canônico, o mesmo catálogo, a mesma seed do dataset e os mesmos 120 exemplos de teste (60 chamadas e 60 abstenções). O primeiro é o Qwen base sem adapter; o segundo é o mesmo checkpoint com o adapter LoRA treinado no 5090.
+## 1. Correção metodológica
 
-| Métrica | Qwen base | Qwen + LoRA |
-|---|---:|---:|
-| JSON válido | 100,00% | 100,00% |
-| Saída canônica válida | 85,00% | 100,00% |
-| Exact match | 64,17% | 99,17% |
-| Acurácia de ação | 65,00% | 99,17% |
-| Seleção de ferramenta | 61,67% | 100,00% |
-| Argumentos exatos | 61,67% | 100,00% |
-| F1 de abstenção | 74,07% | 99,16% |
-| Latência média no 5090 | 439,125 ms | 407,741 ms |
-| Latência mediana no 5090 | 455,209 ms | 387,781 ms |
-| Latência p95 no 5090 | 568,986 ms | 552,391 ms |
+A versão anterior usava a mesma identidade de caso em treino, desenvolvimento e teste, mudando apenas a formulação textual. Seus resultados foram preservados como histórico, mas não são usados como evidência de generalização:
 
-As métricas foram calculadas por `scripts/fc_eval.py`. A latência foi medida por exemplo durante a geração, sem incluir carregamento do modelo, e não representa execução Android.
+- dataset e manifesto antigos: `data/archive/fc_dataset_variant_holdout_v1/`;
+- predições e métricas antigas: `results/archive/variant_holdout_v1/`.
 
-## 2. Configuração LoRA
+A versão `fc-android-ptbr/0.2.0-case-split` contém 1.200 registros, 200 `case_id` únicos e seis formulações por caso. Cada caso aparece em um único split: seis casos por ferramenta/família em treino, dois em desenvolvimento e dois em teste.
 
-- épocas: 2;
-- batch físico: 2;
-- acumulação de gradiente: 8;
-- passos do otimizador: 60;
-- comprimento máximo: 2.048 tokens;
-- `r=16`, `alpha=32`, dropout 0,05;
-- taxa de aprendizado: `2e-4`;
-- parâmetros treináveis: 23.340.032 de 2.236.581.696 (1,0436%);
-- PyTorch `2.10.0+cu128`, Transformers `5.3.0`, PEFT `0.20.0`.
+| Split | Registros | Chamadas | Abstenções |
+|---|---:|---:|---:|
+| train | 720 | 360 | 360 |
+| dev | 240 | 120 | 120 |
+| test | 240 | 120 | 120 |
+| **total** | **1.200** | **600** | **600** |
 
-Perdas registradas:
+A validação encontrou zero `case_id` atravessando splits e zero texto duplicado. As seis formas superficiais são reutilizadas entre casos; portanto, este é um holdout por caso/valores, não um holdout completo de templates ou de famílias semânticas. Essa limitação permanece explícita.
 
-| Época | Train loss | Dev loss |
-|---:|---:|---:|
-| 1 | 0,051189 | 0,001158 |
-| 2 | 0,005472 | 0,002338 |
+## 2. Comparação no teste por casos inéditos
 
-O adapter salvo em `results/qwen35_2b_lora_fc/` tem aproximadamente 109 MB e não é incluído no commit Git; o manifesto de treinamento registra o caminho, a configuração e o hash do dataset.
+Todos os sistemas receberam o mesmo prompt canônico, catálogo e 240 exemplos de teste. B0 é o Qwen base; as demais linhas são três treinamentos LoRA independentes, cada um com a seed indicada.
 
-## 3. Interpretação e limites
+| Sistema | JSON válido | Canônico | Exact match | Ação | Ferramenta | Argumentos | F1 abst. |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| B0 Qwen base | 100,00% | 87,50% | 71,67% | 71,67% | 62,50% | 62,50% | 82,55% |
+| LoRA seed 20260830 | 100,00% | 100,00% | 99,17% | 100,00% | 100,00% | 98,33% | 100,00% |
+| LoRA seed 20260831 | 100,00% | 100,00% | 99,17% | 99,58% | 99,17% | 98,33% | 99,59% |
+| LoRA seed 20260832 | 100,00% | 99,58% | 97,08% | 97,50% | 95,00% | 94,17% | 97,96% |
 
-O resultado mostra que o caminho técnico — saída canônica, validação estrita e LoRA no 5090 — funciona. Não demonstra ainda que o modelo generaliza para comandos naturais reais, fala, variações regionais ou APIs Android executáveis.
+IC95% de Wilson para exact match: B0 `[65,66%, 76,99%]`; seeds 20260830 e 20260831 `[97,01%, 99,77%]`; seed 20260832 `[94,10%, 98,58%]`. No teste pareado, o McNemar exato bilateral para exact match foi `p=2,71e-20` (66 pares ganhos e 0 perdidos) nas duas primeiras seeds e `p=6,80e-16` (64 ganhos e 3 perdas) na terceira.
 
-O teste reserva a sexta formulação textual para avaliação, mas continua sendo sintético e pequeno. O ganho alto é esperado em uma tarefa com vocabulário controlado e não deve ser usado como resultado final do artigo. Antes do manuscrito, é necessário adicionar um conjunto humano/independente, casos de composição, ruído linguístico e testes de abstenção não templated.
+As médias descritivas entre as três seeds LoRA foram: exact match 98,47%, ação 99,03%, seleção de ferramenta 98,06%, argumentos 96,94% e F1 de abstenção 99,18%. Elas resumem a variabilidade observada; não substituem um experimento principal com dados humanos e splits semânticos congelados.
 
-Nenhuma métrica de latência, memória, energia ou temperatura do telefone foi coletada. Essa etapa depende do aparelho carregado e da implementação Android do despachante.
+### Latência de geração no 5090
 
-## 4. Exportação e smoke test no `llama.cpp`
+Os valores abaixo são por exemplo, sem carregamento do modelo, e não representam latência no telefone.
 
-O adapter foi exportado para GGUF F16 com `scripts/convert_qwen35_lora_gguf.py`. O wrapper cria somente uma visão temporária do `config.json`, preenchendo `text_config.architectures` a partir de `architectures`; isso contorna uma incompatibilidade do conversor local com o checkpoint Qwen3.5 sem modificar o cache do modelo.
+| Sistema | Média | Mediana | p95 |
+|---|---:|---:|---:|
+| B0 Qwen base | 435,590 ms | 451,596 ms | 585,323 ms |
+| LoRA seed 20260830 | 408,351 ms | 392,229 ms | 575,424 ms |
+| LoRA seed 20260831 | 403,926 ms | 387,422 ms | 511,257 ms |
+| LoRA seed 20260832 | 402,768 ms | 385,234 ms | 564,003 ms |
 
-- arquivo: `results/qwen35_2b_lora_fc.gguf`;
-- tamanho: 33.664.704 bytes;
-- SHA-256: `cc1b794d20220c9267a92cfac7b173e15e776fbac5ce01b6a5993ac9fc1c2ca6`;
-- base de inferência: `models/qwen35-2b-q4_k_m.gguf`;
-- runtime: `llama.cpp` commit `a66d50588`, CUDA no RTX 5090.
+## 3. Treinamento LoRA
 
-Com `scripts/run_llama_fc_smoke.py`, o modelo base Q4_K_M e o adapter foram carregados juntos com o schema JSON. Dois casos da divisão de teste passaram:
+Cada seed usou dois epochs, batch físico 2, acumulação 8, 90 passos do otimizador, comprimento máximo 2.048, `r=16`, `alpha=32`, dropout 0,05 e taxa `2e-4`. Foram 720 exemplos de treino e 240 de desenvolvimento.
+
+| Seed | Train loss epoch 1 | Dev loss epoch 1 | Train loss epoch 2 | Dev loss epoch 2 | Tempo |
+|---:|---:|---:|---:|---:|---:|
+| 20260830 | 0,042124 | 0,015946 | 0,003452 | 0,027487 | 321,688 s |
+| 20260831 | 0,041768 | 0,016048 | 0,000110 | 0,003563 | 322,429 s |
+| 20260832 | 0,037355 | 0,020100 | 0,001892 | 0,013435 | 322,036 s |
+
+Foram treináveis 23.340.032 de 2.236.581.696 parâmetros (1,0436%). O runtime foi PyTorch `2.10.0+cu128`, Transformers `5.3.0` e PEFT `0.20.0`. Os manifestos completos estão em `results/qwen35_2b_lora_fc_seed*/training_manifest.json` e os pesos permanecem ignorados pelo Git.
+
+O seed 20260830 foi usado como exemplar para o smoke de integração GGUF; isso não deve ser interpretado como seleção baseada no teste para o artigo. A análise principal deve pré-especificar como as seeds serão agregadas.
+
+## 4. Interpretação e limites
+
+O piloto sustenta uma conclusão restrita: neste corpus sintético, com holdout por caso e contrato controlado, o LoRA melhora substancialmente a saída estruturada do mesmo Qwen3.5-2B, e o efeito aparece nas três seeds. Ele não demonstra compreensão de comandos naturais, fala, dialetos, ruído, OOD humano, segurança operacional ou execução Android.
+
+Ainda faltam conjunto humano independente, famílias semânticas disjuntas, casos composicionais e ruidosos, ablação de quantidade de dados, baselines externos, grid de quantização e benchmark físico. Nenhuma métrica de RAM, energia, temperatura, bateria ou latência fim a fim foi coletada no A54.
+
+## 5. Exportação e smoke test no `llama.cpp`
+
+O adapter da seed 20260830 foi exportado para `results/qwen35_2b_lora_fc_seed20260830.gguf` em F16.
+
+- tamanho: 33.664.736 bytes;
+- SHA-256: `c9b497df1bb35c98d2125664abb01f243622412dddf38875fb2fde84a4e93a29`;
+- base: `models/qwen35-2b-q4_k_m.gguf`;
+- `llama.cpp`: commit `a66d50588`;
+- GPU: RTX 5090.
+
+`scripts/run_llama_fc_smoke.py` carregou base Q4 e adapter juntos, com schema JSON, e validou:
 
 | Caso | Saída | Validação |
 |---|---|---|
-| `pos_bluetooth_set_state_04_05` | `bluetooth_set_state(enabled=true)` | JSON e contrato válidos |
-| `neg_missing_target_00_05` | `abstain` | JSON e contrato válidos |
+| `pos_bluetooth_set_state_08_00` | `bluetooth_set_state(enabled=false)` | JSON e contrato válidos |
+| `neg_missing_target_08_00` | `abstain` | JSON e contrato válidos |
 
-Esse smoke test valida a cadeia HF → LoRA → GGUF → `llama.cpp` → JSON, mas não é uma avaliação de generalização nem uma medição Android.
+O wrapper de conversão usa uma visão temporária do `config.json` para preencher `text_config.architectures`; o cache do modelo não foi alterado. O smoke confirma a cadeia HF → LoRA → GGUF → `llama.cpp` → JSON, não a execução no aparelho.
 
-## 5. Verificação da base Android sem aparelho
+## 6. Base Android sem aparelho
 
-O servidor não tinha um SDK Android válido: `app/local.properties` apontava para `/tmp/android-sdk`. Foi instalado um SDK local do usuário em `/home/daniel/android-sdk`, com Build-Tools 35, plataforma Android 35 e Platform-Tools. A configuração permanece local e ignorada pelo Git.
+Foi instalado no servidor um SDK local em `/home/daniel/android-sdk`, com plataforma Android 35, Build-Tools 35 e Platform-Tools. `cd app && ./gradlew test assembleDebug --no-daemon --console=plain` terminou com `BUILD SUCCESSFUL`.
 
-O comando `cd app && ./gradlew test assembleDebug --no-daemon --console=plain` terminou com `BUILD SUCCESSFUL`. A saída está em `app/app/build/outputs/apk/debug/app-debug.apk`; ela confirma a compilação da base existente, não a execução do fluxo FC. O app atual ainda é orientado a chat, portanto não foi instalado no A54 e nenhum número Android foi produzido.
+O APK compilado é a aplicação legada de chat. Ainda não há parser FC Kotlin, camada de segurança, allowlist executável ou dispatcher integrado ao app. Por isso o A54 permaneceu apenas carregando e não foi conectado novamente.
 
-## 6. Artefatos
+## 7. Artefatos rastreáveis
 
-- base: `results/qwen35_2b_base_canonical_fc_test.predictions.jsonl` e `.metrics.json`;
-- adapter: `results/qwen35_2b_lora_fc_test.predictions.jsonl` e `.metrics.json`;
-- manifesto do treino: `results/qwen35_2b_lora_fc/training_manifest.json`;
-- manifesto do dataset: `data/generated/fc_dataset.manifest.json`;
-- resultados da divisão anterior, arquivados em `results/archive/case_split/`;
-- conversor: `scripts/convert_qwen35_lora_gguf.py`;
-- smoke test: `scripts/run_llama_fc_smoke.py` e os dois relatórios `results/qwen35_2b_lora_fc_llama_smoke*.json`.
+- dataset e manifesto: `data/generated/fc_dataset.jsonl` e `.manifest.json`;
+- baseline: `results/qwen35_2b_base_canonical_fc_case_test.{predictions,metrics}.json*`;
+- LoRA: `results/qwen35_2b_lora_fc_seed2026083{0,1,2}_test.{predictions,metrics}.json*`;
+- comparações: `results/qwen35_2b_lora_fc_seed202608{30,31,32}_mcnemar.json`;
+- adapter GGUF e smoke: `results/qwen35_2b_lora_fc_seed20260830.gguf` e `results/qwen35_2b_lora_fc_seed20260830_llama_smoke*.json`;
+- scripts: `generate_fc_dataset.py`, `validate_fc_dataset.py`, `fc_eval.py`, `compare_fc_predictions.py`, `convert_qwen35_lora_gguf.py` e `run_llama_fc_smoke.py`;
+- correção metodológica: `docs/phase_1_correction_log.md`.

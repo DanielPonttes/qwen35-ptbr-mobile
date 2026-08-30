@@ -13,5 +13,6 @@ local.properties
 *.iml
 .idea/
 results/qwen35_2b_lora_fc/
+results/qwen35_2b_lora_fc_seed*/
 results/archive/
 results/*.gguf

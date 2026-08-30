@@ -1,0 +1,15 @@
+{
+  "generator_version": "fc-android-ptbr/0.1.0",
+  "kind_counts": {
+    "abstain": 360,
+    "call": 360
+  },
+  "records": 720,
+  "seed": 20260830,
+  "sha256": "3fe6a38e9232b744817ae9987682f1631465f99ec5ba30b04402d804380bc98f",
+  "split_counts": {
+    "dev": 120,
+    "test": 120,
+    "train": 480
+  }
+}

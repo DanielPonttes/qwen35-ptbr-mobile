@@ -99,7 +99,7 @@ O formato mínimo do registro é:
 
 O dataset final deve conter português formal e informal, comandos curtos e implícitos, erros ortográficos e de acentuação, negação, números/horários, ambiguidade, comandos impossíveis, fora do domínio e casos adversariais. A divisão final deve separar famílias semânticas e incluir, no mínimo, teste IID, paraphrase, noisy, compositional, ambiguous, out-of-domain e adversarial.
 
-O piloto disponível tem 720 registros sintéticos, dez ferramentas e divisão por variante textual (480/120/120). Essa divisão reserva uma formulação para dev e outra para teste, mas não é uma separação por intenção semântica nem uma avaliação humana. O teste final deve ser congelado antes do treinamento principal; exemplos quase duplicados e provenance devem ser registrados.
+O piloto corrigido tem 1.200 registros sintéticos, dez ferramentas, 200 `case_id` únicos e divisão por caso (720/240/240). Cada caso aparece em um único split; seis formulações superficiais são reutilizadas entre casos. Assim, ele é um holdout por caso/valores, mas não uma separação completa por template ou por família semântica nem uma avaliação humana. O teste final deve ser congelado antes do treinamento principal; exemplos quase duplicados e provenance devem ser registrados.
 
 ## 7. Métricas
 
@@ -115,7 +115,7 @@ No aparelho físico: cold start, warm start, TTFT, latência total, p50/p95/p99,
 
 ### 7.3 Estatística
 
-Para qualidade pareada, reportar proporções com IC 95% e usar McNemar ou método equivalente quando a comparação for binária por exemplo. Para latência e energia, usar mediana, dispersão, IC por bootstrap e/ou testes não paramétricos, sem presumir normalidade. Experimentos principais terão pelo menos três seeds quando o custo permitir; seed, commit, hash do dataset, configuração, duração, VRAM/RAM e logs devem acompanhar cada resultado.
+Para qualidade pareada, reportar proporções com IC 95% e usar McNemar ou método equivalente quando a comparação for binária por exemplo. Para latência e energia, usar mediana, dispersão, IC por bootstrap e/ou testes não paramétricos, sem presumir normalidade. O piloto corrigido implementa IC95% de Wilson, bootstrap determinístico para F1 de abstenção e McNemar exato em `scripts/fc_eval.py` e `scripts/compare_fc_predictions.py`. Experimentos principais terão pelo menos três seeds quando o custo permitir; seed, commit, hash do dataset, configuração, duração, VRAM/RAM e logs devem acompanhar cada resultado.
 
 Os objetivos experimentais do projeto (>95% tool accuracy, >90% full-call accuracy, >99% validade JSON/schema, baixa hallucinated-tool rate e degradação pequena em INT4) são metas de investigação, não resultados garantidos nem critérios para omitir resultados negativos.
 
@@ -132,10 +132,10 @@ Os objetivos experimentais do projeto (>95% tool accuracy, >90% full-call accura
 Comandos já reproduzíveis no Neuromancer:
 
 ```bash
-python3 scripts/validate_fc_dataset.py data/generated/fc_dataset.jsonl --expected-total 720
+python3 scripts/validate_fc_dataset.py data/generated/fc_dataset.jsonl --expected-total 1200
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/fc_eval.py --dataset data/generated/fc_dataset.jsonl \
-  --predictions results/qwen35_2b_lora_fc_test.predictions.jsonl \
+  --predictions results/qwen35_2b_lora_fc_seed20260830_test.predictions.jsonl \
   --split test
 ```
 
@@ -154,6 +154,6 @@ O celular só entra na ordem do projeto na integração Android e no benchmark. 
 - `docs/phase_1_fc_protocol.md`: contrato operacional e harness;
 - `docs/phase_1_results.md`: piloto provisório e limites;
 - `data/schema/`, `data/tools/`, `scripts/` e `tests/`: implementação do contrato;
-- commits `d4f5753` e `aa0793f` na branch `codex/phase1-fc`.
+- commits históricos `d4f5753`, `aa0793f`, `737bbf7` e `5e311b5` na branch `codex/phase1-fc`; a correção metodológica e os resultados novos serão consolidados em commit posterior.
 
 O branch permanece local no servidor. Não houve push, publicação de modelo ou alteração do `master`.

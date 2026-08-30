@@ -1,0 +1,293 @@
+{
+  "confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.769231,
+      "upper": 0.874016
+    },
+    "abstention_precision": {
+      "lower": 0.766112,
+      "upper": 0.898639
+    },
+    "abstention_recall": {
+      "lower": 0.728788,
+      "upper": 0.86875
+    },
+    "action_accuracy": {
+      "lower": 0.656591,
+      "upper": 0.769915
+    },
+    "argument_exact_accuracy": {
+      "lower": 0.53577,
+      "upper": 0.706476
+    },
+    "argument_exact_given_tool": {
+      "lower": 0.951276,
+      "upper": 1.0
+    },
+    "canonical_valid_rate": {
+      "lower": 0.827164,
+      "upper": 0.911021
+    },
+    "exact_match_rate": {
+      "lower": 0.656591,
+      "upper": 0.769915
+    },
+    "json_valid_rate": {
+      "lower": 0.984246,
+      "upper": 1.0
+    },
+    "parseable_rate": {
+      "lower": 0.984246,
+      "upper": 1.0
+    },
+    "tool_selection_accuracy": {
+      "lower": 0.53577,
+      "upper": 0.706476
+    }
+  },
+  "counts": {
+    "abstain_false_negative": 23,
+    "abstain_false_positive": 18,
+    "abstain_gold": 120,
+    "abstain_true_positive": 97,
+    "call_gold": 120
+  },
+  "dataset": "data/generated/fc_dataset.jsonl",
+  "duplicate_predictions": 0,
+  "extra_predictions": 0,
+  "invalid_examples_sample": [
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_media_control_09_05"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_app_open_09_01"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_media_control_08_01"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_media_control_08_03"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_app_open_09_04"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_alarm_create_09_04"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_alarm_create_08_01"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_app_open_09_03"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_media_control_08_00"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_media_control_09_04"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_app_open_08_01"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_media_control_08_05"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_alarm_create_08_00"
+    },
+    {
+      "errors": [
+        "target.arguments: argumento não permitido: level"
+      ],
+      "id": "pos_volume_set_09_05"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_alarm_create_09_05"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_alarm_create_09_02"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_alarm_create_09_01"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_app_open_09_05"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_alarm_create_09_00"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_volume_set_09_03"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "pos_alarm_create_08_02"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_media_control_08_04"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_app_open_09_02"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "neg_missing_disambiguation_08_05"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "pos_app_open_09_00"
+    }
+  ],
+  "metrics": {
+    "abstention_f1": 0.825532,
+    "abstention_precision": 0.843478,
+    "abstention_recall": 0.808333,
+    "action_accuracy": 0.716667,
+    "argument_exact_accuracy": 0.625,
+    "argument_exact_given_tool": 1.0,
+    "canonical_valid_rate": 0.875,
+    "exact_match_rate": 0.716667,
+    "json_valid_rate": 1.0,
+    "parseable_rate": 1.0,
+    "tool_selection_accuracy": 0.625
+  },
+  "missing_predictions": 0,
+  "per_tool": {
+    "airplane_mode_set_state": {
+      "argument_exact_accuracy": 0.833333,
+      "argument_exact_given_tool": 1.0,
+      "count": 12,
+      "tool_selection_accuracy": 0.833333
+    },
+    "alarm_create": {
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "count": 12,
+      "tool_selection_accuracy": 0.0
+    },
+    "app_open": {
+      "argument_exact_accuracy": 0.083333,
+      "argument_exact_given_tool": 1.0,
+      "count": 12,
+      "tool_selection_accuracy": 0.083333
+    },
+    "bluetooth_set_state": {
+      "argument_exact_accuracy": 0.833333,
+      "argument_exact_given_tool": 1.0,
+      "count": 12,
+      "tool_selection_accuracy": 0.833333
+    },
+    "brightness_set": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 12,
+      "tool_selection_accuracy": 1.0
+    },
+    "flashlight_set": {
+      "argument_exact_accuracy": 0.916667,
+      "argument_exact_given_tool": 1.0,
+      "count": 12,
+      "tool_selection_accuracy": 0.916667
+    },
+    "location_set_state": {
+      "argument_exact_accuracy": 0.916667,
+      "argument_exact_given_tool": 1.0,
+      "count": 12,
+      "tool_selection_accuracy": 0.916667
+    },
+    "media_control": {
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "count": 12,
+      "tool_selection_accuracy": 0.0
+    },
+    "volume_set": {
+      "argument_exact_accuracy": 0.666667,
+      "argument_exact_given_tool": 1.0,
+      "count": 12,
+      "tool_selection_accuracy": 0.666667
+    },
+    "wifi_set_state": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 12,
+      "tool_selection_accuracy": 1.0
+    }
+  },
+  "predictions": "results/qwen35_2b_base_canonical_fc_case_test.predictions.jsonl",
+  "records": 240,
+  "split": "test",
+  "statistical_methods": {
+    "abstention_f1_interval": "deterministic bootstrap percentile, 2000 resamples, seed 20260830",
+    "proportion_intervals": "Wilson score, 95%"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "comparisons": {
+    "action_accuracy": {
+      "ci95_a": {
+        "lower": 0.656591,
+        "upper": 0.769915
+      },
+      "ci95_b": {
+        "lower": 0.946541,
+        "upper": 0.988493
+      },
+      "correct_a": 172,
+      "correct_b": 234,
+      "mcnemar_exact": {
+        "b_a_correct_b_incorrect": 3,
+        "c_a_incorrect_b_correct": 65,
+        "discordant_pairs": 68,
+        "p_value_two_sided": 3.5550311609441887e-16
+      },
+      "rate_a": 0.716667,
+      "rate_b": 0.975
+    },
+    "canonical_valid": {
+      "ci95_a": {
+        "lower": 0.827164,
+        "upper": 0.911021
+      },
+      "ci95_b": {
+        "lower": 0.97678,
+        "upper": 0.999264
+      },
+      "correct_a": 210,
+      "correct_b": 239,
+      "rate_a": 0.875,
+      "rate_b": 0.995833
+    },
+    "exact_match": {
+      "ci95_a": {
+        "lower": 0.656591,
+        "upper": 0.769915
+      },
+      "ci95_b": {
+        "lower": 0.94103,
+        "upper": 0.985801
+      },
+      "correct_a": 172,
+      "correct_b": 233,
+      "mcnemar_exact": {
+        "b_a_correct_b_incorrect": 3,
+        "c_a_incorrect_b_correct": 64,
+        "discordant_pairs": 67,
+        "p_value_two_sided": 6.801200228001569e-16
+      },
+      "rate_a": 0.716667,
+      "rate_b": 0.970833
+    }
+  },
+  "dataset": "data/generated/fc_dataset.jsonl",
+  "pairs": 240,
+  "predictions_a": "results/qwen35_2b_base_canonical_fc_case_test.predictions.jsonl",
+  "predictions_b": "results/qwen35_2b_lora_fc_seed20260832_test.predictions.jsonl",
+  "split": "test",
+  "statistical_methods": {
+    "paired_test": "McNemar exact bilateral binomial test",
+    "proportion_intervals": "Wilson score, 95%"
+  }
+}

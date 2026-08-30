@@ -1,15 +1,15 @@
 {
-  "generator_version": "fc-android-ptbr/0.1.0",
+  "generator_version": "fc-android-ptbr/0.2.0-case-split",
   "kind_counts": {
-    "abstain": 360,
-    "call": 360
+    "abstain": 600,
+    "call": 600
   },
-  "records": 720,
+  "records": 1200,
   "seed": 20260830,
-  "sha256": "3fe6a38e9232b744817ae9987682f1631465f99ec5ba30b04402d804380bc98f",
+  "sha256": "43e88020821b46cb741367bfcfda8eac5ccb1cef57d0e8b053ec02c7ebfacd1b",
   "split_counts": {
-    "dev": 120,
-    "test": 120,
-    "train": 480
+    "dev": 240,
+    "test": 240,
+    "train": 720
   }
 }

@@ -18,13 +18,13 @@ from typing import Any
 from fc_common import load_registry
 
 
-GENERATOR_VERSION = "fc-android-ptbr/0.1.0"
-SPLIT_BY_VARIANT = ["train", "train", "train", "train", "dev", "test"]
+GENERATOR_VERSION = "fc-android-ptbr/0.2.0-case-split"
+SPLIT_BY_CASE = ["train"] * 6 + ["dev"] * 2 + ["test"] * 2
 VARIANTS = 6
 
 
 def toggle_cases(subject: str, on_state: str, off_state: str) -> list[dict[str, Any]]:
-    states = [True, False, True, False, True, False]
+    states = [True, False, True, False, True, False, False, True, False, True]
     contexts = [
         "agora",
         "antes de sair",
@@ -32,6 +32,10 @@ def toggle_cases(subject: str, on_state: str, off_state: str) -> list[dict[str, 
         "durante a viagem",
         "para economizar bateria",
         "quando eu terminar",
+        "durante o trabalho",
+        "em casa",
+        "antes de dormir",
+        "na rua",
     ]
     return [
         {
@@ -58,7 +62,7 @@ def positive_cases() -> dict[str, list[dict[str, Any]]]:
         "brightness_set": [
             {"args": {"level": level}, "level": level, "context": context}
             for level, context in zip(
-                [0, 25, 50, 75, 100, 60],
+                [0, 25, 50, 75, 100, 60, 15, 35, 85, 95],
                 [
                     "à noite",
                     "para leitura",
@@ -66,6 +70,10 @@ def positive_cases() -> dict[str, list[dict[str, Any]]]:
                     "durante o dia",
                     "ao ar livre",
                     "para poupar bateria",
+                    "durante o trabalho",
+                    "em casa",
+                    "em ambiente claro",
+                    "antes de dormir",
                 ],
             )
         ],
@@ -83,6 +91,10 @@ def positive_cases() -> dict[str, list[dict[str, Any]]]:
                 ("media", "mídia", 80, "durante a música"),
                 ("ring", "toque", 0, "durante a reunião"),
                 ("alarm", "alarme", 100, "ao acordar"),
+                ("media", "mídia", 35, "no ônibus"),
+                ("ring", "toque", 70, "em casa"),
+                ("alarm", "alarme", 25, "para o estudo"),
+                ("media", "mídia", 95, "na academia"),
             ]
         ],
         "app_open": [
@@ -94,6 +106,10 @@ def positive_cases() -> dict[str, list[dict[str, Any]]]:
                 ("messages", "as Mensagens", "para ver uma conversa"),
                 ("maps", "o Maps", "para consultar o caminho"),
                 ("calendar", "o Calendário", "para ver meus compromissos"),
+                ("camera", "a Câmera", "para registrar o momento"),
+                ("settings", "as Configurações", "para ajustar o aparelho"),
+                ("phone", "o Telefone", "para ligar para alguém"),
+                ("maps", "o Maps", "para localizar um endereço"),
             ]
         ],
         "media_control": [
@@ -105,6 +121,10 @@ def positive_cases() -> dict[str, list[dict[str, Any]]]:
                 ("stop", "pare a mídia", "completamente"),
                 ("next", "passe para a próxima faixa", "agora"),
                 ("previous", "volte para a faixa anterior", "agora"),
+                ("play", "inicie a reprodução", "no carro"),
+                ("pause", "pause o áudio", "durante a conversa"),
+                ("next", "avance para a próxima música", "na playlist"),
+                ("previous", "retorne à faixa anterior", "se possível"),
             ]
         ],
         "alarm_create": [
@@ -120,6 +140,10 @@ def positive_cases() -> dict[str, list[dict[str, Any]]]:
                 (18, 45, "exercício"),
                 (22, 0, "remédio"),
                 (23, 30, "dormir"),
+                (6, 15, "caminhada"),
+                (9, 45, "consulta"),
+                (14, 20, "pausa"),
+                (20, 10, "leitura"),
             ]
         ],
     }
@@ -188,12 +212,12 @@ def render_positive(tool: str, case: dict[str, Any], variant: int) -> str:
         context = case["context"]
         bare_app = app.removeprefix("as ").removeprefix("a ").removeprefix("o ")
         return [
-            f"Abra {app}.",
-            f"Inicie o aplicativo {bare_app}.",
-            f"Pode abrir {app}, por favor?",
+            f"Abra {app} {context}.",
+            f"Inicie o aplicativo {bare_app} {context}.",
+            f"Pode abrir {app} {context}, por favor?",
             f"Quero usar {app} {context}.",
             f"Entre em {app} {context}.",
-            f"Lance {app} agora.",
+            f"Lance {app} {context}.",
         ][variant]
     if tool == "media_control":
         action = case["action_label"]
@@ -311,6 +335,66 @@ NEGATIVE_FAMILIES = [
             "mude a rede",
         ],
     ),
+    (
+        "multiple_actions",
+        [
+            "ative o Wi-Fi e abra a câmera",
+            "ligue o Bluetooth e aumente o brilho",
+            "pause a música e crie um alarme",
+            "abra o Maps e ligue a lanterna",
+            "mude o toque e desative a localização",
+            "ative o modo avião e abra as configurações",
+            "aumente o brilho e coloque o volume no máximo",
+            "abra o telefone e envie uma mensagem",
+            "ligue a lanterna e reproduza a música",
+            "crie um alarme e abra o calendário",
+        ],
+    ),
+    (
+        "contradictory_request",
+        [
+            "ligue e desligue o Wi-Fi ao mesmo tempo",
+            "ative e desative o Bluetooth agora",
+            "deixe o modo avião ligado e desligado",
+            "ligue e desligue a localização simultaneamente",
+            "coloque o brilho em zero e no máximo",
+            "deixe o volume mudo e no máximo",
+            "acenda e apague a lanterna ao mesmo tempo",
+            "pause e reproduza a música simultaneamente",
+            "abra e feche a câmera agora",
+            "crie um alarme sem definir o horário",
+        ],
+    ),
+    (
+        "missing_numeric_value",
+        [
+            "defina o brilho",
+            "coloque o brilho da tela em um nível adequado",
+            "configure o volume da mídia",
+            "mude o volume do toque",
+            "ajuste o volume do alarme",
+            "programe o alarme para algum horário",
+            "deixe a tela mais clara, mas sem dizer quanto",
+            "coloque o som em uma porcentagem qualquer",
+            "crie um alarme para mais tarde",
+            "ajuste o brilho como você achar melhor",
+        ],
+    ),
+    (
+        "unsupported_device_state",
+        [
+            "carregue o celular até cem por cento",
+            "aumente a memória disponível do aparelho",
+            "melhore o sinal da operadora automaticamente",
+            "libere espaço apagando arquivos inúteis",
+            "conserte a bateria que está descarregando",
+            "ative o modo de economia adaptativa",
+            "troque o fuso horário sem perguntar",
+            "conecte o aparelho a uma rede disponível",
+            "atualize todos os aplicativos agora",
+            "resfrie o telefone imediatamente",
+        ],
+    ),
 ]
 
 
@@ -361,13 +445,15 @@ def build_dataset(registry: dict[str, dict[str, Any]], seed: int) -> list[dict[s
         raise ValueError(f"não há casos positivos para: {sorted(missing)}")
     records: list[dict[str, Any]] = []
     for tool, tool_cases in cases.items():
+        if len(tool_cases) != len(SPLIT_BY_CASE):
+            raise ValueError(f"a ferramenta {tool} precisa de {len(SPLIT_BY_CASE)} casos")
         for case_index, case in enumerate(tool_cases):
             for variant in range(VARIANTS):
                 identifier = f"pos_{tool}_{case_index:02d}_{variant:02d}"
                 records.append(
                     make_record(
                         identifier,
-                        SPLIT_BY_VARIANT[variant],
+                        SPLIT_BY_CASE[case_index],
                         render_positive(tool, case, variant),
                         {"action": "call", "tool": tool, "arguments": case["args"]},
                         "call",
@@ -377,13 +463,15 @@ def build_dataset(registry: dict[str, dict[str, Any]], seed: int) -> list[dict[s
                     )
                 )
     for family_index, (family, items) in enumerate(NEGATIVE_FAMILIES):
+        if len(items) != len(SPLIT_BY_CASE):
+            raise ValueError(f"a família negativa {family} precisa de {len(SPLIT_BY_CASE)} casos")
         for item_index, item in enumerate(items):
             for variant in range(VARIANTS):
                 identifier = f"neg_{family}_{item_index:02d}_{variant:02d}"
                 records.append(
                     make_record(
                         identifier,
-                        SPLIT_BY_VARIANT[variant],
+                        SPLIT_BY_CASE[item_index],
                         render_negative(item, variant),
                         {"action": "abstain", "tool": None, "arguments": {}},
                         "abstain",

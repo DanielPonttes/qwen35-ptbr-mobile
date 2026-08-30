@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
+import random
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -29,6 +31,59 @@ def rate(numerator: int, denominator: int) -> float | None:
     if denominator == 0:
         return None
     return round(numerator / denominator, 6)
+
+
+def wilson_interval(successes: int, denominator: int, z: float = 1.959963984540054) -> dict[str, float] | None:
+    """Intervalo de confiança de 95% pelo score de Wilson."""
+
+    if denominator == 0:
+        return None
+    proportion = successes / denominator
+    denominator_adjusted = 1.0 + (z * z / denominator)
+    center = (proportion + (z * z / (2.0 * denominator))) / denominator_adjusted
+    half_width = (
+        z
+        * math.sqrt(
+            proportion * (1.0 - proportion) / denominator
+            + (z * z / (4.0 * denominator * denominator))
+        )
+        / denominator_adjusted
+    )
+    return {
+        "lower": round(max(0.0, center - half_width), 6),
+        "upper": round(min(1.0, center + half_width), 6),
+    }
+
+
+def bootstrap_abstention_f1(
+    rows: list[tuple[bool, bool]], samples: int = 2000, seed: int = 20260830
+) -> dict[str, float] | None:
+    """IC95% bootstrap determinístico para F1 de abstenção."""
+
+    if not rows:
+        return None
+    generator = random.Random(seed)
+    values: list[float] = []
+    for _ in range(samples):
+        true_positive = false_positive = false_negative = 0
+        for _ in rows:
+            gold_abstain, predicted_abstain = rows[generator.randrange(len(rows))]
+            if gold_abstain and predicted_abstain:
+                true_positive += 1
+            elif not gold_abstain and predicted_abstain:
+                false_positive += 1
+            elif gold_abstain and not predicted_abstain:
+                false_negative += 1
+        precision = rate(true_positive, true_positive + false_positive)
+        recall = rate(true_positive, true_positive + false_negative)
+        if precision is None or recall is None or precision + recall == 0:
+            values.append(0.0)
+        else:
+            values.append(2.0 * precision * recall / (precision + recall))
+    values.sort()
+    lower_index = int(0.025 * (len(values) - 1))
+    upper_index = int(0.975 * (len(values) - 1))
+    return {"lower": round(values[lower_index], 6), "upper": round(values[upper_index], 6)}
 
 
 def evaluate(
@@ -73,6 +128,7 @@ def evaluate(
     invalid_examples: list[dict[str, Any]] = []
     by_tool: dict[str, Counter[str]] = defaultdict(Counter)
     by_split: dict[str, Counter[str]] = defaultdict(Counter)
+    abstention_rows: list[tuple[bool, bool]] = []
 
     for identifier, gold_record in dataset.items():
         gold = gold_record.get("target")
@@ -112,6 +168,9 @@ def evaluate(
             by_split[split]["exact"] += 1
         if valid and predicted_action == gold_action:
             action_correct += 1
+        abstention_rows.append(
+            (gold_action == "abstain", valid and predicted_action == "abstain")
+        )
         if gold_action == "call":
             if valid and parsed["tool"] == gold.get("tool"):
                 tool_correct += 1
@@ -152,6 +211,37 @@ def evaluate(
             ),
         }
 
+    metrics = {
+        "parseable_rate": rate(parsed_count, total),
+        "json_valid_rate": rate(json_valid_count, total),
+        "canonical_valid_rate": rate(canonical_valid_count, total),
+        "exact_match_rate": rate(exact_count, total),
+        "action_accuracy": rate(action_correct, total),
+        "tool_selection_accuracy": rate(tool_correct, call_total),
+        "argument_exact_accuracy": rate(argument_exact, call_total),
+        "argument_exact_given_tool": rate(argument_exact_given_tool, tool_correct),
+        "abstention_precision": abstention_precision,
+        "abstention_recall": abstention_recall,
+        "abstention_f1": abstention_f1,
+    }
+    confidence_intervals_95 = {
+        "parseable_rate": wilson_interval(parsed_count, total),
+        "json_valid_rate": wilson_interval(json_valid_count, total),
+        "canonical_valid_rate": wilson_interval(canonical_valid_count, total),
+        "exact_match_rate": wilson_interval(exact_count, total),
+        "action_accuracy": wilson_interval(action_correct, total),
+        "tool_selection_accuracy": wilson_interval(tool_correct, call_total),
+        "argument_exact_accuracy": wilson_interval(argument_exact, call_total),
+        "argument_exact_given_tool": wilson_interval(argument_exact_given_tool, tool_correct),
+        "abstention_precision": wilson_interval(
+            abstain_true_positive, abstain_true_positive + abstain_false_positive
+        ),
+        "abstention_recall": wilson_interval(
+            abstain_true_positive, abstain_true_positive + abstain_false_negative
+        ),
+        "abstention_f1": bootstrap_abstention_f1(abstention_rows),
+    }
+
     return {
         "dataset": str(dataset_path),
         "predictions": str(predictions_path),
@@ -161,18 +251,11 @@ def evaluate(
         "extra_predictions": len(set(predictions) - set(dataset)),
         "duplicate_predictions": duplicate_predictions,
         "invalid_examples_sample": invalid_examples,
-        "metrics": {
-            "parseable_rate": rate(parsed_count, total),
-            "json_valid_rate": rate(json_valid_count, total),
-            "canonical_valid_rate": rate(canonical_valid_count, total),
-            "exact_match_rate": rate(exact_count, total),
-            "action_accuracy": rate(action_correct, total),
-            "tool_selection_accuracy": rate(tool_correct, call_total),
-            "argument_exact_accuracy": rate(argument_exact, call_total),
-            "argument_exact_given_tool": rate(argument_exact_given_tool, tool_correct),
-            "abstention_precision": abstention_precision,
-            "abstention_recall": abstention_recall,
-            "abstention_f1": abstention_f1,
+        "metrics": metrics,
+        "confidence_intervals_95": confidence_intervals_95,
+        "statistical_methods": {
+            "proportion_intervals": "Wilson score, 95%",
+            "abstention_f1_interval": "deterministic bootstrap percentile, 2000 resamples, seed 20260830",
         },
         "counts": {
             "call_gold": call_total,
