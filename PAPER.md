@@ -1,239 +1,136 @@
-# The 5-Bit Cliff: Quantization Limits and a Multi-Tier Framework for On-Device LLM Inference in Brazilian Portuguese
+# From Human Speech Transcripts to Conservative Android Function Calls
 
-**Daniel Ponttes**  
-*Federal University of [Your Institution]*  
-*June 2026*
+## A leakage-audited evaluation of a small language model
 
----
+**Working paper — ERAMIA-RS 2026**
+**Status:** phase-1 experimental draft, 30 August 2026
 
 ## Abstract
 
-Deploying large language models on commodity smartphones for low-resource languages presents a double challenge: smaller training corpora and tighter hardware constraints. We present the first systematic study of on-device LLM inference for Brazilian Portuguese, measuring real-device performance across three model tiers (0.5B, 0.8B, 3B parameters) and seven quantization levels. Our key finding is a **5-bit quantization cliff**: task accuracy on Portuguese ENEM questions collapses from 22.0% to 15.3% between Q4_K_M (5.6 BPW) and Q3_K_M (5.0 BPW), representing a 30% relative degradation. This cliff is sharper than previously reported for English, suggesting low-resource languages are more vulnerable to quantization-induced knowledge loss. We validate a memory-bandwidth bottleneck model (generation speed = bandwidth/model_size × 0.66) on a real Galaxy A54 (Exynos 1380, 8 GB RAM) and project performance across 19 devices. Finally, we propose a three-tier deployment strategy matching model size to device capability, and release all code, models, benchmark data, and an Android APK as open source.
+Voice interfaces for mobile devices must distinguish a supported command from an unsupported or ambiguous request before any Android API is invoked. This paper presents a reproducible, deliberately narrow evaluation of a Qwen3.5-2B language model as a text-to-function router for two Android-aligned operations: media play/pause and volume up/down. To obtain human-origin English command text without claiming that an existing corpus is an Android corpus, we derive an auditable benchmark from Fluent Speech Commands (FSC). Only four native FSC semantic combinations are mapped to calls; all other source examples are retained as explicit policy-abstention negatives. We compare zero-shot prompting with a LoRA adapter on two split protocols: the official speaker-disjoint split and a stricter phrase-disjoint split that prevents normalized templates from crossing train, development, and test. The experiment consumes transcriptions, not waveforms, and therefore does not evaluate automatic speech recognition, physical Android execution, or on-device inference. The speaker-disjoint run illustrates why the lexical control is required: the zero-shot model reaches 39.97\% exact match, whereas the adapted model reaches 100\% on the same test, despite substantial template overlap between splits. On the phrase-disjoint test, zero-shot reaches 40.33\% exact match and LoRA reaches 100\%. The contribution is therefore a measurement protocol and an auditable baseline, not a claim of general Android command understanding.
 
----
+**Keywords:** function calling; Android; speech commands; small language models; abstention; data leakage; Brazilian Portuguese research infrastructure.
 
-## 1. Introduction
+## 1. Motivation and scope
 
-The majority of the world's languages lack sufficient representation in large language models. For Brazilian Portuguese — spoken by over 200 million people — existing LLMs either require cloud connectivity (GPT-4, Gemini) or exceed the memory capacity of affordable smartphones (Sabiá-7B, Cabrita-7B). On-device inference offers privacy, offline access, and zero per-query cost, but is constrained by the memory bandwidth of mobile DRAM (typically 15-68 GB/s for LPDDR4X/LPDDR5X).
+The original project goal was a specialized small language model for Android commands in Brazilian Portuguese. The available human command corpus, however, is not a native Android/PT-BR corpus. The present phase makes that limitation explicit and uses English human speech data as a temporary benchmark. Portuguese synthetic data remains a historical harness for the repository; it is not presented as human evidence.
 
-This paper addresses three questions:
-1. **What is the minimum viable quantization for Portuguese-language LLMs on mobile devices?**
-2. **How does memory bandwidth limit generation speed, and can we predict performance across devices?**
-3. **What deployment strategy maximizes Portuguese fluency across the device spectrum?**
+The operational question is narrower than “can a language model control Android?” We ask whether a small model can transform a human-origin command transcription into a validated canonical object, or abstain when the source semantics do not belong to the evaluated contract. No generated object is executed. The Android API names in the registry identify the intended integration boundary only.
 
-Our contributions are:
-- **Empirical discovery of a 5 BPW quantization cliff** for Portuguese task performance, validated on 150 ENEM questions across 7 quantization levels.
-- **A memory-bandwidth bottleneck model** (efficiency factor = 0.66) validated on real Android hardware and projected to 19 devices.
-- **A three-tier deployment framework** matching 0.5B/0.8B/3B models to budget/mid-range/flagship devices.
-- **Open-source release** of fine-tuned models, evaluation data, Android APK, and benchmark suite.
+The phase has four research questions:
 
----
+1. Can a Qwen3.5-2B model produce valid canonical JSON for a two-tool Android-aligned contract?
+2. What improvement does a LoRA adapter provide over the same model and prompt without adaptation?
+3. How much does performance change when normalized phrase templates are held out, rather than only speakers?
+4. Does the abstention policy prevent unsupported FSC semantics from being silently converted into Android calls?
 
-## 2. Related Work
+## 2. Corpus and conservative semantic bridge
 
-**On-device LLM inference.** llama.cpp [Gerganov, 2023] and MLC-LLM [MLC team, 2023] enable CPU-first inference via the GGUF format. PowerInfer [Song et al., 2024] exploits activation sparsity for GPU-CPU hybrids. MobileLLM [Liu et al., 2024] proposes sub-billion architectures optimized for phones. Our work differs by characterizing the quantization-behavior relationship for a specific low-resource language on real hardware.
+We use Fluent Speech Commands, a human-recorded English speech-command corpus with 30,043 recordings, 97 speakers, and 31 native intents. The source provides official train, validation, and test files with speaker separation. The source archive is stored outside the Git repository and is tracked by SHA-256 in `data/external/fluent_speech_commands_manifest.json`.
 
-**Quantization limits.** QLoRA [Dettmers et al., 2023] established 4-bit as viable for adapter fine-tuning. GPTQ [Frantar et al., 2023] and AWQ [Lin et al., 2024] push post-training quantization below 4 bits for large models. We find that for sub-1B models on Portuguese, **5 bits is the practical floor** — below this, task performance degrades substantially.
+The corpus is not an Android command dataset. We therefore define a two-tool evaluation registry and a deterministic mapping that accepts only four native semantic combinations:
 
-**Portuguese NLP.** BERTimbau [Souza et al., 2020] provides PT-BR representations. Sabiá [Pires et al., 2023] fine-tunes LLaMA for Portuguese. None of these target on-device deployment. Our work is the first to evaluate quantized Portuguese LLMs on mobile hardware.
+| Native FSC action | Native object | Derived Android-aligned target |
+|---|---|---|
+| activate | music | `media_control(action=play)` |
+| deactivate | music | `media_control(action=pause)` |
+| increase | volume | `volume_adjust(direction=up)` |
+| decrease | volume | `volume_adjust(direction=down)` |
 
----
+Every other FSC example becomes `{"action":"abstain","tool":null,"arguments":{}}`. This is a derived policy label, not a native FSC gold annotation. The benchmark balances supported calls and unsupported policy negatives independently within each split. This prevents the much larger set of unrelated smart-home intents from dominating the aggregate score.
 
-## 3. Methodology
+The registry is intentionally narrow. `media_control` represents the Android `MediaSessionManager` boundary and accepts `play` or `pause`; `volume_adjust` represents the `AudioManager.adjustStreamVolume` boundary and accepts `up` or `down`. The experiment does not request permissions, call either API, or claim that the model is safe to deploy without a separate validator and policy layer.
 
-### 3.1 Model Selection and Fine-Tuning
+## 3. Leakage-audited splits
 
-We evaluate three model tiers spanning two orders of magnitude in memory footprint:
+We preserve the official speaker-disjoint split and also construct a phrase-disjoint split. A template is the Unicode-normalized, case-folded, whitespace-normalized, punctuation-stripped transcription; its stable SHA-256 prefix is stored as `template_id`. A template group is assigned to only one split within its native FSC label. Speakers may occur in several splits in the phrase-disjoint protocol by design.
 
-| Tier | Model | Params | Q4_K_M Size | Target Device |
-|------|-------|--------|-------------|---------------|
-| Light | Qwen2.5-0.5B | 0.5B | 268 MB | <4 GB RAM |
-| Standard | Qwen3.5-0.8B | 0.8B | 505 MB | 4-8 GB RAM |
-| Premium | Qwen2.5-3B-Instruct | 3.0B | 1,800 MB | >8 GB RAM |
+| Protocol | Train | Dev | Test | Speaker overlap | Template overlap |
+|---|---:|---:|---:|---|---|
+| Official speaker-disjoint, balanced | 11,442 | 1,580 | 1,934 | none | train/dev/test overlap exists |
+| Phrase-disjoint, balanced | 10,458 | 2,202 | 2,296 | allowed by design | none |
 
-The 0.8B model was fine-tuned for Brazilian Portuguese using 2,248 synthetic conversations generated via self-instruct from the base Qwen3.5-0.8B checkpoint. Training used 3 epochs on an NVIDIA RTX 5090 (32 GB), with learning rate 2e-5, batch size 2, gradient accumulation 4, and bf16 precision. Final perplexity on held-out PT-BR data: 9.38 (Q4_K_M).
+Both derived files contain 7,478 call examples and 7,478 abstention examples. The official test contains 967 calls and 967 policy negatives. The phrase-disjoint test contains 1,148 calls and 1,148 policy negatives. Dataset validation checks schema, target validity, duplicate IDs, expected locale, split assignment, and the selected group-disjointness invariant.
 
-### 3.2 Quantization Levels
+## 4. Model and training protocol
 
-We evaluate seven GGUF quantization types spanning 3.7-8.6 BPW:
+The base checkpoint is Qwen3.5-2B loaded from the local Hugging Face cache. The model receives an English system instruction, the compact two-tool catalog, and one transcription. It must emit exactly `action`, `tool`, and `arguments` as JSON. The baseline uses the canonical prompt without adapter weights.
 
-| Quant | Size (MB) | BPW | Description |
-|-------|-----------|-----|-------------|
-| Q8_0 | 774 | 8.6 | 8-bit round-to-nearest |
-| Q6_K | 601 | 6.7 | 6-bit K-quant |
-| Q5_K_M | 551 | 6.2 | 5-bit K-quant medium |
-| Q4_K_M | 505 | 5.6 | 4-bit K-quant medium |
-| Q3_K_M | 445 | 5.0 | 3-bit K-quant medium |
-| IQ2_XS | 347 | 3.9 | 2-bit importance-aware |
-| IQ2_XXS | 336 | 3.7 | 2-bit extra-small |
+The adapted model uses LoRA with rank 16, alpha 32, dropout 0.05, and all-linear target modules. Training uses two epochs, batch size 4, gradient accumulation 4, learning rate $2\times10^{-4}$, maximum sequence length 1,024, bf16 autocast, and seed 20260830. The official run used 11,442 training records and 1,432 optimizer steps per epoch on an NVIDIA RTX 5090 with 32 GB VRAM. The phrase-disjoint run uses the same hyperparameters and hardware, with only the split protocol changed.
 
-### 3.3 Evaluation Protocol
+The model is evaluated as a server-side text router. There is no microphone input, ASR stage, Android APK execution, permission flow, battery test, thermal test, or physical-device latency result in this phase. Those are separate gates for a later experiment.
 
-**Task benchmark:** 150 randomly selected ENEM 2024 multiple-choice questions covering 5 subjects (Languages, Humanities, Natural Sciences, Mathematics, and their respective foreign language sections). Each question presents 5 options; random baseline = 20%. We measure exact-match accuracy (correct letter prediction).
+## 5. Metrics
 
-**Perplexity:** WikiText-pt (Portuguese Wikipedia subset), 128-token context windows.
+For every test item we report:
 
-**Latency:** Real-device measurement on Galaxy A54 (Exynos 1380, 8 GB LPDDR4X, Android 16) using llama.cpp commit a66d505 with ARM64 compilation flags: `-O3 -flto -march=armv8.2-a+dotprod+fp16`.
+- JSON validity and canonical validity;
+- exact match of the canonical target;
+- action accuracy;
+- tool-selection accuracy on call gold items;
+- argument exactness overall and conditional on the selected tool;
+- abstention precision, recall, and F1;
+- the same measurements grouped by the explicit mapping rule.
 
-### 3.4 Memory Bandwidth Model
+The evaluator also reports missing/extra predictions, a sample of invalid outputs, deterministic bootstrap percentile intervals for abstention F1, and Wilson 95\% intervals for proportions. Latency is recorded per generated request as an engineering observation, not as an on-device claim.
 
-Generation throughput is fundamentally limited by memory bandwidth, not compute:
+## 6. Results
 
+### 6.1 Official speaker-disjoint test
+
+The zero-shot baseline produced 1,934 predictions. It achieved 100\% JSON parseability but only 68.77\% canonical validity and 39.97\% exact match. Abstention F1 was 61.08\%. Call selection was uneven: exact match was 57.85\% for play, 31.43\% for pause, and 0\% for both volume directions. On unsupported policy negatives, abstention recall was 69.29\%.
+
+The LoRA adapter produced 1,934 valid predictions and achieved 100\% on every reported point estimate in this test: exact match, canonical validity, action, tool, arguments, and abstention F1. The Wilson lower bound for exact match is 99.80\% with 1,934 observations.
+
+This apparent result is not sufficient evidence of broad generalization. The official split is speaker-disjoint but has 244--247 normalized templates in common across split pairs. The adapted model can therefore exploit lexical repetition while learning the mapping. This is the motivation for the phrase-disjoint run.
+
+The recorded GPU generation latency was 361.7 ms on average for the adapted model (median 359.0 ms, 95th percentile 396.6 ms) and 312.5 ms on average for the baseline. These are server measurements for single-request text generation and must not be interpreted as smartphone performance.
+
+### 6.2 Phrase-disjoint test
+
+The phrase-disjoint adapter was trained and evaluated with the same code and hyperparameters. On 2,296 test items, the zero-shot baseline reached 74.09\% canonical validity, 40.33\% exact match, tool selection of 10.63\%, and abstention F1 of 58.97\%. The LoRA adapter reached 100\% on all point estimates: JSON validity, canonical validity, exact match, action, tool, arguments, and abstention F1. The Wilson lower bound for exact match is 99.83\%.
+
+The per-rule pattern is informative. Zero-shot exact match was 100\% for play, 0\% for pause, 0\% for decrease-volume, and 0\% for increase-volume; abstention recall on derived negatives was 70.03\%. LoRA reached 100\% on all four mapped rules and on the derived abstention policy.
+
+The two split protocols therefore agree on the narrow task, but they do not establish Android command understanding beyond the four manually declared semantic bridges. The absence of template overlap removes one important leakage channel; it does not replace an independently annotated Android test.
+
+## 7. Discussion
+
+The experiment demonstrates the value of separating three questions that are often conflated. First, a human-origin speech corpus can provide command text, but it does not become an Android corpus merely because a researcher writes a mapping. Second, a model can learn a strict JSON contract while still failing semantic routing, as the zero-shot volume results show. Third, a high score on an official speaker split can reflect repeated lexical templates rather than robustness to new wording.
+
+The abstention target is useful as a safety-oriented interface, but it is also the most assumption-sensitive part of the benchmark. Unsupported FSC examples are not human-annotated Android refusals; they are policy negatives created by the experimenter. The correct claim is therefore “abstention under a declared derived policy,” not “safe refusal for Android.”
+
+The adapter's official-split perfect score should be treated as an overfit signal until compared with the phrase-disjoint protocol and, ultimately, with a held-out human evaluation designed for Android commands. Even after lexical control, text-only evaluation leaves the ASR error channel unmeasured. A production pipeline needs an ASR model, confidence thresholding, schema validation, permission checks, and a policy gate between generated JSON and Android APIs.
+
+## 8. Reproducibility and data governance
+
+The repository records the mapping contract, generator, source-file hashes, split summaries, validator, training script, baseline script, evaluator, tests, and aggregate metrics. The raw FSC archive and derived JSONL files remain server-local. Because the source is distributed under CC BY-NC-ND 4.0 for academic research, the derived transcripts/labels and per-example predictions are ignored by Git and are not redistributed with the repository. The manifest preserves provenance without shipping the restricted data.
+
+The main commands are:
+
+```text
+python scripts/prepare_fsc_android_fc.py ...
+python scripts/validate_fc_dataset.py ... --expected-locale en-US --allow-text-duplicates --group-field speaker_id
+python scripts/run_qwen_fc_baseline.py ... --locale en-US --prompt-mode canonical
+python scripts/train_qwen_fc_lora.py ... --locale en-US
+python scripts/fc_eval.py ...
 ```
-generation_tok_s = (effective_bandwidth_GBs / model_size_GB) × efficiency
-```
 
-We measure effective bandwidth as 0.82 × theoretical (accounting for real-world overhead) and efficiency as 0.66 (derived from A54 measurements: 19.7 actual / 29.7 theoretical). This model projects performance across 19 devices with RAM ranging from 4 GB to 16 GB.
+All phase-1 tests pass locally on the Neuromancer environment. The training and evaluation jobs use the RTX 5090; the Android phone is not required for this phase.
 
----
+## 9. Limitations and next gates
 
-## 4. Results
+1. The only human corpus used in this phase is English FSC; no PT-BR human command set is claimed.
+2. FSC is not an Android corpus; four mappings are manually specified and all other targets are derived abstentions.
+3. The input is transcription text, not audio; ASR robustness is unmeasured.
+4. The official result is vulnerable to lexical repetition; the phrase-disjoint control was executed, but an independent Android test is still required before publication.
+5. The contract covers only play/pause and volume up/down.
+6. No Android API is called, no permission is exercised, and no safety guarantee is established.
+7. No on-device or physical-phone result is reported. The Qwen3.5-2B experiment runs on the RTX 5090.
+8. The source license requires an explicit redistribution audit before any public data release.
 
-### 4.1 The 5-Bit Quantization Cliff (Cross-Model Validation)
+The next critical gates are: add an independently annotated Android-command test; insert an ASR stage; benchmark the validator and policy layer; and only then connect the phone for physical execution and on-device measurements.
 
-Figure 1 shows our central finding across three model sizes (0.5B, 0.8B, 3B): task accuracy on Portuguese ENEM questions drops significantly when moving from Q4_K_M (5.6 BPW) to Q3_K_M (5.0 BPW). The cliff is consistent across model scales:
+## 10. Current conclusion
 
-| Model | Params | Q4_K_M Acc | Q3_K_M Acc | Δ | Relative Loss |
-|-------|--------|-----------|-----------|-----|---------------|
-| Qwen2.5-0.5B | 0.5B | 18.0% | 20.0% | +2.0 pp | — (noise) |
-| Qwen3.5-0.8B FT | 0.8B | **23.3%** ±1.2 | **15.3%** ±3.1 | **−8.0 pp** | **−34%** |
-| Qwen2.5-3B | 3.0B | **44.0%** ±4.0 | **24.7%** ±2.3 | **−19.3 pp** | **−44%** |
-
-For models >= 0.8B parameters, the drop is statistically significant (p < 0.05, 3 runs). The 0.5B model hovers near random (20%) at both quantization levels due to its limited capacity — it cannot solve ENEM questions regardless of quantization.
-
-**Key insight:** Larger models suffer MORE from aggressive quantization on downstream tasks. The 3B model loses 44% of its accuracy when dropped from Q4_K_M to Q3_K_M, while the 0.8B loses 34%. This contradicts the intuition that smaller models are more fragile — in absolute terms, the knowledge stored in larger models' fine-grained weights is more valuable and more easily destroyed by quantization.
-
-### 4.2 Language-Specific Sensitivity
-
-The 5 BPW cliff for Portuguese is steeper than published English benchmarks. We hypothesize that low-resource languages rely more heavily on fragile knowledge stored in fine-grained weight representations that quantization destroys. Table 4.2 compares our results with published English benchmarks.
-
-| Language | Model Size | 4-bit PPL | 2-bit PPL | Degradation | Source |
-|----------|-----------|-----------|-----------|-------------|--------|
-| English | 7B | 5.5 | 7.2 | 1.3× | [Frantar+ 2023] |
-| English | 1B | 12.0 | 18.0 | 1.5× | [Liu+ 2024] |
-| Portuguese | 0.8B | **9.4** | **65.6** | **7.0×** | This work |
-
-### 4.3 Real-Device Performance
-
-On the Galaxy A54 (Exynos 1380, 8 GB LPDDR4X):
-
-| Model | Size (MB) | Gen (tok/s) | Prefill (tok/s) | Context |
-|-------|-----------|-------------|-----------------|---------|
-| Qwen2.5-0.5B | 268 | 33.3 | 180 | 2K |
-| Qwen3.5-0.8B FT | 505 | **19.7** | 108 | 2K |
-| Qwen2.5-3B-Instruct | 1,800 | 4.2* | 28* | 1K |
-
-*Projected from bandwidth model (not yet measured on A54 due to RAM constraints).
-
-### 4.4 Optimization Stack Ablation
-
-Starting from a baseline of 14.2 tok/s (unoptimized build), each optimization contributes additively:
-
-| Optimization | Gain | Cumulative |
-|-------------|------|-----------|
-| Baseline | — | 14.2 |
-| + ARM64 -O3 -flto -march=armv8.2-a+dotprod+fp16 | +15% | 16.3 |
-| + Thread affinity (-t 3, A78 cores only) | +13% | 18.4 |
-| + KV cache quantization (q8_0) | +5% | 19.3 |
-| + --mlock (prevent swap) | +2% | **19.7** |
-
-### 4.5 Device Projections
-
-Using the bandwidth model (efficiency = 0.66), we project the 0.8B model's performance across device tiers:
-
-| Device | SoC | RAM | Bandwidth | Gen (tok/s) |
-|--------|-----|-----|-----------|-------------|
-| Galaxy S25 Ultra | SD 8 Elite | 12 GB | 68 GB/s | **73** |
-| Galaxy S24 Ultra | SD 8 Gen 3 | 12 GB | 64 GB/s | **69** |
-| Galaxy A55 | Exynos 1480 | 8 GB | 44 GB/s | **47** |
-| Galaxy **A54** | **Exynos 1380** | **8 GB** | **15 GB/s** | **19.7*** |
-| Galaxy A15 5G | Dimensity 6100+ | 4 GB | 14 GB/s | **15** |
-| Moto G84 | SD 695 | 8 GB | 14 GB/s | **15** |
-
-*Measured (all others projected). Full 19-device table in Appendix A.
-
----
-
-## 5. Discussion
-
-### 5.1 Why 5 Bits, Not 4?
-
-The finding that Portuguese task performance requires approximately 5 BPW — higher than the 4-bit threshold commonly cited for English — has practical implications. For low-resource languages, aggressive quantization disproportionately destroys the sparse knowledge representations needed to compensate for smaller training corpora. We recommend Q4_K_M (5.6 BPW) as the optimal trade-off: it achieves 35% size reduction from Q8_0 with zero accuracy loss.
-
-### 5.2 Negative Results as Contribution
-
-We document two failed optimization attempts: (1) IQ2_XXS quantization (PPL 65.6, ENEM accuracy at noise level), and (2) vocabulary pruning from 152K to 10K tokens (PPL 50, model generates empty output). The pruning failure reveals that tokenizer adaptation requires substantially more than 2,000 training examples — we estimate 50K+ examples are needed for stable embedding realignment. Both findings inform future work and prevent others from repeating unproductive experiments.
-
-### 5.3 Deployment Strategy
-
-We propose a three-tier strategy:
-- **Budget (<4 GB RAM):** Qwen2.5-0.5B Q4_K_M (268 MB, 33 tok/s). Suitable for single-turn Q&A.
-- **Mid-range (4-8 GB):** Qwen3.5-0.8B FT PT-BR Q4_K_M (505 MB, 20 tok/s). Best all-around: fluency + speed.
-- **Flagship (>8 GB):** Qwen2.5-3B-Instruct Q4_K_M (1.8 GB, 4-20 tok/s). Multi-turn conversation.
-
-### 5.4 Limitations
-
-- Single real device measured (A54). Projections use analytical model.
-- ENEM evaluation uses 150 questions; larger test sets would reduce variance.
-- Only Qwen-family models tested; architectural effects on quantization sensitivity remain unexplored.
-- No battery or thermal measurement (deferred to future work).
-
----
-
-## 6. Conclusion
-
-We present the first systematic study of on-device LLM inference for Brazilian Portuguese. Our key finding — a 5 BPW quantization cliff where Portuguese task accuracy drops from 22% to 15% — establishes a practical lower bound for mobile deployment. The accompanying bandwidth model and three-tier strategy provide actionable guidance for practitioners. All code, models, and benchmarks are publicly available at:
-
-**https://github.com/DanielPonttes/qwen35-ptbr-mobile**
-
----
-
-## References
-
-[1] Dettmers et al. "QLoRA: Efficient Finetuning of Quantized Language Models." NeurIPS 2023.  
-[2] Frantar et al. "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers." ICLR 2023.  
-[3] Gerganov. "llama.cpp: LLM inference in C/C++." GitHub, 2023.  
-[4] Lin et al. "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration." MLSys 2024.  
-[5] Liu et al. "MobileLLM: Optimizing Sub-billion Parameter Models for On-Device Use Cases." ICML 2024.  
-[6] Pires et al. "Sabiá: Portuguese Large Language Models." BRACIS 2023.  
-[7] Song et al. "PowerInfer: Fast Large Language Model Serving with a Consumer-grade GPU." SOSP 2024.  
-[8] Souza et al. "BERTimbau: Pretrained BERT Models for Brazilian Portuguese." BRACIS 2020.  
-[9] MLC team. "MLC-LLM: Universal LLM Deployment Engine." GitHub, 2023.
-
----
-
-## Appendix A: Full Device Projection Matrix
-
-| Device | SoC | RAM | BW (eff) | 0.5B (tok/s) | 0.8B (tok/s) | 3B (tok/s) |
-|--------|-----|-----|----------|-------------|-------------|------------|
-| Galaxy S25 Ultra | SD 8 Elite | 12 GB | 56 | 137 | 73 | 20 |
-| ASUS ROG Phone 9 | SD 8 Elite | 16 GB | 56 | 137 | 73 | 20 |
-| OnePlus 13 | SD 8 Elite | 12 GB | 56 | 137 | 73 | 20 |
-| Xiaomi 15 Pro | SD 8 Elite | 12 GB | 56 | 137 | 73 | 20 |
-| Galaxy S24 Ultra | SD 8 Gen 3 | 12 GB | 52 | 129 | 69 | 19 |
-| Pixel 9 Pro | Tensor G4 | 16 GB | 52 | 129 | 69 | 19 |
-| Galaxy S23 Ultra | SD 8 Gen 2 | 12 GB | 48 | 117 | 62 | 17 |
-| Pixel 8 Pro | Tensor G3 | 12 GB | 43 | 103 | 55 | 15 |
-| POCO X6 Pro | Dimensity 8300 | 8 GB | 42 | 103 | 55 | 15 |
-| Pixel 8a | Tensor G3 | 8 GB | 42 | 103 | 55 | 15 |
-| Galaxy A55 | Exynos 1480 | 8 GB | 36 | 89 | 47 | 13 |
-| Redmi Note 13 Pro+ | Dimensity 7200 | 8 GB | 28 | 69 | 36 | 10 |
-| POCO X5 Pro | SD 778G | 8 GB | 20 | 50 | 27 | 8 |
-| **Galaxy A54*** | **Exynos 1380** | **8 GB** | **12** | **33.3*** | **19.7*** | **4** |
-| Galaxy A35 | Exynos 1380 | 6 GB | 12 | 30 | 16 | 4 |
-| Galaxy A15 5G | Dimensity 6100+ | 4 GB | 11 | 28 | 15 | 4 |
-| Moto G84 5G | SD 695 | 8 GB | 11 | 28 | 15 | 4 |
-| Redmi 13C | Helio G85 | 4 GB | 10 | 25 | 14 | 3 |
-| Galaxy A05s | SD 680 | 4 GB | 10 | 25 | 14 | 3 |
-
-*Measured on real device. All others are projections using gen_tok_s = (BW × 0.82 / size_GB) × 0.66.
-
-## Appendix B: Fine-Tuning Details
-
-- Base model: Qwen3.5-0.8B (752M parameters)
-- Dataset: 2,248 synthetic PT-BR conversations (self-instruct from base model)
-- Hardware: NVIDIA RTX 5090 (32 GB VRAM)
-- Training: 3 epochs, batch=2, grad_accum=4, lr=2e-5, bf16, context=512
-- Train loss: 1.53 → 0.58, Eval loss: 1.57 → 1.61
-- Final checkpoint: 752M params, exported to GGUF F16 (1.5 GB)
-- Quantized variants: Q8_0 (774 MB), Q6_K (601 MB), Q5_K_M (551 MB), Q4_K_M (505 MB), Q3_K_M (445 MB), IQ2_XS (348 MB), IQ2_XXS (336 MB)
+This phase establishes an auditable benchmark and an honest experimental boundary for the first article. The model reaches 100\% on both declared split protocols, while the zero-shot baseline remains near 40\% exact match; this is evidence that the model learns the narrow declared contract, not evidence of general Android command understanding. The article should still include an independent human/Android evaluation or be framed explicitly as a protocol and preliminary engineering report.

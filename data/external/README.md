@@ -1,5 +1,14 @@
 # External datasets
 
+## Current experimental scope
+
+The current human-data experiment uses Fluent Speech Commands (FSC) in
+English. The project does not treat FSC as an Android corpus. The derived
+Android-aligned benchmark uses only four conservative mappings and labels all
+other FSC intents as policy abstention. See
+fluent_speech_commands_android_fc_manifest.json and
+docs/phase_1_english_dataset.md for the audit trail.
+
 ## LaPSMail (human PT-BR speech)
 
 - Local archive: /home/daniel/datasets/lapsmail/MailDatabase1.0.zip
@@ -9,7 +18,10 @@
 - Scope: 1,100 human-recorded WAV files (44 canonical email commands x 25 speakers), 16 kHz mono.
 - Split: speaker-disjoint 15/5/5.
 
-This is the immediate human corpus available for the project. It is Brazilian Portuguese and contains real volunteer recordings, but its semantic domain is email rather than Android. Use it for ASR/acoustic robustness and command-like speech; do not use it as direct gold labels for the Android tool contract.
+This remains a documented auxiliary resource. It is Brazilian Portuguese and
+contains real volunteer recordings, but its semantic domain is email rather
+than Android. Use it for ASR/acoustic robustness and command-like speech; do
+not use it as direct gold labels for the Android tool contract.
 
 Source references: [LaPSMail dissertation](https://ppgcc.propesp.ufpa.br/Disserta%C3%A7%C3%B5es_2012/Rafael%20Santana%20Oliveira_Disserta%C3%A7%C3%A3o.pdf) and [open speech-corpora catalog entry](https://github.com/coqui-ai/open-speech-corpora).
 
@@ -20,13 +32,29 @@ The directory [openvoiceos/](openvoiceos/) contains the pt-BR files from [OpenVo
 
 - Archive: /home/daniel/datasets/fluent_speech_commands/fluent.tar.gz
 - Extracted data: /home/daniel/datasets/fluent_speech_commands/raw/fluent_speech_commands_dataset/
-- Manifest: [luent_speech_commands_manifest.json](fluent_speech_commands_manifest.json)
+- Manifest: [fluent_speech_commands_manifest.json](fluent_speech_commands_manifest.json)
 - Scope: 30,043 human recordings, 97 speakers, 31 intents, 16 kHz mono WAV, speaker-disjoint train/valid/test.
 - License: CC BY-NC-ND 4.0, academic research only.
 
 This is the best immediate English audio benchmark for command-like speech. Its semantics are smart-home/assistant commands, not Android tools, so it is suitable for transfer, robustness and external comparison—not direct gold labels for the Android contract.
 
 Official provenance: [Fluent.ai dataset page](https://fluent.ai/fluent-speech-commands-a-dataset-for-spoken-language-understanding-research/). The local archive was obtained from a public [Hugging Face mirror](https://huggingface.co/datasets/leo19941227/fluent_speech_commands) and checked by SHA-256.
+
+### Derived Android-aligned benchmark
+
+- Contract: android_tools_fsc.json
+- Official speaker-disjoint data:
+  fluent_speech_commands_android_fc.jsonl
+- Phrase-disjoint data:
+  fluent_speech_commands_android_fc_phrase_disjoint.jsonl
+- Derivation: ../scripts/prepare_fsc_android_fc.py
+- Size of each balanced derivation: 14,956 rows, 7,478 calls and 7,478
+  policy abstentions.
+
+Only activate/deactivate music and increase/decrease volume are mapped to
+Android-compatible tools. The mapping is a manually specified semantic bridge,
+not a source annotation. The benchmark consumes FSC transcriptions; it does
+not evaluate an end-to-end ASR model.
 
 ## SLURP (human English SLU annotations)
 

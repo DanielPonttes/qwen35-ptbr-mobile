@@ -77,3 +77,25 @@ Esses itens não foram simulados nem inferidos a partir da RTX 5090. O celular p
 ## 5. Rastreabilidade Git
 
 O branch `codex/phase1-fc` continua local no Neuromancer, sem push e sem alteração do `master`. Adapters, GGUFs, builds e resultados grandes permanecem ignorados pelo Git; datasets, scripts, testes, manifestos, métricas, comparações e documentação são os artefatos destinados ao commit.
+
+## 6. Atualização aplicada — corpus humano em inglês
+
+As seções anteriores registram o piloto sintético histórico em PT-BR. Elas não
+devem ser lidas como resultado do corpus humano atual. Para atender à decisão
+de usar um dataset estrangeiro, o FSC foi adotado como corpus humano principal
+da rodada, com contrato Android deliberadamente restrito e ponte semântica
+explícita de apenas quatro rótulos nativos. Os demais exemplos viraram
+abstenções de política derivadas, não gold Android.
+
+- Dataset oficial equilibrado: 14.956 registros; SHA-256
+  `5d5ed89b0108ff9821c9c1e44d50f8435623cdc1ada5dedfb73612bb4990b2a6`.
+- Dataset phrase-disjoint equilibrado: 14.956 registros; SHA-256
+  `bb551304122a8aa28199ad5226b48da29dd53bd9bd11c8aed5a9b27b728b4707`.
+- O teste oficial tem 1.934 exemplos; o phrase-disjoint, 2.296.
+- Baseline zero-shot: 39,97% e 40,33% exact match, respectivamente.
+- LoRA: 100% exact match e 100% F1 de abstention nos dois testes.
+- A inferência consumiu transcrições; não houve ASR, execução de API Android,
+  benchmark no aparelho ou uso do celular.
+- Os resultados devem ser interpretados como desempenho em quatro pontes
+  manuais, com negativos de política derivados. O teste Android independente,
+  a etapa ASR, o policy gate e a medição física continuam gates críticos.

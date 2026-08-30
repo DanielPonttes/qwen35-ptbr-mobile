@@ -1,0 +1,143 @@
+{
+  "dataset_name": "Fluent Speech Commands Android-aligned derived benchmark",
+  "derived_contract": "data/tools/android_tools_fsc.json",
+  "generator_version": "fsc-android-fc/0.1.0",
+  "limitations": [
+    "FSC is smart-home/assistant speech, not a native Android command corpus.",
+    "The four supported mappings are manually specified semantic bridges.",
+    "The source repeats exact phrasings across speakers; official splits are speaker-disjoint but not phrase-disjoint.",
+    "The Android-aligned benchmark consumes transcripts; it does not perform speech recognition."
+  ],
+  "locale": "en-US",
+  "mapping_policy": {
+    "supported_native_labels": [
+      [
+        "activate",
+        "music",
+        "none"
+      ],
+      [
+        "deactivate",
+        "music",
+        "none"
+      ],
+      [
+        "increase",
+        "volume",
+        "none"
+      ],
+      [
+        "decrease",
+        "volume",
+        "none"
+      ]
+    ],
+    "unsupported_policy": "all other FSC labels become abstain; this is a derived policy label, not native FSC gold"
+  },
+  "official_speaker_disjoint": {
+    "path": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_android_fc.jsonl",
+    "sha256": "5d5ed89b0108ff9821c9c1e44d50f8435623cdc1ada5dedfb73612bb4990b2a6",
+    "speaker_intersections": {
+      "dev-test": 0,
+      "train-dev": 0,
+      "train-test": 0
+    },
+    "summary": {
+      "by_split": {
+        "dev": {
+          "supported": 790,
+          "unsupported": 790
+        },
+        "test": {
+          "supported": 967,
+          "unsupported": 967
+        },
+        "train": {
+          "supported": 5721,
+          "unsupported": 5721
+        }
+      },
+      "mapping_rules": {
+        "activate_music_to_media_play": 912,
+        "deactivate_music_to_media_pause": 825,
+        "decrease_volume_to_media_down": 2731,
+        "increase_volume_to_media_volume_up": 3010,
+        "unsupported_fsc_semantics_to_policy_abstain": 7478
+      },
+      "records": 14956,
+      "speakers_by_split": {
+        "dev": 10,
+        "test": 10,
+        "train": 77
+      },
+      "templates_by_split": {
+        "dev": 245,
+        "test": 247,
+        "train": 248
+      }
+    },
+    "template_intersections": {
+      "dev-test": 244,
+      "train-dev": 245,
+      "train-test": 247
+    }
+  },
+  "phrase_disjoint": {
+    "note": "Phrase groups are disjoint across splits; speakers may occur in multiple splits by design.",
+    "path": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_android_fc_phrase_disjoint.jsonl",
+    "sha256": "bb551304122a8aa28199ad5226b48da29dd53bd9bd11c8aed5a9b27b728b4707",
+    "summary": {
+      "by_split": {
+        "dev": {
+          "supported": 1101,
+          "unsupported": 1101
+        },
+        "test": {
+          "supported": 1148,
+          "unsupported": 1148
+        },
+        "train": {
+          "supported": 5229,
+          "unsupported": 5229
+        }
+      },
+      "mapping_rules": {
+        "activate_music_to_media_play": 912,
+        "deactivate_music_to_media_pause": 825,
+        "decrease_volume_to_media_down": 2731,
+        "increase_volume_to_media_volume_up": 3010,
+        "unsupported_fsc_semantics_to_policy_abstain": 7478
+      },
+      "records": 14956,
+      "speakers_by_split": {
+        "dev": 95,
+        "test": 93,
+        "train": 97
+      },
+      "templates_by_split": {
+        "dev": 32,
+        "test": 38,
+        "train": 178
+      }
+    }
+  },
+  "seed": 20260830,
+  "source_archive_sha256": "c9fd67f2efa078daa84daddcad2de937eb96581c140e3131ed8cd06fbae9ba1b",
+  "source_dataset": "Fluent Speech Commands",
+  "source_files": {
+    "test": {
+      "path": "/home/daniel/datasets/fluent_speech_commands/raw/fluent_speech_commands_dataset/data/test_data.csv",
+      "sha256": "663a12e4f7e7b86c1ab72a96b78bb1d797dbc878424f94ec249f3dd5c21ca488"
+    },
+    "train": {
+      "path": "/home/daniel/datasets/fluent_speech_commands/raw/fluent_speech_commands_dataset/data/train_data.csv",
+      "sha256": "df1b87b7122c7a9fa1555fda61ba45436c4bbb33428e1ea54adcc1c3c1317ea4"
+    },
+    "valid": {
+      "path": "/home/daniel/datasets/fluent_speech_commands/raw/fluent_speech_commands_dataset/data/valid_data.csv",
+      "sha256": "5ac95de1cfad131cf85457fa404977b305377c8f25efb31879774b8c4fbd5197"
+    }
+  },
+  "source_license": "CC BY-NC-ND 4.0; academic research only",
+  "source_root": "/home/daniel/datasets/fluent_speech_commands/raw/fluent_speech_commands_dataset"
+}

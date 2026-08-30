@@ -1,5 +1,11 @@
 # Fase 1 — Resultados do piloto corrigido no Neuromancer
 
+> **Nota de escopo:** os resultados abaixo pertencem ao piloto sintético PT-BR
+> e não são a avaliação humana principal. A rodada humana em inglês baseada no
+> Fluent Speech Commands está documentada separadamente em
+> docs/phase_1_english_dataset.md; seus resultados serão registrados em um
+> relatório próprio.
+
 **Data de fechamento:** 2026-08-30
 **GPU:** NVIDIA GeForce RTX 5090 (32.607 MiB)
 **Modelo base:** Qwen3.5-2B, snapshot local `15852e8c16360a2fea060d615a32b45270f8a8fc`

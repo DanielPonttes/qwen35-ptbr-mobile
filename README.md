@@ -1,5 +1,11 @@
 # Qwen3.5 0.8B — Chat PT-BR Mobile
 
+> **Status do artigo:** o conteúdo abaixo descreve o protótipo legado de chat.
+> O experimento atual de function calling está documentado em
+> docs/phase_1_english_dataset.md, com corpus humano Fluent Speech Commands em
+> inglês, contrato Android restrito, avaliação separada por falante/frase e
+> sem alegação de ASR end-to-end ou execução on-device antes do teste físico.
+
 Chat em português brasileiro rodando **localmente no celular** (offline, sem nuvem).
 
 **Modelo:** Qwen3.5 0.8B fine-tuned para PT-BR | **Hardware alvo:** Galaxy A54 (Exynos 1380, 6 GB RAM) | **Velocidade:** ~19.5 tok/s

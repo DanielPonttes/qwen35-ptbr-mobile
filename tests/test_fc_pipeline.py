@@ -16,6 +16,7 @@ from fc_common import load_registry, parse_prediction_record, validate_target  #
 from compare_fc_predictions import exact_mcnemar_p_value  # noqa: E402
 from fc_eval import wilson_interval  # noqa: E402
 from generate_fc_dataset import build_dataset  # noqa: E402
+from prepare_fsc_android_fc import derive_target, normalize_template  # noqa: E402
 from validate_fc_dataset import validate_record  # noqa: E402
 
 
@@ -73,6 +74,35 @@ class FunctionCallingPipelineTests(unittest.TestCase):
         self.assertIsNotNone(interval)
         self.assertGreater(interval["lower"], 0.7)
         self.assertEqual(exact_mcnemar_p_value(0, 3), 0.25)
+
+    def test_fsc_mapping_is_conservative_and_explicit(self) -> None:
+        play, rule, tool = derive_target(
+            {
+                "native_action": "activate",
+                "native_object": "music",
+                "native_location": "none",
+            }
+        )
+        self.assertEqual(
+            play,
+            {"action": "call", "tool": "media_control", "arguments": {"action": "play"}},
+        )
+        self.assertEqual(rule, "activate_music_to_media_play")
+        self.assertEqual(tool, "media_control")
+
+        unsupported, rule, tool = derive_target(
+            {
+                "native_action": "activate",
+                "native_object": "lights",
+                "native_location": "kitchen",
+            }
+        )
+        self.assertEqual(unsupported, {"action": "abstain", "tool": None, "arguments": {}})
+        self.assertEqual(rule, "unsupported_fsc_semantics_to_policy_abstain")
+        self.assertIsNone(tool)
+
+    def test_fsc_template_normalization_is_stable(self) -> None:
+        self.assertEqual(normalize_template("  Turn  The Lights On! "), "turn the lights on")
 
 
 if __name__ == "__main__":

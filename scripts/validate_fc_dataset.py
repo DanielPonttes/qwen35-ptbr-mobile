@@ -14,9 +14,31 @@ from fc_common import load_registry, validate_target
 
 REQUIRED_RECORD_KEYS = {"id", "split", "locale", "text", "target", "metadata"}
 REQUIRED_METADATA_KEYS = {"kind", "case_id", "variant_id", "generator_version"}
+OPTIONAL_METADATA_KEYS = {
+    "tool",
+    "source",
+    "source_id",
+    "source_split",
+    "source_row",
+    "speaker_id",
+    "audio",
+    "native_action",
+    "native_object",
+    "native_location",
+    "template_id",
+    "mapping_status",
+    "mapping_rule",
+    "split_strategy",
+    "sample_group",
+}
 
 
-def validate_record(record: Any, registry: dict[str, dict[str, Any]], line_number: int) -> list[str]:
+def validate_record(
+    record: Any,
+    registry: dict[str, dict[str, Any]],
+    line_number: int,
+    expected_locale: str | None = "pt-BR",
+) -> list[str]:
     prefix = f"linha {line_number}"
     if not isinstance(record, dict):
         return [f"{prefix}: esperado objeto"]
@@ -31,8 +53,8 @@ def validate_record(record: Any, registry: dict[str, dict[str, Any]], line_numbe
         errors.append(f"{prefix}.id: deve ser string não vazia")
     if record["split"] not in {"train", "dev", "test"}:
         errors.append(f"{prefix}.split: valor inválido")
-    if record["locale"] != "pt-BR":
-        errors.append(f"{prefix}.locale: esperado pt-BR")
+    if expected_locale is not None and record["locale"] != expected_locale:
+        errors.append(f"{prefix}.locale: esperado {expected_locale}")
     if not isinstance(record["text"], str) or len(record["text"].strip()) < 3:
         errors.append(f"{prefix}.text: texto vazio ou curto")
     errors.extend(f"{prefix}.{error}" for error in validate_target(record["target"], registry))
@@ -42,7 +64,7 @@ def validate_record(record: Any, registry: dict[str, dict[str, Any]], line_numbe
         errors.append(f"{prefix}.metadata: esperado objeto")
         return errors
     missing_metadata = REQUIRED_METADATA_KEYS - set(metadata)
-    extra_metadata = set(metadata) - (REQUIRED_METADATA_KEYS | {"tool"})
+    extra_metadata = set(metadata) - (REQUIRED_METADATA_KEYS | OPTIONAL_METADATA_KEYS)
     errors.extend(f"{prefix}.metadata: campo ausente: {key}" for key in sorted(missing_metadata))
     errors.extend(f"{prefix}.metadata: campo não permitido: {key}" for key in sorted(extra_metadata))
     if metadata.get("kind") not in {"call", "abstain"}:
@@ -65,6 +87,9 @@ def validate_dataset(
     dataset_path: Path,
     registry_path: Path,
     expected_total: int | None = None,
+    expected_locale: str | None = "pt-BR",
+    reject_duplicate_text: bool = True,
+    group_field: str | None = None,
 ) -> tuple[list[str], Counter[str], Counter[str]]:
     registry = load_registry(registry_path)
     errors: list[str] = []
@@ -73,6 +98,8 @@ def validate_dataset(
     splits: Counter[str] = Counter()
     kinds: Counter[str] = Counter()
     case_splits: dict[str, set[str]] = {}
+    group_splits: dict[str, set[str]] = {}
+    duplicate_texts = 0
     with dataset_path.open("r", encoding="utf-8") as handle:
         for line_number, line in enumerate(handle, start=1):
             if not line.strip():
@@ -83,13 +110,15 @@ def validate_dataset(
             except json.JSONDecodeError as exc:
                 errors.append(f"linha {line_number}: JSON inválido: {exc.msg}")
                 continue
-            errors.extend(validate_record(record, registry, line_number))
+            errors.extend(validate_record(record, registry, line_number, expected_locale))
             if isinstance(record, dict):
                 identifier = record.get("id")
                 text = record.get("text")
                 if identifier in ids:
                     errors.append(f"linha {line_number}: id duplicado: {identifier}")
                 if text in texts:
+                    duplicate_texts += 1
+                if reject_duplicate_text and text in texts:
                     errors.append(f"linha {line_number}: texto duplicado")
                 ids.add(identifier)
                 texts.add(text)
@@ -101,13 +130,25 @@ def validate_dataset(
                     split = record.get("split")
                     if isinstance(case_id, str) and isinstance(split, str):
                         case_splits.setdefault(case_id, set()).add(split)
+                    if group_field is not None:
+                        group_value = metadata.get(group_field)
+                        if isinstance(group_value, str) and isinstance(split, str):
+                            group_splits.setdefault(group_value, set()).add(split)
     for case_id, case_split_values in sorted(case_splits.items()):
         if len(case_split_values) > 1:
             errors.append(
                 f"case_id atravessa splits: {case_id} -> {sorted(case_split_values)}"
             )
+    if group_field is not None:
+        for group_value, group_split_values in sorted(group_splits.items()):
+            if len(group_split_values) > 1:
+                errors.append(
+                    f"{group_field} atravessa splits: {group_value} -> {sorted(group_split_values)}"
+                )
     if expected_total is not None and len(ids) != expected_total:
         errors.append(f"total esperado {expected_total}, encontrado {len(ids)}")
+    if duplicate_texts and not reject_duplicate_text:
+        kinds["duplicate_text_rows_allowed"] = duplicate_texts
     return errors, splits, kinds
 
 
@@ -126,8 +167,26 @@ def main() -> int:
         default=root / "data" / "tools" / "android_tools.json",
     )
     parser.add_argument("--expected-total", type=int, default=None)
+    parser.add_argument("--expected-locale", default="pt-BR")
+    parser.add_argument(
+        "--allow-text-duplicates",
+        action="store_true",
+        help="permit repeated transcripts, as expected for multi-speaker human corpora",
+    )
+    parser.add_argument(
+        "--group-field",
+        default=None,
+        help="metadata field that must remain in one split, e.g. speaker_id",
+    )
     args = parser.parse_args()
-    errors, splits, kinds = validate_dataset(args.dataset, args.registry, args.expected_total)
+    errors, splits, kinds = validate_dataset(
+        args.dataset,
+        args.registry,
+        args.expected_total,
+        expected_locale=args.expected_locale,
+        reject_duplicate_text=not args.allow_text_duplicates,
+        group_field=args.group_field,
+    )
     if errors:
         print(f"status=INVALID errors={len(errors)}")
         for error in errors[:50]:

@@ -1,5 +1,10 @@
 # Fase 1 — Contrato, dataset e harness de function calling
 
+> **Atualização aplicada (2026-08-30):** o corpus humano desta rodada é o
+> Fluent Speech Commands em inglês. Consulte docs/phase_1_english_dataset.md
+> e ADR-005 para a política de mapeamento. O dataset sintético PT-BR descrito
+> neste documento é um piloto histórico de engenharia.
+
 **Projeto:** SLM especializada em comandos Android em Português Brasileiro
 **Branch:** `codex/phase1-fc`
 **Ambiente:** Neuromancer / RTX 5090

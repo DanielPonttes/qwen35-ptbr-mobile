@@ -1,5 +1,12 @@
 # Fase 1 — Desenho experimental
 
+> **Atualização de escopo (2026-08-30):** a evidência humana desta rodada
+> será o Fluent Speech Commands em inglês, conforme
+> docs/phase_1_english_dataset.md. As perguntas PT-BR abaixo permanecem como
+> objetivo histórico do projeto, mas não podem ser respondidas pelo corpus
+> FSC. O piloto sintético PT-BR continua válido somente para depuração do
+> harness.
+
 **Projeto:** SLM especializada em comandos Android em Português Brasileiro
 **Branch:** `codex/phase1-fc`
 **Ambiente:** Neuromancer, NVIDIA GeForce RTX 5090 32 GB
@@ -146,6 +153,28 @@ Fechadas nesta fase: Qwen3.5-2B como baseline principal, comparação base versu
 Pendentes antes do treinamento principal: tamanho e origem do dataset final, conjunto humano externo, escolha definitiva de B3/B4, confirmação documental das superfícies Android, política de confirmação por risco, grid de quantização e disponibilidade de dois ou mais tiers de aparelho.
 
 O celular só entra na ordem do projeto na integração Android e no benchmark. Portanto, nenhuma ação adicional no A54 é necessária para concluir esta Fase 1; mantê-lo carregando é suficiente.
+
+## 9.1. Addendum — decisão aplicada para o corpus humano em inglês
+
+Para responder à ausência de um teste humano Android/PT-BR independente, esta
+rodada passa a usar o Fluent Speech Commands como corpus humano principal em
+inglês. A implementação e as limitações estão em
+docs/phase_1_english_dataset.md e na ADR-005.
+
+O FSC é usado somente por meio do contrato restrito
+data/tools/android_tools_fsc.json. Quatro combinações de rótulos nativos são
+mapeadas para media_control e volume_adjust; todos os demais registros recebem
+abstain por política de escopo. Portanto, não se deve chamar essa derivação
+de anotação Android nativa.
+
+O experimento passa a ter duas leituras independentes:
+
+- split oficial: falantes disjuntos, frases potencialmente repetidas;
+- split lexical: frases disjuntas, falantes potencialmente repetidos.
+
+O artigo deve reportar essas condições separadamente e declarar que o modelo
+recebe a transcrição, não o áudio. Nenhuma conclusão sobre PT-BR humano,
+ASR end-to-end ou execução on-device é permitida sem um experimento adicional.
 
 ## 10. Artefatos e rastreabilidade
 

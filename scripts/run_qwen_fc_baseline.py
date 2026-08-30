@@ -20,14 +20,14 @@ from fc_common import load_json, load_registry
 from peft import PeftModel
 
 
-SYSTEM_PROMPT = """Você é um roteador estrito de comandos Android em português brasileiro.
+SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos Android em português brasileiro.
 Escolha no máximo uma ferramenta do catálogo fornecido.
 Responda somente com a chamada de ferramenta exigida pelo template ou com:
 {\"action\":\"abstain\",\"tool\":null,\"arguments\":{}}.
 Abstenha-se quando o pedido for ambíguo, estiver incompleto, fora do catálogo ou não puder ser executado com segurança.
 Não explique sua decisão e não invente argumentos."""
 
-CANONICAL_SYSTEM_PROMPT = """Você é um roteador estrito de comandos Android em português brasileiro.
+CANONICAL_SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos Android em português brasileiro.
 Escolha no máximo uma ferramenta do catálogo.
 Responda somente com JSON válido e exatamente estes campos: action, tool, arguments.
 Para uma ação válida use action=call, o nome da ferramenta e os argumentos exigidos.
@@ -36,6 +36,33 @@ Não explique a decisão, não use markdown e não invente argumentos.
 Catálogo de ferramentas:
 {catalog}
 """
+
+SYSTEM_PROMPT_EN = """You are a strict Android command router.
+Choose at most one tool from the provided catalog.
+Respond only with the tool call required by the template or:
+{\"action\":\"abstain\",\"tool\":null,\"arguments\":{}}.
+Abstain when the request is ambiguous, incomplete, unsupported, out of catalog, or unsafe.
+Do not explain your decision or invent arguments."""
+
+CANONICAL_SYSTEM_PROMPT_EN = """You are a strict Android command router.
+Choose at most one tool from the catalog.
+Respond only with valid JSON containing exactly these fields: action, tool, arguments.
+For a valid request use action=call, the tool name, and the required arguments.
+For an ambiguous, incomplete, unsupported, out-of-catalog, or unsafe request use action=abstain, tool=null, and arguments={}.
+Do not explain your decision, use markdown, or invent arguments.
+Tool catalog:
+{catalog}
+"""
+
+
+def build_system_prompt(locale: str, canonical: bool, catalog: str) -> str:
+    if locale == "en-US":
+        template = CANONICAL_SYSTEM_PROMPT_EN if canonical else SYSTEM_PROMPT_EN
+    elif locale == "pt-BR":
+        template = CANONICAL_SYSTEM_PROMPT_PTBR if canonical else SYSTEM_PROMPT_PTBR
+    else:
+        raise ValueError(f"locale sem prompt suportado: {locale}")
+    return template.replace("{catalog}", catalog) if canonical else template
 
 
 def as_openai_tools(registry: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
@@ -97,10 +124,11 @@ def tokenize_request(
     tools: list[dict[str, Any]],
     registry: dict[str, dict[str, Any]],
     prompt_mode: str,
+    locale: str,
 ) -> tuple[dict[str, torch.Tensor], str]:
     if prompt_mode == "canonical":
-        canonical_system = CANONICAL_SYSTEM_PROMPT.replace(
-            "{catalog}", compact_catalog(registry)
+        canonical_system = build_system_prompt(
+            locale, True, compact_catalog(registry)
         )
         messages = [
             {"role": "system", "content": canonical_system},
@@ -117,10 +145,12 @@ def tokenize_request(
             )
             return move_encoding_to_device(encoded, torch.device("cpu")), "canonical_no_thinking"
         except Exception:
-            fallback = canonical_system + "\nComando do usuário: " + text + "\nResposta:"
+            user_label = "User command" if locale == "en-US" else "Comando do usuário"
+            fallback = canonical_system + f"\n{user_label}: " + text + "\nResposta:"
             return move_encoding_to_device(tokenizer(fallback, return_tensors="pt"), torch.device("cpu")), "canonical_plain"
+    system_prompt = build_system_prompt(locale, False, compact_catalog(registry))
     messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": system_prompt},
         {"role": "user", "content": text},
     ]
     try:
@@ -147,7 +177,7 @@ def tokenize_request(
             return move_encoding_to_device(encoded, torch.device("cpu")), "tools_default"
         except Exception:
             fallback = (
-                SYSTEM_PROMPT
+                system_prompt
                 + "\nCatálogo JSON:\n"
                 + json.dumps(tools, ensure_ascii=False)
                 + "\nComando do usuário: "
@@ -178,6 +208,7 @@ def main() -> int:
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--adapter", default=None)
     parser.add_argument("--prompt-mode", choices=["tools", "canonical"], default="tools")
+    parser.add_argument("--locale", choices=["pt-BR", "en-US"], default="pt-BR")
     args = parser.parse_args()
 
     registry = load_registry(args.registry)
@@ -208,7 +239,7 @@ def main() -> int:
     with args.output.open("w", encoding="utf-8") as handle:
         for index, record in enumerate(records, start=1):
             encoded_cpu, template_mode = tokenize_request(
-                tokenizer, record["text"], tools, registry, args.prompt_mode
+                tokenizer, record["text"], tools, registry, args.prompt_mode, args.locale
             )
             encoded = {key: value.to(device) for key, value in encoded_cpu.items()}
             prompt_tokens = int(encoded["input_ids"].shape[-1])
@@ -228,6 +259,7 @@ def main() -> int:
                 "raw": raw,
                 "model": str(args.model),
                 "adapter": args.adapter,
+                "locale": args.locale,
                 "prompt_mode": args.prompt_mode,
                 "device": str(device),
                 "template_mode": template_mode,

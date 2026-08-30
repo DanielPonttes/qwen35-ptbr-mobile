@@ -128,17 +128,27 @@ def evaluate(
     invalid_examples: list[dict[str, Any]] = []
     by_tool: dict[str, Counter[str]] = defaultdict(Counter)
     by_split: dict[str, Counter[str]] = defaultdict(Counter)
+    by_mapping: dict[str, Counter[str]] = defaultdict(Counter)
     abstention_rows: list[tuple[bool, bool]] = []
 
     for identifier, gold_record in dataset.items():
         gold = gold_record.get("target")
         split = gold_record.get("split", "unknown")
+        metadata = gold_record.get("metadata", {})
+        mapping_group = (
+            metadata.get("mapping_rule", "unknown")
+            if isinstance(metadata, dict)
+            else "unknown"
+        )
+        by_mapping[mapping_group]["total"] += 1
         gold_action = gold.get("action") if isinstance(gold, dict) else None
         if gold_action == "call":
             call_total += 1
             by_tool[gold.get("tool")]["total"] += 1
+            by_mapping[mapping_group]["call_gold"] += 1
         elif gold_action == "abstain":
             abstain_total += 1
+            by_mapping[mapping_group]["abstain_gold"] += 1
 
         prediction_record = predictions.get(identifier)
         if prediction_record is None:
@@ -155,6 +165,7 @@ def evaluate(
         valid = parsed is not None and not validation_errors
         if valid:
             canonical_valid_count += 1
+            by_mapping[mapping_group]["valid"] += 1
         if not valid:
             if len(invalid_examples) < 25:
                 invalid_examples.append({"id": identifier, "errors": validation_errors})
@@ -166,8 +177,10 @@ def evaluate(
         if valid and canonical_target(parsed) == canonical_target(gold):
             exact_count += 1
             by_split[split]["exact"] += 1
+            by_mapping[mapping_group]["exact"] += 1
         if valid and predicted_action == gold_action:
             action_correct += 1
+            by_mapping[mapping_group]["action_correct"] += 1
         abstention_rows.append(
             (gold_action == "abstain", valid and predicted_action == "abstain")
         )
@@ -175,19 +188,25 @@ def evaluate(
             if valid and parsed["tool"] == gold.get("tool"):
                 tool_correct += 1
                 by_tool[gold["tool"]]["tool_correct"] += 1
+                by_mapping[mapping_group]["tool_correct"] += 1
                 if parsed["arguments"] == gold.get("arguments", {}):
                     argument_exact_given_tool += 1
                     by_tool[gold["tool"]]["argument_exact_given_tool"] += 1
+                    by_mapping[mapping_group]["argument_exact_given_tool"] += 1
             if valid and parsed["tool"] == gold.get("tool") and parsed["arguments"] == gold.get("arguments", {}):
                 argument_exact += 1
                 by_tool[gold["tool"]]["argument_exact"] += 1
+                by_mapping[mapping_group]["argument_exact"] += 1
         if gold_action == "abstain":
             if valid and predicted_action == "abstain":
                 abstain_true_positive += 1
+                by_mapping[mapping_group]["abstain_true_positive"] += 1
             else:
                 abstain_false_negative += 1
+                by_mapping[mapping_group]["abstain_false_negative"] += 1
         elif valid and predicted_action == "abstain":
             abstain_false_positive += 1
+            by_mapping[mapping_group]["abstain_false_positive"] += 1
 
     abstention_precision = rate(abstain_true_positive, abstain_true_positive + abstain_false_positive)
     abstention_recall = rate(abstain_true_positive, abstain_true_positive + abstain_false_negative)
@@ -209,6 +228,47 @@ def evaluate(
             "argument_exact_given_tool": rate(
                 counts["argument_exact_given_tool"], counts["tool_correct"]
             ),
+        }
+
+    per_mapping = {}
+    for mapping_rule in sorted(by_mapping):
+        counts = by_mapping[mapping_rule]
+        group_total = counts["total"]
+        group_call_total = counts["call_gold"]
+        group_tool_correct = counts["tool_correct"]
+        group_abstain_tp = counts["abstain_true_positive"]
+        group_abstain_fp = counts["abstain_false_positive"]
+        group_abstain_fn = counts["abstain_false_negative"]
+        group_precision = rate(group_abstain_tp, group_abstain_tp + group_abstain_fp)
+        group_recall = rate(group_abstain_tp, group_abstain_tp + group_abstain_fn)
+        if (
+            group_precision is None
+            or group_recall is None
+            or group_precision + group_recall == 0
+        ):
+            group_f1 = None
+        else:
+            group_f1 = round(
+                2 * group_precision * group_recall / (group_precision + group_recall),
+                6,
+            )
+        per_mapping[mapping_rule] = {
+            "records": group_total,
+            "call_gold": group_call_total,
+            "abstain_gold": counts["abstain_gold"],
+            "canonical_valid_rate": rate(counts["valid"], group_total),
+            "exact_match_rate": rate(counts["exact"], group_total),
+            "action_accuracy": rate(counts["action_correct"], group_total),
+            "tool_selection_accuracy": rate(group_tool_correct, group_call_total),
+            "argument_exact_accuracy": rate(
+                counts["argument_exact"], group_call_total
+            ),
+            "argument_exact_given_tool": rate(
+                counts["argument_exact_given_tool"], group_tool_correct
+            ),
+            "abstention_precision": group_precision,
+            "abstention_recall": group_recall,
+            "abstention_f1": group_f1,
         }
 
     metrics = {
@@ -265,6 +325,7 @@ def evaluate(
             "abstain_false_negative": abstain_false_negative,
         },
         "per_tool": per_tool,
+        "per_mapping_rule": per_mapping,
     }
 
 

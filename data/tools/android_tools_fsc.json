@@ -1,0 +1,47 @@
+{
+  "schema_version": "android-fsc-en/0.1.0",
+  "locale": "en-US",
+  "description": "Narrow Android-aligned contract derived from the Fluent Speech Commands benchmark.",
+  "execution_note": "This contract is an evaluation target. It does not grant Android permissions or execute actions.",
+  "provenance_note": "Only media-control and relative media-volume examples are mapped from the source labels. All other source intents are treated as unsupported and mapped to abstain by policy.",
+  "tools": [
+    {
+      "name": "media_control",
+      "description": "Controls the active media session.",
+      "android_surface": "MediaSessionManager",
+      "execution_mode": "media_session",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["play", "pause"],
+            "description": "Start or pause active media playback."
+          }
+        },
+        "required": ["action"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "volume_adjust",
+      "description": "Adjusts the media stream volume by one step.",
+      "android_surface": "AudioManager.adjustStreamVolume",
+      "execution_mode": "direct",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": ["up", "down"],
+            "description": "Whether to increase or decrease the media volume by one system step."
+          }
+        },
+        "required": ["direction"],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -26,7 +26,7 @@ from fc_common import load_registry
 from peft import LoraConfig, get_peft_model
 
 
-SYSTEM_PROMPT = """Você é um roteador estrito de comandos Android em português brasileiro.
+SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos Android em português brasileiro.
 Escolha no máximo uma ferramenta do catálogo.
 Responda somente com JSON válido e exatamente estes campos: action, tool, arguments.
 Para uma ação válida use action=call, o nome da ferramenta e os argumentos exigidos.
@@ -35,6 +35,24 @@ Não explique a decisão, não use markdown e não invente argumentos.
 Catálogo de ferramentas:
 {catalog}
 """
+
+SYSTEM_PROMPT_EN = """You are a strict Android command router.
+Choose at most one tool from the catalog.
+Respond only with valid JSON containing exactly these fields: action, tool, arguments.
+For a valid request use action=call, the tool name, and the required arguments.
+For an ambiguous, incomplete, unsupported, out-of-catalog, or unsafe request use action=abstain, tool=null, and arguments={}.
+Do not explain your decision, use markdown, or invent arguments.
+Tool catalog:
+{catalog}
+"""
+
+
+def build_system_prompt(locale: str, catalog: str) -> str:
+    if locale == "en-US":
+        return SYSTEM_PROMPT_EN.replace("{catalog}", catalog)
+    if locale == "pt-BR":
+        return SYSTEM_PROMPT_PTBR.replace("{catalog}", catalog)
+    raise ValueError(f"locale sem prompt suportado: {locale}")
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -168,6 +186,7 @@ def main() -> int:
     parser.add_argument("--lora-r", type=int, default=16)
     parser.add_argument("--lora-alpha", type=int, default=32)
     parser.add_argument("--seed", type=int, default=20260830)
+    parser.add_argument("--locale", choices=["pt-BR", "en-US"], default="pt-BR")
     args = parser.parse_args()
 
     random.seed(args.seed)
@@ -190,7 +209,7 @@ def main() -> int:
     pad_token_id = tokenizer.pad_token_id or tokenizer.eos_token_id
     if pad_token_id is None:
         raise SystemExit("tokenizer sem pad/eos token")
-    system_prompt = SYSTEM_PROMPT.replace("{catalog}", compact_catalog(registry))
+    system_prompt = build_system_prompt(args.locale, compact_catalog(registry))
     train_dataset = FCDataset(train_records, tokenizer, system_prompt, args.max_length)
     dev_dataset = FCDataset(dev_records, tokenizer, system_prompt, args.max_length)
     train_loader = DataLoader(
@@ -270,6 +289,7 @@ def main() -> int:
     dataset_digest = hashlib.sha256(args.dataset.read_bytes()).hexdigest()
     manifest = {
         "model": str(args.model),
+        "locale": args.locale,
         "dataset_sha256": dataset_digest,
         "dataset": str(args.dataset),
         "registry": str(args.registry),

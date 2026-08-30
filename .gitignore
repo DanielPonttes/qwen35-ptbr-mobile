@@ -16,3 +16,12 @@ results/qwen35_2b_lora_fc/
 results/qwen35_2b_lora_fc_seed*/
 results/archive/
 results/*.gguf
+# FSC is CC BY-NC-ND: derived transcripts/labels remain server-local and are
+# never accidentally committed or redistributed with this repository.
+data/external/fluent_speech_commands_android_fc*.jsonl
+
+# Model adapters and per-example predictions stay server-local; aggregate
+# metrics and experiment documentation remain versionable.
+results/fsc_en_qwen35_2b_lora_official_seed*/
+results/fsc_en_qwen35_2b_lora_phrase_disjoint_seed*/
+results/fsc_en_*predictions.jsonl
