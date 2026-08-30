@@ -1,0 +1,37 @@
+{
+  "dataset_name": "Fluent Speech Commands",
+  "locale": "en-US",
+  "task": "human-recorded spoken language understanding",
+  "archive_path": "/home/daniel/datasets/fluent_speech_commands/fluent.tar.gz",
+  "archive_sha256": "c9fd67f2efa078daa84daddcad2de937eb96581c140e3131ed8cd06fbae9ba1b",
+  "extracted_root": "/home/daniel/datasets/fluent_speech_commands/raw/fluent_speech_commands_dataset",
+  "records": 30043,
+  "speakers": 97,
+  "unique_intents": 31,
+  "splits": {
+    "train": {
+      "records": 23132,
+      "speakers": 77
+    },
+    "valid": {
+      "records": 3118,
+      "speakers": 10
+    },
+    "test": {
+      "records": 3793,
+      "speakers": 10
+    }
+  },
+  "audio": "16 kHz, mono, WAV",
+  "license": "CC BY-NC-ND 4.0; academic research only",
+  "source": {
+    "official_page": "https://fluent.ai/fluent-speech-commands-a-dataset-for-spoken-language-understanding-research/",
+    "archive_mirror": "https://huggingface.co/datasets/leo19941227/fluent_speech_commands",
+    "zenodo_record": "https://zenodo.org/records/11106540"
+  },
+  "caveats": [
+    "Human English speech, but smart-home/assistant domain rather than Android.",
+    "Do not use for commercial training, benchmarking, or product development under the stated license.",
+    "The archive is outside Git; this manifest records its provenance and checksum."
+  ]
+}

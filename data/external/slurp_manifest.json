@@ -1,0 +1,64 @@
+{
+  "dataset_name": "SLURP",
+  "locale": "en-US",
+  "task": "spoken language understanding text annotations with linked recordings",
+  "repository_path": "/home/daniel/datasets/slurp",
+  "repository_commit": "8eb16545762be97ace75334109d73824217311f1",
+  "text_records": 16521,
+  "intents": 93,
+  "scenarios": [
+    "alarm",
+    "audio",
+    "calendar",
+    "cooking",
+    "datetime",
+    "email",
+    "general",
+    "iot",
+    "lists",
+    "music",
+    "news",
+    "play",
+    "qa",
+    "recommendation",
+    "social",
+    "takeaway",
+    "transport",
+    "weather"
+  ],
+  "splits": {
+    "train": {
+      "records": 11514,
+      "intents": 91
+    },
+    "devel": {
+      "records": 2033,
+      "intents": 71
+    },
+    "test": {
+      "records": 2974,
+      "intents": 77
+    },
+    "train_synthetic": {
+      "records": 19711,
+      "intents": 98
+    }
+  },
+  "files": {
+    "train": "dataset/slurp/train.jsonl",
+    "devel": "dataset/slurp/devel.jsonl",
+    "test": "dataset/slurp/test.jsonl",
+    "train_synthetic": "dataset/slurp/train_synthetic.jsonl"
+  },
+  "human_text_note": "Use train/devel/test for human-origin annotations; train_synthetic.jsonl is explicitly synthetic and must be kept separate.",
+  "audio_note": "Original repository provides a script for optional acoustic data download; audio is licensed CC BY-NC 4.0, text CC BY 4.0.",
+  "source": {
+    "repository": "https://github.com/pswietojanski/slurp",
+    "paper": "https://arxiv.org/abs/2011.13205"
+  },
+  "caveats": [
+    "English human spoken-language data, not Android-specific.",
+    "Keep the synthetic split separate from human-origin splits.",
+    "The checkout is outside Git; this manifest records the exact repository commit."
+  ]
+}
