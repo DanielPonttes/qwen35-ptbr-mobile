@@ -3,7 +3,7 @@
 **Projeto:** SLM especializada em comandos Android em Português Brasileiro  
 **Branch:** `codex/phase1-fc`  
 **Ambiente de trabalho:** Neuromancer / RTX 5090  
-**Status:** infraestrutura da Fase 1 implementada; treinamento e benchmark Android ainda não iniciados.
+**Status:** infraestrutura, piloto LoRA e smoke test GGUF implementados; benchmark Android ainda pendente.
 
 ## 1. Objetivo desta fase
 
@@ -91,16 +91,41 @@ python3 scripts/fc_eval.py \
 
 Cada linha de predição deve conter `id` e `prediction` como objeto canônico, ou `id` e `raw` como string. O parser também reconhece o formato funcional observado no Qwen (`<function=...><parameter=...>`), mas essa conversão é contabilizada como não-JSON.
 
-## 7. Próximas atividades sem celular
+## 7. Integração de inferência sem celular
 
-1. Criar o ambiente de treinamento no Neuromancer com versões fixadas de PyTorch, Transformers, PEFT e Accelerate.
-2. Auditar manualmente uma amostra do dataset e complementar exemplos de negação, variações regionais e comandos incompletos.
-3. Executar baseline zero-shot no Qwen3.5-2B usando exatamente o catálogo e o prompt do protocolo.
-4. Treinar um piloto LoRA/QLoRA no 5090, registrar seed, hash do dataset, hiperparâmetros e checkpoint.
-5. Avaliar Qwen3.5-2B e o baseline generalista no mesmo harness; adicionar LFM2.5 ou Octopus somente após resolver checkpoint, licença e parser.
-6. Converter o candidato aprovado para a rota Android e só então instalar a build no aparelho.
+O adapter LoRA foi exportado para `results/qwen35_2b_lora_fc.gguf` com `scripts/convert_qwen35_lora_gguf.py`. O wrapper corrige, em uma visão temporária somente de configuração, o campo `text_config.architectures=null` do checkpoint Qwen3.5; o cache original não é alterado. O arquivo tem 33.664.704 bytes e SHA-256 `cc1b794d20220c9267a92cfac7b173e15e776fbac5ce01b6a5993ac9fc1c2ca6`.
 
-## 8. Gates e limites
+O carregamento conjunto da quantização Q4_K_M do modelo base com o adapter foi verificado no `llama.cpp` do commit `a66d50588`, com CUDA habilitado no RTX 5090. `scripts/run_llama_fc_smoke.py` reproduz a validação usando o schema canônico e confirmou uma chamada e uma abstenção, ambas com JSON válido e sem erros do contrato. O smoke test é uma verificação de integração, não substitui a avaliação de 120 exemplos nem o teste no aparelho.
+
+Exemplo:
+
+```bash
+python3 scripts/convert_qwen35_lora_gguf.py \
+  --base /caminho/para/Qwen3.5-2B \
+  --lora results/qwen35_2b_lora_fc \
+  --outfile results/qwen35_2b_lora_fc.gguf \
+  --outtype f16
+
+PYTHONPATH=scripts python3 scripts/run_llama_fc_smoke.py \
+  --base-hf /caminho/para/Qwen3.5-2B \
+  --base-gguf /caminho/para/qwen35-2b-q4_k_m.gguf \
+  --lora results/qwen35_2b_lora_fc.gguf \
+  --record-id pos_bluetooth_set_state_04_05 \
+  --output results/qwen35_2b_lora_fc_llama_smoke.json
+```
+
+O GGUF e os pesos do adapter continuam ignorados pelo Git; seus hashes e parâmetros devem acompanhar o registro experimental quando forem transferidos para outro servidor.
+
+## 8. Próximas atividades sem celular
+
+1. Auditar manualmente uma amostra do dataset e complementar exemplos de negação, variações regionais, comandos incompletos e composição.
+2. Avaliar um conjunto humano/independente, com separação por intenção semântica e casos fora do template.
+3. Implementar no app Android o parser, a validação duplicada e o despachante de dez ferramentas, sem executar ações não autorizadas.
+4. Compilar o APK e testar o caminho local no servidor; só instalar no aparelho quando a bateria estiver carregada e o build estiver pronto.
+5. Medir no A54 TTFT, tokens/s, latência fim a fim, RSS, temperatura e energia com versões e logs rastreáveis.
+6. Comparar Qwen3.5-2B com LFM2.5 ou Octopus somente após resolver checkpoint, licença, parser e contrato equivalente.
+
+## 9. Gates e limites
 
 - Nenhuma métrica antiga de ENEM, chat, PPL ou projeção de banda será reutilizada como resultado de FC.
 - Nenhum número de aparelho será publicado sem logs, configuração, versão do APK, modelo, quantização e dispositivo rastreáveis.

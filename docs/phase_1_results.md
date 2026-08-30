@@ -54,10 +54,37 @@ O teste reserva a sexta formulação textual para avaliação, mas continua send
 
 Nenhuma métrica de latência, memória, energia ou temperatura do telefone foi coletada. Essa etapa depende do aparelho carregado e da implementação Android do despachante.
 
-## 4. Artefatos
+## 4. Exportação e smoke test no `llama.cpp`
+
+O adapter foi exportado para GGUF F16 com `scripts/convert_qwen35_lora_gguf.py`. O wrapper cria somente uma visão temporária do `config.json`, preenchendo `text_config.architectures` a partir de `architectures`; isso contorna uma incompatibilidade do conversor local com o checkpoint Qwen3.5 sem modificar o cache do modelo.
+
+- arquivo: `results/qwen35_2b_lora_fc.gguf`;
+- tamanho: 33.664.704 bytes;
+- SHA-256: `cc1b794d20220c9267a92cfac7b173e15e776fbac5ce01b6a5993ac9fc1c2ca6`;
+- base de inferência: `models/qwen35-2b-q4_k_m.gguf`;
+- runtime: `llama.cpp` commit `a66d50588`, CUDA no RTX 5090.
+
+Com `scripts/run_llama_fc_smoke.py`, o modelo base Q4_K_M e o adapter foram carregados juntos com o schema JSON. Dois casos da divisão de teste passaram:
+
+| Caso | Saída | Validação |
+|---|---|---|
+| `pos_bluetooth_set_state_04_05` | `bluetooth_set_state(enabled=true)` | JSON e contrato válidos |
+| `neg_missing_target_00_05` | `abstain` | JSON e contrato válidos |
+
+Esse smoke test valida a cadeia HF → LoRA → GGUF → `llama.cpp` → JSON, mas não é uma avaliação de generalização nem uma medição Android.
+
+## 5. Verificação da base Android sem aparelho
+
+O servidor não tinha um SDK Android válido: `app/local.properties` apontava para `/tmp/android-sdk`. Foi instalado um SDK local do usuário em `/home/daniel/android-sdk`, com Build-Tools 35, plataforma Android 35 e Platform-Tools. A configuração permanece local e ignorada pelo Git.
+
+O comando `cd app && ./gradlew test assembleDebug --no-daemon --console=plain` terminou com `BUILD SUCCESSFUL`. A saída está em `app/app/build/outputs/apk/debug/app-debug.apk`; ela confirma a compilação da base existente, não a execução do fluxo FC. O app atual ainda é orientado a chat, portanto não foi instalado no A54 e nenhum número Android foi produzido.
+
+## 6. Artefatos
 
 - base: `results/qwen35_2b_base_canonical_fc_test.predictions.jsonl` e `.metrics.json`;
 - adapter: `results/qwen35_2b_lora_fc_test.predictions.jsonl` e `.metrics.json`;
 - manifesto do treino: `results/qwen35_2b_lora_fc/training_manifest.json`;
 - manifesto do dataset: `data/generated/fc_dataset.manifest.json`;
-- resultados da divisão anterior, arquivados em `results/archive/case_split/`.
+- resultados da divisão anterior, arquivados em `results/archive/case_split/`;
+- conversor: `scripts/convert_qwen35_lora_gguf.py`;
+- smoke test: `scripts/run_llama_fc_smoke.py` e os dois relatórios `results/qwen35_2b_lora_fc_llama_smoke*.json`.

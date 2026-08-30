@@ -14,3 +14,4 @@ local.properties
 .idea/
 results/qwen35_2b_lora_fc/
 results/archive/
+results/*.gguf
