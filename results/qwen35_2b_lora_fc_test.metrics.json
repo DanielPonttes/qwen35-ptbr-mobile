@@ -1,0 +1,92 @@
+{
+  "counts": {
+    "abstain_false_negative": 1,
+    "abstain_false_positive": 0,
+    "abstain_gold": 60,
+    "abstain_true_positive": 59,
+    "call_gold": 60
+  },
+  "dataset": "/home/daniel/qwen35-ptbr-mobile/data/generated/fc_dataset.jsonl",
+  "duplicate_predictions": 0,
+  "extra_predictions": 0,
+  "invalid_examples_sample": [],
+  "metrics": {
+    "abstention_f1": 0.991596,
+    "abstention_precision": 1.0,
+    "abstention_recall": 0.983333,
+    "action_accuracy": 0.991667,
+    "argument_exact_accuracy": 1.0,
+    "argument_exact_given_tool": 1.0,
+    "canonical_valid_rate": 1.0,
+    "exact_match_rate": 0.991667,
+    "json_valid_rate": 1.0,
+    "parseable_rate": 1.0,
+    "tool_selection_accuracy": 1.0
+  },
+  "missing_predictions": 0,
+  "per_tool": {
+    "airplane_mode_set_state": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "alarm_create": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "app_open": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "bluetooth_set_state": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "brightness_set": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "flashlight_set": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "location_set_state": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "media_control": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "volume_set": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    },
+    "wifi_set_state": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 6,
+      "tool_selection_accuracy": 1.0
+    }
+  },
+  "predictions": "results/qwen35_2b_lora_fc_test.predictions.jsonl",
+  "records": 120,
+  "split": "test"
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/android-ptbr-fc/fc_example.schema.json",
+  "title": "Exemplo do dataset de function calling Android",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "split", "locale", "text", "target", "metadata"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "split": {"enum": ["train", "dev", "test"]},
+    "locale": {"const": "pt-BR"},
+    "text": {"type": "string", "minLength": 3},
+    "target": {"$ref": "fc_output.schema.json"},
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "case_id", "variant_id", "generator_version"],
+      "properties": {
+        "kind": {"enum": ["call", "abstain"]},
+        "tool": {"type": ["string", "null"]},
+        "case_id": {"type": "string"},
+        "variant_id": {"type": "integer", "minimum": 0},
+        "generator_version": {"type": "string"}
+      }
+    }
+  }
+}

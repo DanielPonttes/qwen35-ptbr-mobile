@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/android-ptbr-fc/fc_output.schema.json",
+  "title": "Saída canônica de function calling Android",
+  "description": "Formato estrito usado para avaliar seleção de ferramenta e argumentos.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "tool", "arguments"],
+      "properties": {
+        "action": {"const": "call"},
+        "tool": {"type": "string", "minLength": 1},
+        "arguments": {"type": "object"}
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "tool", "arguments"],
+      "properties": {
+        "action": {"const": "abstain"},
+        "tool": {"type": "null"},
+        "arguments": {"type": "object", "maxProperties": 0}
+      }
+    }
+  ]
+}

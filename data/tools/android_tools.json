@@ -1,0 +1,212 @@
+{
+  "schema_version": "android-ptbr-fc/0.1.0",
+  "locale": "pt-BR",
+  "description": "Contrato experimental de ferramentas para comandos Android em português brasileiro.",
+  "execution_note": "Este catálogo define a saída avaliada; não concede permissões Android nem executa ações por si só.",
+  "tools": [
+    {
+      "name": "wifi_set_state",
+      "description": "Solicita ativação ou desativação do Wi-Fi.",
+      "android_surface": "Settings.Panel.ACTION_WIFI",
+      "execution_mode": "settings_panel",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Verdadeiro para ativar e falso para desativar."
+          }
+        },
+        "required": ["enabled"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "bluetooth_set_state",
+      "description": "Solicita ativação ou desativação do Bluetooth.",
+      "android_surface": "Settings.Panel.ACTION_BLUETOOTH",
+      "execution_mode": "settings_panel",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Verdadeiro para ativar e falso para desativar."
+          }
+        },
+        "required": ["enabled"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "airplane_mode_set_state",
+      "description": "Solicita ativação ou desativação do modo avião.",
+      "android_surface": "Settings.Panel.ACTION_WIRELESS",
+      "execution_mode": "settings_panel",
+      "risk": "medium",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Verdadeiro para ativar e falso para desativar."
+          }
+        },
+        "required": ["enabled"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "location_set_state",
+      "description": "Solicita ativação ou desativação da localização.",
+      "android_surface": "Settings.ACTION_LOCATION_SOURCE_SETTINGS",
+      "execution_mode": "settings_panel",
+      "risk": "medium",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Verdadeiro para ativar e falso para desativar."
+          }
+        },
+        "required": ["enabled"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "brightness_set",
+      "description": "Define o brilho da tela em percentual.",
+      "android_surface": "Settings.System.SCREEN_BRIGHTNESS",
+      "execution_mode": "direct_or_permissioned",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Percentual do brilho, entre 0 e 100."
+          }
+        },
+        "required": ["level"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "volume_set",
+      "description": "Define o volume de um fluxo de áudio.",
+      "android_surface": "AudioManager.setStreamVolume",
+      "execution_mode": "direct",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "stream": {
+            "type": "string",
+            "enum": ["media", "ring", "alarm"],
+            "description": "Fluxo de mídia, toque ou alarme."
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Percentual do volume, entre 0 e 100."
+          }
+        },
+        "required": ["stream", "level"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "flashlight_set",
+      "description": "Solicita ativação ou desativação da lanterna.",
+      "android_surface": "CameraManager.setTorchMode",
+      "execution_mode": "direct",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Verdadeiro para ligar e falso para desligar."
+          }
+        },
+        "required": ["enabled"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "app_open",
+      "description": "Abre um aplicativo comum no aparelho.",
+      "android_surface": "PackageManager.getLaunchIntentForPackage",
+      "execution_mode": "intent",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "app": {
+            "type": "string",
+            "enum": ["camera", "settings", "phone", "messages", "maps", "calendar"],
+            "description": "Aplicativo a ser aberto."
+          }
+        },
+        "required": ["app"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media_control",
+      "description": "Controla a reprodução de mídia ativa.",
+      "android_surface": "MediaSessionManager",
+      "execution_mode": "media_session",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["play", "pause", "resume", "stop", "next", "previous"],
+            "description": "Ação de reprodução."
+          }
+        },
+        "required": ["action"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm_create",
+      "description": "Cria um alarme local em horário definido.",
+      "android_surface": "AlarmClock.ACTION_SET_ALARM",
+      "execution_mode": "intent",
+      "risk": "low",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "hour": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 23,
+            "description": "Hora local entre 0 e 23."
+          },
+          "minute": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 59,
+            "description": "Minuto entre 0 e 59."
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 80,
+            "description": "Rótulo opcional do alarme."
+          }
+        },
+        "required": ["hour", "minute"],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

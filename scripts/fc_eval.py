@@ -1,0 +1,215 @@
+#!/usr/bin/env python3
+"""Calcula métricas reproduzíveis para predições de function calling."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from collections import Counter, defaultdict
+from pathlib import Path
+from typing import Any
+
+from fc_common import canonical_target, load_registry, parse_prediction_record, validate_target
+
+
+def read_jsonl(path: Path) -> list[Any]:
+    records: list[Any] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            if not line.strip():
+                continue
+            try:
+                records.append(json.loads(line))
+            except json.JSONDecodeError as exc:
+                records.append({"__line__": line_number, "__error__": exc.msg})
+    return records
+
+
+def rate(numerator: int, denominator: int) -> float | None:
+    if denominator == 0:
+        return None
+    return round(numerator / denominator, 6)
+
+
+def evaluate(
+    dataset_path: Path,
+    predictions_path: Path,
+    registry_path: Path,
+    split: str | None = None,
+) -> dict[str, Any]:
+    registry = load_registry(registry_path)
+    dataset_records = read_jsonl(dataset_path)
+    if split is not None:
+        dataset_records = [record for record in dataset_records if record.get("split") == split]
+    prediction_records = read_jsonl(predictions_path)
+    dataset = {
+        record.get("id"): record
+        for record in dataset_records
+        if isinstance(record, dict) and isinstance(record.get("id"), str)
+    }
+    predictions: dict[str, Any] = {}
+    duplicate_predictions = 0
+    for record in prediction_records:
+        if not isinstance(record, dict) or not isinstance(record.get("id"), str):
+            continue
+        if record["id"] in predictions:
+            duplicate_predictions += 1
+        predictions[record["id"]] = record
+
+    total = len(dataset)
+    parsed_count = 0
+    json_valid_count = 0
+    canonical_valid_count = 0
+    exact_count = 0
+    action_correct = 0
+    call_total = 0
+    tool_correct = 0
+    argument_exact = 0
+    argument_exact_given_tool = 0
+    abstain_total = 0
+    abstain_true_positive = 0
+    abstain_false_positive = 0
+    abstain_false_negative = 0
+    invalid_examples: list[dict[str, Any]] = []
+    by_tool: dict[str, Counter[str]] = defaultdict(Counter)
+    by_split: dict[str, Counter[str]] = defaultdict(Counter)
+
+    for identifier, gold_record in dataset.items():
+        gold = gold_record.get("target")
+        split = gold_record.get("split", "unknown")
+        gold_action = gold.get("action") if isinstance(gold, dict) else None
+        if gold_action == "call":
+            call_total += 1
+            by_tool[gold.get("tool")]["total"] += 1
+        elif gold_action == "abstain":
+            abstain_total += 1
+
+        prediction_record = predictions.get(identifier)
+        if prediction_record is None:
+            parsed = None
+            is_json = False
+            parse_error = "predição ausente"
+        else:
+            parsed, is_json, parse_error = parse_prediction_record(prediction_record)
+        if parsed is not None:
+            parsed_count += 1
+            if is_json:
+                json_valid_count += 1
+        validation_errors = validate_target(parsed, registry) if parsed is not None else [parse_error or "predição nula"]
+        valid = parsed is not None and not validation_errors
+        if valid:
+            canonical_valid_count += 1
+        if not valid:
+            if len(invalid_examples) < 25:
+                invalid_examples.append({"id": identifier, "errors": validation_errors})
+            predicted_action = None
+        else:
+            predicted_action = parsed["action"]
+            by_split[split]["valid"] += 1
+
+        if valid and canonical_target(parsed) == canonical_target(gold):
+            exact_count += 1
+            by_split[split]["exact"] += 1
+        if valid and predicted_action == gold_action:
+            action_correct += 1
+        if gold_action == "call":
+            if valid and parsed["tool"] == gold.get("tool"):
+                tool_correct += 1
+                by_tool[gold["tool"]]["tool_correct"] += 1
+                if parsed["arguments"] == gold.get("arguments", {}):
+                    argument_exact_given_tool += 1
+                    by_tool[gold["tool"]]["argument_exact_given_tool"] += 1
+            if valid and parsed["tool"] == gold.get("tool") and parsed["arguments"] == gold.get("arguments", {}):
+                argument_exact += 1
+                by_tool[gold["tool"]]["argument_exact"] += 1
+        if gold_action == "abstain":
+            if valid and predicted_action == "abstain":
+                abstain_true_positive += 1
+            else:
+                abstain_false_negative += 1
+        elif valid and predicted_action == "abstain":
+            abstain_false_positive += 1
+
+    abstention_precision = rate(abstain_true_positive, abstain_true_positive + abstain_false_positive)
+    abstention_recall = rate(abstain_true_positive, abstain_true_positive + abstain_false_negative)
+    if abstention_precision is None or abstention_recall is None or abstention_precision + abstention_recall == 0:
+        abstention_f1 = None
+    else:
+        abstention_f1 = round(
+            2 * abstention_precision * abstention_recall / (abstention_precision + abstention_recall),
+            6,
+        )
+
+    per_tool = {}
+    for tool in sorted(registry):
+        counts = by_tool[tool]
+        per_tool[tool] = {
+            "count": counts["total"],
+            "tool_selection_accuracy": rate(counts["tool_correct"], counts["total"]),
+            "argument_exact_accuracy": rate(counts["argument_exact"], counts["total"]),
+            "argument_exact_given_tool": rate(
+                counts["argument_exact_given_tool"], counts["tool_correct"]
+            ),
+        }
+
+    return {
+        "dataset": str(dataset_path),
+        "predictions": str(predictions_path),
+        "split": split,
+        "records": total,
+        "missing_predictions": len(set(dataset) - set(predictions)),
+        "extra_predictions": len(set(predictions) - set(dataset)),
+        "duplicate_predictions": duplicate_predictions,
+        "invalid_examples_sample": invalid_examples,
+        "metrics": {
+            "parseable_rate": rate(parsed_count, total),
+            "json_valid_rate": rate(json_valid_count, total),
+            "canonical_valid_rate": rate(canonical_valid_count, total),
+            "exact_match_rate": rate(exact_count, total),
+            "action_accuracy": rate(action_correct, total),
+            "tool_selection_accuracy": rate(tool_correct, call_total),
+            "argument_exact_accuracy": rate(argument_exact, call_total),
+            "argument_exact_given_tool": rate(argument_exact_given_tool, tool_correct),
+            "abstention_precision": abstention_precision,
+            "abstention_recall": abstention_recall,
+            "abstention_f1": abstention_f1,
+        },
+        "counts": {
+            "call_gold": call_total,
+            "abstain_gold": abstain_total,
+            "abstain_true_positive": abstain_true_positive,
+            "abstain_false_positive": abstain_false_positive,
+            "abstain_false_negative": abstain_false_negative,
+        },
+        "per_tool": per_tool,
+    }
+
+
+def main() -> int:
+    root = Path(__file__).resolve().parents[1]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--dataset",
+        type=Path,
+        default=root / "data" / "generated" / "fc_dataset.jsonl",
+    )
+    parser.add_argument("--predictions", type=Path, required=True)
+    parser.add_argument(
+        "--registry",
+        type=Path,
+        default=root / "data" / "tools" / "android_tools.json",
+    )
+    parser.add_argument("--split", choices=["train", "dev", "test"], default=None)
+    parser.add_argument("--output", type=Path, default=None)
+    args = parser.parse_args()
+    report = evaluate(args.dataset, args.predictions, args.registry, args.split)
+    serialized = json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    if args.output is not None:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(serialized, encoding="utf-8")
+    print(serialized, end="")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
