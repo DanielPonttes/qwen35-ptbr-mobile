@@ -1,0 +1,1000 @@
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "toca {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "toca {song} do {artist}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}, {"name": "artist", "examples": ["tom jobim", "toquinho", "chico buarque", "jorge ben"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "coloca {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "coloca {song} do {artist}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}, {"name": "artist", "examples": ["tom jobim", "toquinho", "chico buarque", "jorge ben"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "bota {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "manda {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "quero ouvir {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "tô a fim de ouvir {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "pode tocar {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "pode botar {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "pode colocar {song} do {artist}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}, {"name": "artist", "examples": ["tom jobim", "toquinho", "chico buarque", "jorge ben"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "começa {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "inicia {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "reproduz {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "reproduz a música {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "toca a música {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "manda ver {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "solta {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "toca aí {song} do {artist}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}, {"name": "artist", "examples": ["tom jobim", "toquinho", "chico buarque", "jorge ben"]}]}
+{"intent_id": "media:play_song", "domain": "media", "lang": "pt-BR", "template": "quero a {song}", "slots": [{"name": "song", "examples": ["garota de ipanema", "aquarela", "construção", "país tropical"]}]}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "pausa", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "pausa a música", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "pausa a canção", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "pausa a reprodução", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "pausa o som", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "pausa por favor", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "aperta o pause", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "coloca em pausa", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "para a música", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "para a canção", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "para de tocar", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "para o som", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "para a reprodução", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "interrompe a música", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "suspende a reprodução", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "segura aí a música", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "pode pausar a música", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "podia parar isso", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "pausa um pouco", "slots": []}
+{"intent_id": "media:pause_playback", "domain": "media", "lang": "pt-BR", "template": "dá uma pausa", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "retoma", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "retoma a música", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "retoma a canção", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "retoma a reprodução", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "continua tocando", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "continua a música", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "segue com a música", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "deixa tocando", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "volta a tocar", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "começa a tocar de novo", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "prossegue com a canção", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "tira do pause", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "tira a música do pause", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "aperta o play de novo", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "vai com a música", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "retoma o som", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "volta pra música", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "deixa rolando", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "música no ar de novo", "slots": []}
+{"intent_id": "media:resume_playback", "domain": "media", "lang": "pt-BR", "template": "bota a música pra tocar de novo", "slots": []}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "coloca o volume em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "bota o volume em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "aumenta o volume pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "abaixa o volume pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "volume {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "volume em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "muda o volume pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "deixa o volume em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "manda o volume pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "ajusta o volume pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "leva o volume pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "regula o volume pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "define o volume em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "sobe pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "diminui pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "aumenta pra {level} por favor", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "baixa o volume pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "seta o volume em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "pode colocar o volume em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:set_volume", "domain": "media", "lang": "pt-BR", "template": "podia deixar isso em {level} por cento", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "pula", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "pula essa", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "pula essa música", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "pula essa faixa", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "próxima", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "próxima música", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "próxima faixa", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "toca a próxima música", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "toca a próxima faixa", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "passa pra próxima", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "avança", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "avança pra próxima", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "pra frente", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "avança rápido", "slots": []}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "pula {count} faixas", "slots": [{"name": "count", "examples": ["1", "2", "3", "5"]}]}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "pula {count} músicas", "slots": [{"name": "count", "examples": ["1", "2", "3", "5"]}]}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "pula {count}", "slots": [{"name": "count", "examples": ["1", "2", "3", "5"]}]}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "avança {count} faixas", "slots": [{"name": "count", "examples": ["1", "2", "3", "5"]}]}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "passa {count} músicas pra frente", "slots": [{"name": "count", "examples": ["1", "2", "3", "5"]}]}
+{"intent_id": "media:skip_track", "domain": "media", "lang": "pt-BR", "template": "avança em {count}", "slots": [{"name": "count", "examples": ["1", "2", "3", "5"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "coloca um timer pra {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "coloca um timer de {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "define um timer pra {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "inicia um timer pra {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "começa um timer de {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "timer de {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "cria um timer pra {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "contagem regressiva {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "conta {duration} pra trás", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "me lembra em {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "coloca um timer pra {duration} pro {label}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}, {"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "coloca um timer de {duration} pro {label}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}, {"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "coloca um timer do {label} pra {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}, {"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "inicia um timer de {duration} pro {label}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}, {"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "timer {duration} chamado {label}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}, {"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "pode colocar um timer pra {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "podia colocar um timer de {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "por favor inicia um timer pra {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "dispara um timer de {duration} pro {label}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}, {"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:set_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "manda ver um timer de {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "30 segundos", "1 hora"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "cancela o timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "cancela timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "para o timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "para timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "encerra o timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "mata o timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "deleta o timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "remove o timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "aborta o timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "cancela a contagem regressiva", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "cancela o timer do {label}", "slots": [{"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "para o timer do {label}", "slots": [{"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "encerra o timer do {label}", "slots": [{"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "deleta o timer do {label}", "slots": [{"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "remove o timer do {label}", "slots": [{"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "mata o timer do {label}", "slots": [{"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "pode cancelar o timer", "slots": []}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "por favor para o timer do {label}", "slots": [{"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "manda embora o timer do {label}", "slots": [{"name": "label", "examples": ["macarrão", "roupa", "ovos", "chá"]}]}
+{"intent_id": "timers_alarms:cancel_timer", "domain": "timers_alarms", "lang": "pt-BR", "template": "se livra do timer", "slots": []}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "bota um alarme pras {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "bota um alarme às {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "coloca um alarme pras {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "alarme pras {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "alarme às {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "me acorda às {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "me acorda às {time} por favor", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "cria um alarme pras {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "agenda um alarme pras {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "novo alarme às {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "bota um alarme pras {time} pro {label}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}, {"name": "label", "examples": ["trabalho", "academia", "reunião", "escola"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "bota um alarme do {label} às {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}, {"name": "label", "examples": ["trabalho", "academia", "reunião", "escola"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "me acorda às {time} pro {label}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}, {"name": "label", "examples": ["trabalho", "academia", "reunião", "escola"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "alarme às {time} pro {label}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}, {"name": "label", "examples": ["trabalho", "academia", "reunião", "escola"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "alarme chamado {label} às {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}, {"name": "label", "examples": ["trabalho", "academia", "reunião", "escola"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "pode botar um alarme pras {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "podia me acordar às {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "por favor bota um alarme pras {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "toca pra mim às {time}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}]}
+{"intent_id": "timers_alarms:set_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "me levanta às {time} pro {label}", "slots": [{"name": "time", "examples": ["7 da manhã", "6:30 da manhã", "às 8 da manhã", "meio-dia"]}, {"name": "label", "examples": ["trabalho", "academia", "reunião", "escola"]}]}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "lista meus alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "lista alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "mostra meus alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "mostra os alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "me mostra meus alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "que alarmes eu tenho", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "que alarmes estão configurados", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "me diz meus alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "me diz que alarmes tenho", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "quais alarmes estão ativos", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "vê todos meus alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "exibe meus alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "exibe todos os alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "tem algum alarme", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "tem algum alarme aí", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "eu tenho alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "lista de alarmes por favor", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "me dá a lista de alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "lê meus alarmes", "slots": []}
+{"intent_id": "timers_alarms:list_alarms", "domain": "timers_alarms", "lang": "pt-BR", "template": "o que tem na lista de alarmes", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "soneca", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "soneca no alarme", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "soneca alarme", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "aperta o soneca", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "clica no soneca", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "dá uma soneca", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "adia o alarme", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "atrasa o alarme", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "mais cinco minutinhos", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "só mais uns minutos", "slots": []}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "soneca de {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "soneca no alarme por {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "soneca {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "adia o alarme {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "atrasa o alarme {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "me dá mais {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "me deixa dormir mais {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "pode dar uma soneca de {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "soneca pra mim {duration}", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "timers_alarms:snooze_alarm", "domain": "timers_alarms", "lang": "pt-BR", "template": "empurra o alarme {duration} pra frente", "slots": [{"name": "duration", "examples": ["5 minutos", "10 minutos", "15 minutos", "9 minutos"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "luzes ligadas", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "liga as luzes", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "acende as luzes", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "acende a luz", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "liga a luz", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "ilumina o ambiente", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "clareia aí", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "aperta o interruptor", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "liga a iluminação", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "acende essa luz", "slots": []}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "liga as luzes da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "acende as luzes da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "liga a luz da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "luzes ligadas na {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "acende a luz da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "ilumina a {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "pode ligar as luzes da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "por favor liga as luzes na {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "acende aí a {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_on", "domain": "smarthome", "lang": "pt-BR", "template": "clareia a {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "luzes desligadas", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "desliga as luzes", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "apaga as luzes", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "apaga a luz", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "desliga a luz", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "escurece o ambiente", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "tira a luz", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "desliga o interruptor", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "desliga a iluminação", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "apaga essa luz", "slots": []}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "desliga as luzes da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "apaga as luzes da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "desliga a luz da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "luzes desligadas na {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "apaga a luz da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "escurece a {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "pode desligar as luzes da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "por favor apaga as luzes na {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "apaga aí a {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lights_off", "domain": "smarthome", "lang": "pt-BR", "template": "tira a luz da {room}", "slots": [{"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "coloca o brilho em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "define o brilho em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "abaixa as luzes pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "abaixa pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "aumenta as luzes pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "brilho {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "muda o brilho pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "ajusta as luzes pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "bota as luzes em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "deixa as luzes em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "coloca as luzes da {room} em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "abaixa as luzes da {room} pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "aumenta as luzes da {room} pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "coloca o brilho na {room} em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "define o brilho da {room} em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "muda as luzes da {room} pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "pode colocar as luzes em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "por favor abaixa as luzes da {room} pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "bota as luzes em {level} por cento", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "smarthome:set_brightness_light", "domain": "smarthome", "lang": "pt-BR", "template": "desce as luzes da {room} pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "coloca o termostato em {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "define o termostato em {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "coloca a temperatura em {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "define a temperatura em {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "aumenta o aquecimento pra {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "abaixa o aquecimento pra {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "deixa em {temperature} graus", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "bota em {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "termostato {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "muda o termostato pra {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "coloca o termostato da {room} em {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "coloca a temperatura na {room} em {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "deixa a {room} a {temperature} graus", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "aumenta o aquecimento na {room} pra {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "abaixa o aquecimento na {room} pra {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "pode colocar o termostato em {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "por favor deixa a {temperature} graus", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "manda o aquecimento pra {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "aquece a {room} a {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:set_thermostat", "domain": "smarthome", "lang": "pt-BR", "template": "esfria a {room} pra {temperature}", "slots": [{"name": "temperature", "examples": ["22", "19", "20", "25"]}, {"name": "room", "examples": ["cozinha", "quarto", "sala", "banheiro"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "tranca a porta", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "tranca as portas", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "tranca todas as portas", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "fecha a porta com chave", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "fecha tudo com chave", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "protege a casa", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "aferrolha a porta", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "ativa a trava", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "tranca tudo", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "fechadura por favor", "slots": []}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "tranca a {door}", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "fecha a {door} com chave", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "protege a {door}", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "aferrolha a {door}", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "ativa a trava da {door}", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "garanta que a {door} está trancada", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "pode trancar a {door}", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "por favor tranca a {door}", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "fecha bem a {door}", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "smarthome:lock_door", "domain": "smarthome", "lang": "pt-BR", "template": "bota o ferrolho na {door}", "slots": [{"name": "door", "examples": ["porta da frente", "porta dos fundos", "porta da garagem", "porta lateral"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "liga pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "liga pro {contact} por favor", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "telefona pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "telefona pro {contact} pra mim", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "chama o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "disca o número do {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "coloca o {contact} no telefone", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "me passa o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "faz uma ligação pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "faz uma chamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "pode ligar pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "podia ligar pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "por favor liga pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "toca pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "dá um toque pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "me liga com o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "coloca o {contact} na linha", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "liga aí pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "dá uma ligadinha pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:call_contact", "domain": "communication", "lang": "pt-BR", "template": "manda uma chamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda uma mensagem pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "envia uma mensagem pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda sms pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "escreve pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda mensagem pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda um texto pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda uma linha pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "dispara uma mensagem pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda dm pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda uma mensagem rápida pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda sms pro {contact} dizendo {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "envia pro {contact} com {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda mensagem pro {contact} dizendo {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda pro {contact} com {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "fala pro {contact} com {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "escreve pro {contact} dizendo {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "manda pro {contact} a mensagem {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "pode mandar sms pro {contact} com {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "por favor envia pro {contact} com {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:send_message", "domain": "communication", "lang": "pt-BR", "template": "pinga o {contact} com {message}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}, {"name": "message", "examples": ["vou atrasar", "até já", "estou a caminho", "feliz aniversário"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "lê minhas mensagens", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "lê mensagens", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "lê meus sms", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "me mostra as minhas mensagens", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "tem mensagem nova", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "eu tenho alguma mensagem", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "que mensagens eu tenho", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "verifica minhas mensagens", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "vê a caixa de entrada", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "lê as últimas mensagens", "slots": []}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "lê as mensagens do {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "lê as mensagens da {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "tem mensagem do {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "me mostra as mensagens do {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "o que o {contact} me mandou", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "verifica mensagens do {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "o {contact} me mandou mensagem", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "lê pra mim as do {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "mostra a última mensagem do {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:read_messages", "domain": "communication", "lang": "pt-BR", "template": "tem algo do {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "desliga", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "desliga o telefone", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "desliga a chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "encerra a chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "encerra essa chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "termina a chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "para a chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "corta a chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "corta", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "desconecta", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "desconecta a chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "interrompe a chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "mata a chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "encerra a ligação", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "finaliza a ligação", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "já basta da chamada", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "tchau desliga", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "chega disso desliga", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "desliga por favor", "slots": []}
+{"intent_id": "communication:hang_up", "domain": "communication", "lang": "pt-BR", "template": "desliga agora", "slots": []}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "videochamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "começa uma videochamada com o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "faz uma videochamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "vídeochat com o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "liga em vídeo pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "inicia videochamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "liga em videochamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "toca videochamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "marca videochamada com o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "entra numa videochamada com o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "pode fazer videochamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "podia fazer videochamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "por favor inicia videochamada com o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "conecta em vídeo com o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "coloca o {contact} em vídeo", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "videochamada já pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "organiza videochamada com o {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "abre uma videochamada pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "vídeo pro {contact}", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "communication:video_call", "domain": "communication", "lang": "pt-BR", "template": "chama o {contact} cara a cara", "slots": [{"name": "contact", "examples": ["joão", "maria", "pedro", "mãe"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "navega pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "me leva pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "me conduz pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "me guia até {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "dirige até {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "direções pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "me dá direções pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "como chego em {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "rota pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "planeja uma rota pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "inicia navegação pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "começa a navegação pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "me encaminha pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "pode navegar pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "pode me levar pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "por favor me leva pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "define destino pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "vai pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "bora pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:navigate_to", "domain": "navigation", "lang": "pt-BR", "template": "me mostra o caminho pra {destination}", "slots": [{"name": "destination", "examples": ["casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "acha uma {place_type} perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "acha pra mim uma {place_type} aqui perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "acha uma {place_type} próxima", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "onde fica a {place_type} mais próxima", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "qual a {place_type} mais perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "procura uma {place_type} perto de mim", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "me mostra uma {place_type} aqui perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "tem alguma {place_type} por aqui", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "tem uma {place_type} perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "localiza a {place_type} mais próxima", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "{place_type} aqui perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "procura uma {place_type} aqui por perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "acha {place_type} perto de mim", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "pode achar uma {place_type} aqui perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "por favor acha uma {place_type} próxima", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "tem uma {place_type} aqui em volta", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "mostra {place_type} perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "alguma {place_type} aqui perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "procura aí uma {place_type} perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:find_nearby", "domain": "navigation", "lang": "pt-BR", "template": "arruma uma {place_type} aqui perto", "slots": [{"name": "place_type", "examples": ["posto de gasolina", "farmácia", "cafeteria", "restaurante"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "qual é o tempo de chegada", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "tempo estimado por favor", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quanto falta pra chegar", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quanto tempo falta na rota", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quando que chego", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quando que vou chegar", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "horário estimado de chegada", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "tempo restante", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quanto tempo resta", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "a que distância eu tô", "slots": []}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quanto tempo até {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quanto tempo até chegar em {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "qual o tempo de chegada {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quando chego em {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quando vou estar {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "tempo estimado pra {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "tempo pra {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "a que distância fica {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "quanto falta pra {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:eta_query", "domain": "navigation", "lang": "pt-BR", "template": "pode me dizer o tempo de chegada pra {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o mercado"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "como tá o trânsito", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "como vai o trânsito", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "estado do trânsito", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "atualização do trânsito", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "tem trânsito", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "muito trânsito", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "tem atrasos", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "tem engarrafamento", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "quão ruim tá o trânsito", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "verifica o trânsito", "slots": []}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "como tá o trânsito pra {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "como vai o trânsito até {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "trânsito até {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "tem trânsito até {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "tem engarrafamento no caminho pra {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "atrasos pra {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "tem congestionamento até {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "verifica o trânsito até {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "quão ruim tá o trânsito pra {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:traffic_status", "domain": "navigation", "lang": "pt-BR", "template": "condições da estrada até {destination}", "slots": [{"name": "destination", "examples": ["em casa", "o escritório", "o aeroporto", "o centro"]}]}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "cancela a rota", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "cancela rota", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "para a navegação", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "para a navegação aí", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "encerra a navegação", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "encerra a rota", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "aborta a navegação", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "aborta a rota", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "sai da navegação", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "sai da rota", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "abandona a navegação", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "abandona a rota", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "mata a navegação", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "mata a rota", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "interrompe a navegação", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "interrompe a rota", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "para de me guiar", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "para as direções", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "cancela as direções", "slots": []}
+{"intent_id": "navigation:cancel_route", "domain": "navigation", "lang": "pt-BR", "template": "desliga o gps", "slots": []}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "define {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "define a palavra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "definição de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "o que significa {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "qual o significado de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "significado de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "procura {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "procura a palavra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "o que é {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "dicionário {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "pode definir {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "podia definir {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "por favor define {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "me diz o que significa {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "explica a palavra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "me explica {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "qual a definição de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "verbete de dicionário pra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "como define {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:define_word", "domain": "search_qa", "lang": "pt-BR", "template": "me dá o significado de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "petricor"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "qual é {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "o que é {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "me diz {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "me fala sobre {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "pesquisa {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "pesquisa por {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "googla {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "procura {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "pode achar {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "descobre {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "você sabe {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "me responde {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "informação sobre {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "me dá info sobre {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "explica {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "pergunta sobre {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "consulta sobre {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "eu queria saber {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "e {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:factual_query", "domain": "search_qa", "lang": "pt-BR", "template": "por favor responde {query}", "slots": [{"name": "query", "examples": ["a capital da frança", "qual a altura do monte everest", "a velocidade da luz", "a população de tóquio"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "quem é {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "quem é o {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "quem era {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "me fala sobre {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "me diz quem é {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "informação sobre {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "biografia de {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "bio de {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "contexto sobre {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "vida de {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "pode me dizer quem é {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "o que você sabe sobre {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "descreve {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "explica quem é {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "me apresenta {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "procura {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "pesquisa por {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "me dá uma bio de {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "história de {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:who_is", "domain": "search_qa", "lang": "pt-BR", "template": "quem exatamente é {person}", "slots": [{"name": "person", "examples": ["einstein", "shakespeare", "marie curie", "napoleon"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "traduz {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "traduz a frase {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "traduz {phrase} por favor", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "como se diz {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "como dizer {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "como é {phrase} em outra língua", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "pode traduzir {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "por favor traduz {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "me dá uma tradução de {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "tradução de {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "traduz {phrase} pra {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "traduz {phrase} em {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "como se diz {phrase} em {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "como dizer {phrase} em {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "como é {phrase} em {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "traduz {phrase} pra mim pro {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "pode traduzir {phrase} pra {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "me dá {phrase} em {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "como falo {phrase} em {target_language}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:translate_phrase", "domain": "search_qa", "lang": "pt-BR", "template": "tradução em {target_language} de {phrase}", "slots": [{"name": "phrase", "examples": ["olá", "obrigado", "bom dia", "como vai"]}, {"name": "target_language", "examples": ["espanhol", "francês", "alemão", "japonês"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "soletra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "soletra a palavra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "como se soletra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "como soletrar {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "como se escreve {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "me soletra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "ortografia de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "qual a ortografia de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "me dá a ortografia de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "pode soletrar {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "podia soletrar {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "por favor soletra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "me diz como soletrar {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "como eu soletro {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "letra por letra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "me soletra a palavra {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "me ensina a soletrar {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "lê as letras de {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "letras em {word}", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "search_qa:spell_word", "domain": "search_qa", "lang": "pt-BR", "template": "escreve {word} letra por letra", "slots": [{"name": "word", "examples": ["saudade", "efêmero", "ubíquo", "ritmo"]}]}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "como está o tempo", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "como está o tempo hoje", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "que tempo está fazendo", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "que tempo faz", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "que tempo faz hoje", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "como tá lá fora", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "qual a temperatura lá fora", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "tá bom tempo", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "tá frio hoje", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "tá calor hoje", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "tá chovendo", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "tá ensolarado", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "preciso de casaco hoje", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "preciso de guarda-chuva", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "boletim do tempo por favor", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "verifica o tempo", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "me dá o tempo", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "me diz o tempo", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "tempo agora", "slots": []}
+{"intent_id": "weather:weather_today", "domain": "weather", "lang": "pt-BR", "template": "previsão do tempo pra hoje", "slots": []}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "que tempo faz {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "como tá o tempo {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "tempo pra {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "previsão do tempo pra {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "previsão pra {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "como vai ficar o tempo {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "vai chover {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "vai fazer sol {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "vai fazer frio {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "temperatura {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "tempo previsto pra {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "como vai ser {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "tem previsão pra {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "pode me dizer o tempo {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "me dá a previsão {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "como vai estar {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "qual vai ser a temperatura {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "tempo esperado {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "boletim do tempo pra {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_forecast", "domain": "weather", "lang": "pt-BR", "template": "tem previsão de chuva pra {date}", "slots": [{"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "este fim de semana"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "que tempo tá em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "tempo em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "como tá o tempo em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "temperatura em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "como tá em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "previsão pra {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "previsão do tempo pra {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "tá chovendo em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "tá ensolarado em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "tá frio em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "que calor faz em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "boletim do tempo pra {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "qual a temperatura em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "pode verificar o tempo em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "me diz o tempo em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "me dá o tempo de {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "tempo agora em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "condições em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "quão quente tá {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_location", "domain": "weather", "lang": "pt-BR", "template": "tem chuva em {location}", "slots": [{"name": "location", "examples": ["tóquio", "londres", "nova iorque", "paris"]}]}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "qual a umidade", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "tá úmido", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "qual o nível de umidade", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "qual a umidade hoje", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "me diz a umidade", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "me dá a umidade", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "boletim de umidade", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "verifica a umidade", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "tá muito úmido", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "tá úmido hoje", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "tá seco lá fora", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "o ar tá seco", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "o ar tá úmido", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "qual a porcentagem de umidade", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "quanta umidade lá fora", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "porcentagem de umidade", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "umidade agora", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "nível de umidade por favor", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "umidade no ar", "slots": []}
+{"intent_id": "weather:weather_humidity", "domain": "weather", "lang": "pt-BR", "template": "quão úmido tá o ar", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "tá ventando muito", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "qual a velocidade do vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "como tá o vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "tá ventando", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "tá ventando hoje", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "me diz o vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "me dá o vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "boletim do vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "verifica o vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "tem vento lá fora", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "tem vento agora", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "velocidade do vento hoje", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "vento agora", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "nível de vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "tem vento forte", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "tem brisa", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "tem uma brisa", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "quão forte tá o vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "condições de vento", "slots": []}
+{"intent_id": "weather:weather_wind", "domain": "weather", "lang": "pt-BR", "template": "ventoso lá fora", "slots": []}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "cria um evento {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "cria um evento chamado {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "adiciona um evento {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "agenda {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "agenda um evento {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "bota {title} no meu calendário", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "marca {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "novo evento {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "cria uma entrada no calendário pra {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "adiciona ao calendário {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "agenda {title} às {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "agenda {title} com {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "cria um evento {title} com {date} às {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "adiciona {title} com {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "bota {title} com {date} às {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "marca {title} pra {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "marca {title} às {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "cria um compromisso pra {title} com {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "pode agendar {title} pra {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:create_event", "domain": "calendar", "lang": "pt-BR", "template": "por favor adiciona {title} no meu calendário às {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "lista meus eventos", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "mostra meus eventos", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "que eventos eu tenho", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "o que tem no meu calendário", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "me mostra meu calendário", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "o que tem na minha agenda", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "lê minha agenda", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "o que tá agendado", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "tem eventos chegando", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "verifica meu calendário", "slots": []}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "o que tem no meu calendário {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "lista meus eventos pra {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "que eventos eu tenho {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "mostra meus eventos {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "o que tá agendado pra {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "tem reuniões {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "o que eu tenho {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "lê minha agenda pra {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "entradas do calendário {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:list_events", "domain": "calendar", "lang": "pt-BR", "template": "mostra o calendário {date}", "slots": [{"name": "date", "examples": ["hoje", "amanhã", "esta semana", "segunda que vem"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "cancela {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "cancela a {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "cancela a minha {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "apaga {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "apaga a {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "remove {title} do meu calendário", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "remove a {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "apaga {title} do meu calendário", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "desmarca {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "risca {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "pode cancelar {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "podia cancelar {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "por favor cancela {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "elimina {title} do calendário", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "descarta {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "deixa pra lá {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "aborta {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "tira {title} do meu calendário", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "mata {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:cancel_event", "domain": "calendar", "lang": "pt-BR", "template": "se livra de {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "qual meu próximo evento", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "qual é meu próximo evento", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "quando é meu próximo evento", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "quando é minha próxima reunião", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "qual minha próxima reunião", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "próximo evento por favor", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "próxima reunião por favor", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "me diz meu próximo evento", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "me diz minha próxima reunião", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "o que vem a seguir no calendário", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "o que vem a seguir", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "próximo compromisso", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "qual o próximo compromisso", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "quando é meu próximo compromisso", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "próximo na agenda", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "o que tenho a seguir", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "o que vem agora", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "evento próximo", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "qual meu evento próximo", "slots": []}
+{"intent_id": "calendar:next_event", "domain": "calendar", "lang": "pt-BR", "template": "próxima coisa no calendário", "slots": []}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "remarca {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "remarca a {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "muda {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "muda a {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "adia {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "altera {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "empurra {title} pra frente", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "desloca {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "pode remarcar {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "por favor muda {title}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "remarca {title} pras {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "remarca {title} pra {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "remarca {title} pra {date} às {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "muda {title} pras {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "muda {title} pra {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "muda {title} pra {date} às {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "adia {title} pra {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "altera {title} pras {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "empurra {title} pra {date}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "calendar:reschedule_event", "domain": "calendar", "lang": "pt-BR", "template": "desloca {title} pra {date} às {time}", "slots": [{"name": "title", "examples": ["consulta no dentista", "reunião de equipe", "jantar com a maria", "ida ao médico"]}, {"name": "time", "examples": ["15h", "10h30", "meio-dia", "19h"]}, {"name": "date", "examples": ["amanhã", "sexta-feira", "segunda que vem", "sábado"]}]}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desliga", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desliga tudo", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desliga o sistema", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desliga o computador", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "encerra", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "encerra o computador", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "encerra o sistema", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "encerra tudo", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desliga o pc", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "apaga o sistema", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "apaga aí", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desativa o computador", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desativa o sistema", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "mata o sistema", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "para o sistema", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "para o computador", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "encerra agora", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "fecha o sistema", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desliga por favor", "slots": []}
+{"intent_id": "system_control:shutdown", "domain": "system_control", "lang": "pt-BR", "template": "desliga totalmente", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicia", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicializa", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicia o sistema", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicia o computador", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicializa o sistema", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicializa o computador", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicia por favor", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicia o pc", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicializa o pc", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "inicia de novo", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "recicla o sistema", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "ciclo de energia", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicia a máquina", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicializa a máquina", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "dá um reinício no sistema", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicializa agora", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "faz um reinício", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "faz um reboot", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "desliga e liga de novo", "slots": []}
+{"intent_id": "system_control:restart", "domain": "system_control", "lang": "pt-BR", "template": "reinicia tudo", "slots": []}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "coloca o brilho da tela em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "define o brilho da tela em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "brilho da tela {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "coloca o brilho do monitor em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "brilho do monitor {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "brilho em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "define o brilho do display em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "abaixa o brilho da tela pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "abaixa o display pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "aumenta o brilho da tela pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "muda o brilho da tela pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "ajusta o brilho da tela pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "altera o brilho da tela pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "manda a tela pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "desce o brilho da tela pra {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "pode colocar o brilho da tela em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "por favor coloca o brilho da tela em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "coloca a tela em {level} por cento", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "display em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:set_brightness_screen", "domain": "system_control", "lang": "pt-BR", "template": "brilho do monitor em {level}", "slots": [{"name": "level", "examples": ["50", "75", "20", "cem"]}]}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "silencia", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "silencia o sistema", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "silencia o áudio", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "silencia o som", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "coloca no mudo", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "silencia tudo", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "modo silencioso", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "sem som", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "modo mudo", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "cala a boca", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "cala", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "fica quieto", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "sem áudio", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "mata o áudio", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "mata o som", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "desliga o som", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "desliga o áudio", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "som desligado", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "áudio desligado", "slots": []}
+{"intent_id": "system_control:mute_system", "domain": "system_control", "lang": "pt-BR", "template": "silencia por favor", "slots": []}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "muda o idioma pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "muda a língua pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "passa pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "muda o idioma pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "define o idioma pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "coloca o idioma em {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "fala {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "fala em {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "fala comigo em {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "usa {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "usa {target_language} no lugar", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "responde em {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "me responde em {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "interface em {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "pode passar pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "por favor muda pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "muda meu idioma pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "a partir de agora fala {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "idioma do sistema {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "system_control:change_language", "domain": "system_control", "lang": "pt-BR", "template": "se traduz pra {target_language}", "slots": [{"name": "target_language", "examples": ["espanhol", "francês", "alemão", "inglês"]}]}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "lê as notícias", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "lê as manchetes", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "que notícias tem", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "quais são as manchetes", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "me dá as notícias", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "me dá as manchetes", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "me diz as notícias", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "me diz as manchetes", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "notícias de hoje", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "manchetes de hoje", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "notícias por favor", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "manchetes por favor", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "as últimas notícias", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "as últimas manchetes", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "o que tá rolando nas notícias", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "tem notícias hoje", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "tem manchetes hoje", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "me mostra as notícias", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "me mostra as manchetes", "slots": []}
+{"intent_id": "news:read_headlines", "domain": "news", "lang": "pt-BR", "template": "atualização de notícias", "slots": []}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "lê notícias sobre {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "tem notícias sobre {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "lê as notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "manchetes de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "me diz as notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "me dá notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "me mostra notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "notícias da área de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "últimas notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "lê sobre {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "atualização sobre {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "tem novidade em {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "manchetes de {topic} de hoje", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "o que tem de novo em {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "pode ler as notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "por favor lê notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "seção de {topic} por favor", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "foca nas notícias de {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:read_topic", "domain": "news", "lang": "pt-BR", "template": "filtra notícias pra {topic}", "slots": [{"name": "topic", "examples": ["esportes", "política", "tecnologia", "meteorologia"]}]}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "próxima notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "próximo artigo", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "próximas notícias", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "próxima manchete", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "passa pra próxima notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "vai pra próxima notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "pula essa notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "avança", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "passa pra próxima notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "próxima notícia por favor", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "me dá a próxima", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "o que vem a seguir", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "me diz a próxima notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "lê a próxima notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "próximo item de notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "próxima peça por favor", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "avança nas notícias", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "passa pra próxima", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "continua pra próxima notícia", "slots": []}
+{"intent_id": "news:next_story", "domain": "news", "lang": "pt-BR", "template": "pula pra próxima notícia", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "notícia anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "artigo anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "notícias anteriores", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "manchete anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "volta pra notícia anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "volta", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "volta uma notícia", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "volta", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "a anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "notícia anterior por favor", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "me dá a anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "qual era a notícia anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "me diz a notícia anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "lê a notícia anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "item de notícia anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "peça anterior por favor", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "volta pra anterior", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "recua", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "rebobina as notícias", "slots": []}
+{"intent_id": "news:previous_story", "domain": "news", "lang": "pt-BR", "template": "uma notícia pra trás", "slots": []}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "lê notícias da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "me dá notícias da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "me mostra notícias da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "notícias da {source} por favor", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "o que tem na {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "me lê a {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "sintoniza a {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "muda pra {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "define a fonte de notícias pra {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "usa a {source} como minha fonte de notícias", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "últimas da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "manchetes da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "o que diz a {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "toca a {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "me dá o feed da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "abre as notícias da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "lê as manchetes da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "quero notícias da {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "muda a fonte de notícias pra {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}
+{"intent_id": "news:news_source", "domain": "news", "lang": "pt-BR", "template": "inscreve na {source}", "slots": [{"name": "source", "examples": ["bbc", "globo", "reuters", "uol"]}]}

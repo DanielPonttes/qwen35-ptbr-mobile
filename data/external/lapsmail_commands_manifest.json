@@ -1,0 +1,40 @@
+{
+  "dataset_name": "LaPSMail",
+  "dataset_version": "MailDatabase1.0",
+  "locale": "pt-BR",
+  "task": "human-recorded spoken-command audio",
+  "records": 1100,
+  "speakers": 25,
+  "canonical_commands": 44,
+  "audio_root": "/home/daniel/datasets/lapsmail/commands_16k",
+  "archive_path": "/home/daniel/datasets/lapsmail/MailDatabase1.0.zip",
+  "archive_sha256": "b2f0027556f7e28cdf7bdb8ec630e7e7d19b281c3dc356e51e1ab0815ad2fa23",
+  "derived_manifest": "data/external/lapsmail_commands.jsonl",
+  "sampling_rate_hz": 16000,
+  "channels": 1,
+  "speaker_disjoint_splits": {
+    "train": {
+      "speakers": 15,
+      "records": 660
+    },
+    "dev": {
+      "speakers": 5,
+      "records": 220
+    },
+    "test": {
+      "speakers": 5,
+      "records": 220
+    }
+  },
+  "source": {
+    "download_url": "https://drive.google.com/uc?export=download&confirm=PecV&id=1B_Vq8MDSE4fBQefVxqCGSl-EcKAcjJLb",
+    "primary_reference": "https://ppgcc.propesp.ufpa.br/Disserta%C3%A7%C3%B5es_2012/Rafael%20Santana%20Oliveira_Disserta%C3%A7%C3%A3o.pdf",
+    "catalog_reference": "https://github.com/coqui-ai/open-speech-corpora"
+  },
+  "caveats": [
+    "Human-recorded Brazilian Portuguese speech for email commands, not Android commands.",
+    "The dissertation reports 43 commands plus 43 names, while its appendix lists 44 command strings; this index follows the appendix and verifies 44 recordings per speaker.",
+    "Use for ASR/acoustic robustness and command-like speech evaluation; it is not direct gold text for the Android tool contract.",
+    "The original archive is outside Git; only this derived index and provenance are versioned."
+  ]
+}
