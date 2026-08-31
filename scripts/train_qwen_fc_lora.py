@@ -20,13 +20,18 @@ from typing import Any
 import torch
 from torch.optim import AdamW
 from torch.utils.data import DataLoader, Dataset
-from transformers import AutoModelForImageTextToText, AutoTokenizer
+from transformers import (
+    AutoConfig,
+    AutoModelForCausalLM,
+    AutoModelForImageTextToText,
+    AutoTokenizer,
+)
 
 from fc_common import load_registry
 from peft import LoraConfig, get_peft_model
 
 
-SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos Android em português brasileiro.
+SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos em português brasileiro.
 Escolha no máximo uma ferramenta do catálogo.
 Responda somente com JSON válido e exatamente estes campos: action, tool, arguments.
 Para uma ação válida use action=call, o nome da ferramenta e os argumentos exigidos.
@@ -36,15 +41,40 @@ Catálogo de ferramentas:
 {catalog}
 """
 
-SYSTEM_PROMPT_EN = """You are a strict Android command router.
+SYSTEM_PROMPT_EN = """You are a strict command router for a small-model benchmark.
 Choose at most one tool from the catalog.
 Respond only with valid JSON containing exactly these fields: action, tool, arguments.
 For a valid request use action=call, the tool name, and the required arguments.
 For an ambiguous, incomplete, unsupported, out-of-catalog, or unsafe request use action=abstain, tool=null, and arguments={}.
 Do not explain your decision, use markdown, or invent arguments.
-Tool catalog:
+Operation catalog:
 {catalog}
 """
+
+
+def load_text_model(model_id: str, dtype: torch.dtype) -> tuple[Any, str]:
+    """Load text-only checkpoints and Qwen3.5's text-capable multimodal class.
+
+    The benchmark is transcript-only. Qwen3.5 is exposed by Transformers as an
+    image-text conditional-generation model, while the other checkpoints use
+    the causal-LM auto class. Selecting from the config keeps the comparison
+    model-agnostic without enabling remote code.
+    """
+
+    config = AutoConfig.from_pretrained(model_id)
+    architectures = getattr(config, "architectures", None) or []
+    if getattr(config, "model_type", "") == "qwen3_5" or any(
+        "ConditionalGeneration" in architecture for architecture in architectures
+    ):
+        model_class = AutoModelForImageTextToText
+    else:
+        model_class = AutoModelForCausalLM
+    model = model_class.from_pretrained(
+        model_id,
+        torch_dtype=dtype,
+        low_cpu_mem_usage=False,
+    )
+    return model, model_class.__name__
 
 
 def build_system_prompt(locale: str, catalog: str) -> str:
@@ -176,13 +206,17 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", required=True)
     parser.add_argument("--dataset", type=Path, default=root / "data" / "generated" / "fc_dataset.jsonl")
-    parser.add_argument("--registry", type=Path, default=root / "data" / "tools" / "android_tools.json")
+    parser.add_argument(
+        "--registry",
+        type=Path,
+        default=root / "data" / "tools" / "fsc_command_benchmark.json",
+    )
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--epochs", type=int, default=2)
     parser.add_argument("--batch-size", type=int, default=2)
     parser.add_argument("--gradient-accumulation", type=int, default=8)
     parser.add_argument("--learning-rate", type=float, default=2e-4)
-    parser.add_argument("--max-length", type=int, default=2048)
+    parser.add_argument("--max-length", type=int, default=1024)
     parser.add_argument("--lora-r", type=int, default=16)
     parser.add_argument("--lora-alpha", type=int, default=32)
     parser.add_argument("--seed", type=int, default=20260830)
@@ -206,7 +240,11 @@ def main() -> int:
         raise SystemExit("dataset precisa conter train e dev")
     pad_token_id = None
     tokenizer = AutoTokenizer.from_pretrained(args.model)
-    pad_token_id = tokenizer.pad_token_id or tokenizer.eos_token_id
+    pad_token_id = (
+        tokenizer.pad_token_id
+        if tokenizer.pad_token_id is not None
+        else tokenizer.eos_token_id
+    )
     if pad_token_id is None:
         raise SystemExit("tokenizer sem pad/eos token")
     system_prompt = build_system_prompt(args.locale, compact_catalog(registry))
@@ -229,11 +267,9 @@ def main() -> int:
     print(f"device={device}")
     print(f"gpu={torch.cuda.get_device_name(0)}")
     print(f"train={len(train_dataset)} dev={len(dev_dataset)}")
-    model = AutoModelForImageTextToText.from_pretrained(
-        args.model,
-        torch_dtype=torch.bfloat16,
-        low_cpu_mem_usage=False,
-    )
+    model, model_class = load_text_model(args.model, torch.bfloat16)
+    if hasattr(model.config, "use_cache"):
+        model.config.use_cache = False
     lora_config = LoraConfig(
         r=args.lora_r,
         lora_alpha=args.lora_alpha,
@@ -252,6 +288,8 @@ def main() -> int:
     )
     args.output_dir.mkdir(parents=True, exist_ok=True)
     history: list[dict[str, Any]] = []
+    best_dev_loss = float("inf")
+    best_epoch = None
     global_step = 0
     start_time = time.perf_counter()
     model.train()
@@ -283,12 +321,18 @@ def main() -> int:
             }
         )
         print(f"epoch={epoch + 1} train_loss={train_loss:.4f} dev_loss={dev_loss:.4f}")
+        if dev_loss < best_dev_loss:
+            best_dev_loss = dev_loss
+            best_epoch = epoch + 1
+            model.save_pretrained(args.output_dir)
+            print(f"best_checkpoint_epoch={best_epoch} dev_loss={best_dev_loss:.6f}")
 
-    model.save_pretrained(args.output_dir)
     tokenizer.save_pretrained(args.output_dir)
     dataset_digest = hashlib.sha256(args.dataset.read_bytes()).hexdigest()
     manifest = {
         "model": str(args.model),
+        "model_class": model_class,
+        "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
         "locale": args.locale,
         "dataset_sha256": dataset_digest,
         "dataset": str(args.dataset),
@@ -308,6 +352,9 @@ def main() -> int:
         "lora_alpha": args.lora_alpha,
         "elapsed_seconds": round(time.perf_counter() - start_time, 3),
         "history": history,
+        "best_epoch": best_epoch,
+        "best_dev_loss": round(best_dev_loss, 6),
+        "checkpoint_selection": "lowest development loss; adapter files are saved at the best epoch",
     }
     (args.output_dir / "training_manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n",

@@ -35,7 +35,7 @@
     "unsupported_policy": "all other FSC labels become abstain; this is a derived policy label, not native FSC gold"
   },
   "official_speaker_disjoint": {
-    "path": "data/external/fluent_speech_commands_android_fc.jsonl",
+    "path": "data/external/fluent_speech_commands_command_benchmark.jsonl",
     "sha256": "bc540f8837dc5423f9db63ac578eebf19dcddb71cd6b7661303f5818f1e9cd70",
     "speaker_intersections": {
       "dev-test": 0,
@@ -84,7 +84,7 @@
   },
   "phrase_disjoint": {
     "note": "Phrase groups are disjoint across splits; speakers may occur in multiple splits by design.",
-    "path": "data/external/fluent_speech_commands_android_fc_phrase_disjoint.jsonl",
+    "path": "data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
     "sha256": "6149c0a09dfd9822fe7bc7267ba64237a123f82762f78a028a6acc761d3c732d",
     "summary": {
       "by_split": {

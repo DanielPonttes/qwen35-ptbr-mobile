@@ -1,0 +1,196 @@
+{
+  "cluster_confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.646259,
+      "upper": 0.95298
+    },
+    "action_accuracy": {
+      "lower": 0.585133,
+      "upper": 0.942605
+    },
+    "exact_match_rate": {
+      "lower": 0.585133,
+      "upper": 0.942605
+    }
+  },
+  "confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.8,
+      "upper": 0.830911
+    },
+    "abstention_precision": {
+      "lower": 0.666022,
+      "upper": 0.710435
+    },
+    "abstention_recall": {
+      "lower": 0.996665,
+      "upper": 1.0
+    },
+    "action_accuracy": {
+      "lower": 0.756397,
+      "upper": 0.790598
+    },
+    "argument_exact_accuracy": {
+      "lower": 0.519007,
+      "upper": 0.576492
+    },
+    "argument_exact_given_tool": {
+      "lower": 0.99393,
+      "upper": 1.0
+    },
+    "canonical_valid_rate": {
+      "lower": 0.99833,
+      "upper": 1.0
+    },
+    "exact_match_rate": {
+      "lower": 0.756397,
+      "upper": 0.790598
+    },
+    "json_valid_rate": {
+      "lower": 0.99833,
+      "upper": 1.0
+    },
+    "parseable_rate": {
+      "lower": 0.99833,
+      "upper": 1.0
+    },
+    "tool_selection_accuracy": {
+      "lower": 0.519007,
+      "upper": 0.576492
+    }
+  },
+  "counts": {
+    "abstain_false_negative": 0,
+    "abstain_false_positive": 519,
+    "abstain_gold": 1148,
+    "abstain_true_positive": 1148,
+    "call_gold": 1148
+  },
+  "dataset": "data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+  "duplicate_predictions": 0,
+  "extra_predictions": 0,
+  "group_field": "template_id",
+  "grouped_metrics": {
+    "group_size": {
+      "max": 139,
+      "median": 43,
+      "min": 26
+    },
+    "groups": 38,
+    "macro": {
+      "abstention_f1": 0.763158,
+      "action_accuracy": 0.894737,
+      "exact_match_rate": 0.894737
+    },
+    "records": 2296,
+    "strict_group_exact_match_rate": 0.894737
+  },
+  "invalid_examples_sample": [],
+  "metrics": {
+    "abstention_f1": 0.81563,
+    "abstention_precision": 0.688662,
+    "abstention_recall": 1.0,
+    "action_accuracy": 0.773955,
+    "argument_exact_accuracy": 0.547909,
+    "argument_exact_given_tool": 1.0,
+    "canonical_valid_rate": 1.0,
+    "exact_match_rate": 0.773955,
+    "json_valid_rate": 1.0,
+    "parseable_rate": 1.0,
+    "tool_selection_accuracy": 0.547909
+  },
+  "missing_predictions": 0,
+  "per_mapping_rule": {
+    "activate_music_to_media_play": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 1.0,
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "call_gold": 122,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 1.0,
+      "records": 122,
+      "tool_selection_accuracy": 1.0
+    },
+    "deactivate_music_to_media_pause": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 1.0,
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "call_gold": 139,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 1.0,
+      "records": 139,
+      "tool_selection_accuracy": 1.0
+    },
+    "decrease_volume_to_volume_down": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.481038,
+      "argument_exact_accuracy": 0.481038,
+      "argument_exact_given_tool": 1.0,
+      "call_gold": 501,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.481038,
+      "records": 501,
+      "tool_selection_accuracy": 0.481038
+    },
+    "increase_volume_to_volume_up": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.329016,
+      "argument_exact_accuracy": 0.329016,
+      "argument_exact_given_tool": 1.0,
+      "call_gold": 386,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.329016,
+      "records": 386,
+      "tool_selection_accuracy": 0.329016
+    },
+    "unsupported_fsc_semantics_to_policy_abstain": {
+      "abstain_gold": 1148,
+      "abstention_f1": 1.0,
+      "abstention_precision": 1.0,
+      "abstention_recall": 1.0,
+      "action_accuracy": 1.0,
+      "argument_exact_accuracy": null,
+      "argument_exact_given_tool": null,
+      "call_gold": 0,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 1.0,
+      "records": 1148,
+      "tool_selection_accuracy": null
+    }
+  },
+  "per_tool": {
+    "media_control": {
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "count": 261,
+      "tool_selection_accuracy": 1.0
+    },
+    "volume_adjust": {
+      "argument_exact_accuracy": 0.414882,
+      "argument_exact_given_tool": 1.0,
+      "count": 887,
+      "tool_selection_accuracy": 0.414882
+    }
+  },
+  "predictions": "results/fsc_ultrasmall_lexical_phrase_disjoint.predictions.jsonl",
+  "records": 2296,
+  "split": "test",
+  "statistical_methods": {
+    "abstention_f1_interval": "deterministic bootstrap percentile, 2000 resamples, seed 20260830",
+    "proportion_intervals": "Wilson score, 95%"
+  }
+}

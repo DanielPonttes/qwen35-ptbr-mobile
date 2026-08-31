@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Derive an auditable Android-aligned FC benchmark from Fluent Speech Commands.
+"""Derive an auditable command-routing benchmark from Fluent Speech Commands.
 
-FSC's native labels describe smart-home/assistant intents, not Android tools.
-This script therefore applies a deliberately conservative, deterministic mapping:
+FSC's native labels describe smart-home/assistant intents, not the benchmark
+operations. This script therefore applies a deliberately conservative,
+deterministic mapping:
 
 * activate music      -> media_control(play)
 * deactivate music    -> media_control(pause)
@@ -27,7 +28,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-GENERATOR_VERSION = "fsc-android-fc/0.1.0"
+GENERATOR_VERSION = "fsc-command-benchmark/0.2.0"
 SOURCE_SPLITS = ("train", "valid", "test")
 OUTPUT_SPLITS = {"train": "train", "valid": "dev", "test": "test"}
 
@@ -45,12 +46,12 @@ DIRECT_RULES: dict[tuple[str, str, str], tuple[str, dict[str, Any], str]] = {
     ("increase", "volume", "none"): (
         "volume_adjust",
         {"direction": "up"},
-        "increase_volume_to_media_volume_up",
+        "increase_volume_to_volume_up",
     ),
     ("decrease", "volume", "none"): (
         "volume_adjust",
         {"direction": "down"},
-        "decrease_volume_to_media_down",
+        "decrease_volume_to_volume_down",
     ),
 }
 
@@ -329,7 +330,7 @@ def main() -> int:
         )
 
     manifest = {
-        "dataset_name": "Fluent Speech Commands Android-aligned derived benchmark",
+        "dataset_name": "Fluent Speech Commands derived command-routing benchmark",
         "generator_version": GENERATOR_VERSION,
         "locale": "en-US",
         "source_dataset": "Fluent Speech Commands",
@@ -337,7 +338,7 @@ def main() -> int:
         "source_archive_sha256": "c9fd67f2efa078daa84daddcad2de937eb96581c140e3131ed8cd06fbae9ba1b",
         "source_files": source_files,
         "source_license": "CC BY-NC-ND 4.0; academic research only",
-        "derived_contract": "data/tools/android_tools_fsc.json",
+        "derived_contract": "data/tools/fsc_command_benchmark.json",
         "mapping_policy": {
             "supported_native_labels": [
                 ["activate", "music", "none"],
@@ -362,10 +363,10 @@ def main() -> int:
             "note": "Phrase groups are disjoint across splits; speakers may occur in multiple splits by design."
         },
         "limitations": [
-            "FSC is smart-home/assistant speech, not a native Android command corpus.",
+            "FSC is smart-home/assistant speech, not a native command-routing corpus.",
             "The four supported mappings are manually specified semantic bridges.",
             "The source repeats exact phrasings across speakers; official splits are speaker-disjoint but not phrase-disjoint.",
-            "The Android-aligned benchmark consumes transcripts; it does not perform speech recognition."
+            "The benchmark consumes transcripts; it does not perform speech recognition or execute actions."
         ]
     }
     args.manifest.parent.mkdir(parents=True, exist_ok=True)

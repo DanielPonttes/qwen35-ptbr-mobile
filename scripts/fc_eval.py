@@ -86,11 +86,118 @@ def bootstrap_abstention_f1(
     return {"lower": round(values[lower_index], 6), "upper": round(values[upper_index], 6)}
 
 
+def _f1_from_counts(true_positive: int, false_positive: int, false_negative: int) -> float:
+    precision = rate(true_positive, true_positive + false_positive)
+    recall = rate(true_positive, true_positive + false_negative)
+    if precision is None or recall is None or precision + recall == 0:
+        return 0.0
+    return 2.0 * precision * recall / (precision + recall)
+
+
+def summarize_groups(
+    group_rows: dict[str, list[tuple[bool, bool, bool, bool]]]
+) -> dict[str, Any]:
+    """Summarize item outcomes after giving each leakage group equal weight.
+
+    A phrase can occur for many speakers. Item-level confidence intervals then
+    overstate the effective sample size. The macro values below are descriptive
+    group-level statistics; cluster bootstrap intervals are reported separately.
+    """
+
+    if not group_rows:
+        return {
+            "groups": 0,
+            "records": 0,
+            "group_size": {},
+            "macro": {},
+            "strict_group_exact_match_rate": None,
+        }
+    exact_rates: list[float] = []
+    action_rates: list[float] = []
+    abstention_f1_values: list[float] = []
+    strict_exact = 0
+    sizes = [len(rows) for rows in group_rows.values()]
+    for rows in group_rows.values():
+        exact_rates.append(sum(int(row[0]) for row in rows) / len(rows))
+        action_rates.append(sum(int(row[1]) for row in rows) / len(rows))
+        tp = sum(int(row[2] and row[3]) for row in rows)
+        fp = sum(int((not row[2]) and row[3]) for row in rows)
+        fn = sum(int(row[2] and (not row[3])) for row in rows)
+        abstention_f1_values.append(_f1_from_counts(tp, fp, fn))
+        if all(row[0] for row in rows):
+            strict_exact += 1
+
+    return {
+        "groups": len(group_rows),
+        "records": sum(sizes),
+        "group_size": {
+            "min": min(sizes),
+            "median": sorted(sizes)[len(sizes) // 2],
+            "max": max(sizes),
+        },
+        "macro": {
+            "exact_match_rate": round(sum(exact_rates) / len(exact_rates), 6),
+            "action_accuracy": round(sum(action_rates) / len(action_rates), 6),
+            "abstention_f1": round(
+                sum(abstention_f1_values) / len(abstention_f1_values), 6
+            ),
+        },
+        "strict_group_exact_match_rate": rate(strict_exact, len(group_rows)),
+    }
+
+
+def bootstrap_group_intervals(
+    group_rows: dict[str, list[tuple[bool, bool, bool, bool]]],
+    samples: int = 2000,
+    seed: int = 20260830,
+) -> dict[str, dict[str, float] | None]:
+    """Cluster bootstrap over leakage groups, not individual records."""
+
+    if not group_rows:
+        return {
+            "exact_match_rate": None,
+            "action_accuracy": None,
+            "abstention_f1": None,
+        }
+    generator = random.Random(seed)
+    groups = list(group_rows.values())
+    exact_values: list[float] = []
+    action_values: list[float] = []
+    abstention_values: list[float] = []
+    for _ in range(samples):
+        sampled = [groups[generator.randrange(len(groups))] for _ in groups]
+        total = sum(len(rows) for rows in sampled)
+        exact = sum(sum(int(row[0]) for row in rows) for rows in sampled)
+        action = sum(sum(int(row[1]) for row in rows) for rows in sampled)
+        tp = sum(sum(int(row[2] and row[3]) for row in rows) for rows in sampled)
+        fp = sum(sum(int((not row[2]) and row[3]) for row in rows) for rows in sampled)
+        fn = sum(sum(int(row[2] and (not row[3])) for row in rows) for rows in sampled)
+        exact_values.append(exact / total)
+        action_values.append(action / total)
+        abstention_values.append(_f1_from_counts(tp, fp, fn))
+
+    def interval(values: list[float]) -> dict[str, float]:
+        values.sort()
+        lower_index = int(0.025 * (len(values) - 1))
+        upper_index = int(0.975 * (len(values) - 1))
+        return {
+            "lower": round(values[lower_index], 6),
+            "upper": round(values[upper_index], 6),
+        }
+
+    return {
+        "exact_match_rate": interval(exact_values),
+        "action_accuracy": interval(action_values),
+        "abstention_f1": interval(abstention_values),
+    }
+
+
 def evaluate(
     dataset_path: Path,
     predictions_path: Path,
     registry_path: Path,
     split: str | None = None,
+    group_field: str = "template_id",
 ) -> dict[str, Any]:
     registry = load_registry(registry_path)
     dataset_records = read_jsonl(dataset_path)
@@ -130,6 +237,7 @@ def evaluate(
     by_split: dict[str, Counter[str]] = defaultdict(Counter)
     by_mapping: dict[str, Counter[str]] = defaultdict(Counter)
     abstention_rows: list[tuple[bool, bool]] = []
+    group_rows: dict[str, list[tuple[bool, bool, bool, bool]]] = defaultdict(list)
 
     for identifier, gold_record in dataset.items():
         gold = gold_record.get("target")
@@ -174,11 +282,29 @@ def evaluate(
             predicted_action = parsed["action"]
             by_split[split]["valid"] += 1
 
-        if valid and canonical_target(parsed) == canonical_target(gold):
+        item_exact = valid and canonical_target(parsed) == canonical_target(gold)
+        item_action = valid and predicted_action == gold_action
+        item_predicted_abstain = valid and predicted_action == "abstain"
+        group_id = (
+            metadata.get(group_field)
+            if isinstance(metadata, dict)
+            else None
+        )
+        if not isinstance(group_id, str) or not group_id:
+            group_id = identifier
+        group_rows[group_id].append(
+            (
+                item_exact,
+                item_action,
+                gold_action == "abstain",
+                item_predicted_abstain,
+            )
+        )
+        if item_exact:
             exact_count += 1
             by_split[split]["exact"] += 1
             by_mapping[mapping_group]["exact"] += 1
-        if valid and predicted_action == gold_action:
+        if item_action:
             action_correct += 1
             by_mapping[mapping_group]["action_correct"] += 1
         abstention_rows.append(
@@ -198,13 +324,13 @@ def evaluate(
                 by_tool[gold["tool"]]["argument_exact"] += 1
                 by_mapping[mapping_group]["argument_exact"] += 1
         if gold_action == "abstain":
-            if valid and predicted_action == "abstain":
+            if item_predicted_abstain:
                 abstain_true_positive += 1
                 by_mapping[mapping_group]["abstain_true_positive"] += 1
             else:
                 abstain_false_negative += 1
                 by_mapping[mapping_group]["abstain_false_negative"] += 1
-        elif valid and predicted_action == "abstain":
+        elif item_predicted_abstain:
             abstain_false_positive += 1
             by_mapping[mapping_group]["abstain_false_positive"] += 1
 
@@ -302,10 +428,12 @@ def evaluate(
         "abstention_f1": bootstrap_abstention_f1(abstention_rows),
     }
 
+    grouped_metrics = summarize_groups(group_rows)
     return {
         "dataset": str(dataset_path),
         "predictions": str(predictions_path),
         "split": split,
+        "group_field": group_field,
         "records": total,
         "missing_predictions": len(set(dataset) - set(predictions)),
         "extra_predictions": len(set(predictions) - set(dataset)),
@@ -313,6 +441,8 @@ def evaluate(
         "invalid_examples_sample": invalid_examples,
         "metrics": metrics,
         "confidence_intervals_95": confidence_intervals_95,
+        "grouped_metrics": grouped_metrics,
+        "cluster_confidence_intervals_95": bootstrap_group_intervals(group_rows),
         "statistical_methods": {
             "proportion_intervals": "Wilson score, 95%",
             "abstention_f1_interval": "deterministic bootstrap percentile, 2000 resamples, seed 20260830",
@@ -344,9 +474,20 @@ def main() -> int:
         default=root / "data" / "tools" / "android_tools.json",
     )
     parser.add_argument("--split", choices=["train", "dev", "test"], default=None)
+    parser.add_argument(
+        "--group-field",
+        default="template_id",
+        help="metadata field used for cluster-aware summaries and bootstrap",
+    )
     parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
-    report = evaluate(args.dataset, args.predictions, args.registry, args.split)
+    report = evaluate(
+        args.dataset,
+        args.predictions,
+        args.registry,
+        args.split,
+        args.group_field,
+    )
     serialized = json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)

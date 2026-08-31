@@ -1,9 +1,14 @@
-# Resultados experimentais
+# Resultados do benchmark ultrapequeno
 
-Os arquivos de predição e métricas desta pasta foram gerados no Neuromancer com a RTX 5090 e estão vinculados ao SHA-256 do dataset registrado em `data/generated/fc_dataset.manifest.json`.
+Os arquivos `fsc_ultrasmall_*_base_*` e `fsc_ultrasmall_*_base_*.metrics.json` são produzidos pelo runner da matriz e devem conter somente agregados versionáveis e logs locais. As predições `.jsonl` e os adapters são derivados do FSC e permanecem server-local conforme o `.gitignore`.
 
-Os arquivos `*_predictions.jsonl` preservam a resposta bruta do modelo e a latência por exemplo. Os arquivos `*_metrics.json` foram produzidos por `scripts/fc_eval.py`.
+Cada relatório de métrica inclui:
 
-O adapter LoRA em `qwen35_2b_lora_fc/` é um artefato binário local de aproximadamente 109 MB e fica fora do commit Git. O treinamento está documentado em `training_manifest.json`. A pasta `archive/case_split/` contém os resultados da divisão anterior, mantidos apenas para rastreabilidade e não usados na comparação atual.
+- validade JSON e validade canônica;
+- exact match, action accuracy, seleção de ferramenta e argumentos;
+- precision/recall/F1 de abstention;
+- métricas por regra de derivação;
+- resumo macro e strict por `template_id`;
+- intervalos Wilson por item e cluster-bootstrap por template.
 
-Todos os resultados atuais são de desktop/5090 sobre dataset sintético. Ainda não são evidência de desempenho Android.
+Os arquivos `fsc_en_qwen35_2b_*` pertencem à fase anterior, baseada em um contrato Android-alinhado, e não são resultados principais do benchmark ultrapequeno atual.

@@ -1,0 +1,193 @@
+{
+  "cluster_confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.499465,
+      "upper": 0.815781
+    },
+    "action_accuracy": {
+      "lower": 0.332858,
+      "upper": 0.688877
+    },
+    "exact_match_rate": {
+      "lower": 0.332858,
+      "upper": 0.688877
+    }
+  },
+  "confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.648219,
+      "upper": 0.68537
+    },
+    "abstention_precision": {
+      "lower": 0.479565,
+      "upper": 0.520435
+    },
+    "abstention_recall": {
+      "lower": 0.996665,
+      "upper": 1.0
+    },
+    "action_accuracy": {
+      "lower": 0.479565,
+      "upper": 0.520435
+    },
+    "argument_exact_accuracy": {
+      "lower": 0.0,
+      "upper": 0.003335
+    },
+    "argument_exact_given_tool": null,
+    "canonical_valid_rate": {
+      "lower": 0.99833,
+      "upper": 1.0
+    },
+    "exact_match_rate": {
+      "lower": 0.479565,
+      "upper": 0.520435
+    },
+    "json_valid_rate": {
+      "lower": 0.99833,
+      "upper": 1.0
+    },
+    "parseable_rate": {
+      "lower": 0.99833,
+      "upper": 1.0
+    },
+    "tool_selection_accuracy": {
+      "lower": 0.0,
+      "upper": 0.003335
+    }
+  },
+  "counts": {
+    "abstain_false_negative": 0,
+    "abstain_false_positive": 1148,
+    "abstain_gold": 1148,
+    "abstain_true_positive": 1148,
+    "call_gold": 1148
+  },
+  "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+  "duplicate_predictions": 0,
+  "extra_predictions": 0,
+  "group_field": "template_id",
+  "grouped_metrics": {
+    "group_size": {
+      "max": 139,
+      "median": 43,
+      "min": 26
+    },
+    "groups": 38,
+    "macro": {
+      "abstention_f1": 0.763158,
+      "action_accuracy": 0.763158,
+      "exact_match_rate": 0.763158
+    },
+    "records": 2296,
+    "strict_group_exact_match_rate": 0.763158
+  },
+  "invalid_examples_sample": [],
+  "metrics": {
+    "abstention_f1": 0.666667,
+    "abstention_precision": 0.5,
+    "abstention_recall": 1.0,
+    "action_accuracy": 0.5,
+    "argument_exact_accuracy": 0.0,
+    "argument_exact_given_tool": null,
+    "canonical_valid_rate": 1.0,
+    "exact_match_rate": 0.5,
+    "json_valid_rate": 1.0,
+    "parseable_rate": 1.0,
+    "tool_selection_accuracy": 0.0
+  },
+  "missing_predictions": 0,
+  "per_mapping_rule": {
+    "activate_music_to_media_play": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 122,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 122,
+      "tool_selection_accuracy": 0.0
+    },
+    "deactivate_music_to_media_pause": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 139,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 139,
+      "tool_selection_accuracy": 0.0
+    },
+    "decrease_volume_to_volume_down": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 501,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 501,
+      "tool_selection_accuracy": 0.0
+    },
+    "increase_volume_to_volume_up": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 386,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 386,
+      "tool_selection_accuracy": 0.0
+    },
+    "unsupported_fsc_semantics_to_policy_abstain": {
+      "abstain_gold": 1148,
+      "abstention_f1": 1.0,
+      "abstention_precision": 1.0,
+      "abstention_recall": 1.0,
+      "action_accuracy": 1.0,
+      "argument_exact_accuracy": null,
+      "argument_exact_given_tool": null,
+      "call_gold": 0,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 1.0,
+      "records": 1148,
+      "tool_selection_accuracy": null
+    }
+  },
+  "per_tool": {
+    "media_control": {
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "count": 261,
+      "tool_selection_accuracy": 0.0
+    },
+    "volume_adjust": {
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "count": 887,
+      "tool_selection_accuracy": 0.0
+    }
+  },
+  "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_base_phrase_disjoint.predictions.jsonl",
+  "records": 2296,
+  "split": "test",
+  "statistical_methods": {
+    "abstention_f1_interval": "deterministic bootstrap percentile, 2000 resamples, seed 20260830",
+    "proportion_intervals": "Wilson score, 95%"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "benchmark": "fsc-ultrasmall-command-routing-v1",
+  "parameter_cap": 3000000000,
+  "parameter_count_method": "sum of tensor shapes in the local safetensors checkpoint",
+  "input": "English human speech transcriptions from Fluent Speech Commands",
+  "models": [
+    {
+      "name": "qwen25_0_5b",
+      "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "family": "Qwen2",
+      "parameters": 494032768,
+      "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+      "license": "apache-2.0"
+    },
+    {
+      "name": "qwen35_0_8b",
+      "hf_id": "Qwen/Qwen3.5-0.8B",
+      "family": "Qwen3.5",
+      "parameters": 873438784,
+      "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+      "license": "apache-2.0"
+    },
+    {
+      "name": "tinyllama_1_1b",
+      "hf_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "family": "Llama",
+      "parameters": 1100048384,
+      "revision": "fe8a4ea1ffedaf415f4da2f062534de366a451e6",
+      "license": "apache-2.0"
+    },
+    {
+      "name": "smollm2_1_7b",
+      "hf_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "family": "SmolLM",
+      "parameters": 1711376384,
+      "revision": "31b70e2e869a7173562077fd711b654946d38674",
+      "license": "apache-2.0"
+    },
+    {
+      "name": "qwen35_2b",
+      "hf_id": "Qwen/Qwen3.5-2B",
+      "family": "Qwen3.5",
+      "parameters": 2274069824,
+      "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+      "license": "apache-2.0"
+    }
+  ],
+  "excluded": [
+    {
+      "hf_id": "Qwen/Qwen2.5-3B-Instruct",
+      "parameters": 3085938688,
+      "reason": "exceeds the strict 3,000,000,000-parameter cap"
+    },
+    {
+      "hf_id": "Qwen/Qwen3.5-4B-Base",
+      "parameters": 4659865088,
+      "reason": "exceeds the strict 3,000,000,000-parameter cap"
+    }
+  ]
+}

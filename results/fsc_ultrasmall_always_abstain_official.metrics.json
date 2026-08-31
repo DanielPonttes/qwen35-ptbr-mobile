@@ -1,0 +1,193 @@
+{
+  "cluster_confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.601215,
+      "upper": 0.733426
+    },
+    "action_accuracy": {
+      "lower": 0.429812,
+      "upper": 0.579063
+    },
+    "exact_match_rate": {
+      "lower": 0.429812,
+      "upper": 0.579063
+    }
+  },
+  "confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.645658,
+      "upper": 0.686588
+    },
+    "abstention_precision": {
+      "lower": 0.477738,
+      "upper": 0.522262
+    },
+    "abstention_recall": {
+      "lower": 0.996043,
+      "upper": 1.0
+    },
+    "action_accuracy": {
+      "lower": 0.477738,
+      "upper": 0.522262
+    },
+    "argument_exact_accuracy": {
+      "lower": 0.0,
+      "upper": 0.003957
+    },
+    "argument_exact_given_tool": null,
+    "canonical_valid_rate": {
+      "lower": 0.998018,
+      "upper": 1.0
+    },
+    "exact_match_rate": {
+      "lower": 0.477738,
+      "upper": 0.522262
+    },
+    "json_valid_rate": {
+      "lower": 0.998018,
+      "upper": 1.0
+    },
+    "parseable_rate": {
+      "lower": 0.998018,
+      "upper": 1.0
+    },
+    "tool_selection_accuracy": {
+      "lower": 0.0,
+      "upper": 0.003957
+    }
+  },
+  "counts": {
+    "abstain_false_negative": 0,
+    "abstain_false_positive": 967,
+    "abstain_gold": 967,
+    "abstain_true_positive": 967,
+    "call_gold": 967
+  },
+  "dataset": "data/external/fluent_speech_commands_command_benchmark.jsonl",
+  "duplicate_predictions": 0,
+  "extra_predictions": 0,
+  "group_field": "template_id",
+  "grouped_metrics": {
+    "group_size": {
+      "max": 19,
+      "median": 6,
+      "min": 1
+    },
+    "groups": 247,
+    "macro": {
+      "abstention_f1": 0.757085,
+      "action_accuracy": 0.757085,
+      "exact_match_rate": 0.757085
+    },
+    "records": 1934,
+    "strict_group_exact_match_rate": 0.757085
+  },
+  "invalid_examples_sample": [],
+  "metrics": {
+    "abstention_f1": 0.666667,
+    "abstention_precision": 0.5,
+    "abstention_recall": 1.0,
+    "action_accuracy": 0.5,
+    "argument_exact_accuracy": 0.0,
+    "argument_exact_given_tool": null,
+    "canonical_valid_rate": 1.0,
+    "exact_match_rate": 0.5,
+    "json_valid_rate": 1.0,
+    "parseable_rate": 1.0,
+    "tool_selection_accuracy": 0.0
+  },
+  "missing_predictions": 0,
+  "per_mapping_rule": {
+    "activate_music_to_media_play": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 121,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 121,
+      "tool_selection_accuracy": 0.0
+    },
+    "deactivate_music_to_media_pause": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 105,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 105,
+      "tool_selection_accuracy": 0.0
+    },
+    "decrease_volume_to_volume_down": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 345,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 345,
+      "tool_selection_accuracy": 0.0
+    },
+    "increase_volume_to_volume_up": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": 0.0,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 396,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 396,
+      "tool_selection_accuracy": 0.0
+    },
+    "unsupported_fsc_semantics_to_policy_abstain": {
+      "abstain_gold": 967,
+      "abstention_f1": 1.0,
+      "abstention_precision": 1.0,
+      "abstention_recall": 1.0,
+      "action_accuracy": 1.0,
+      "argument_exact_accuracy": null,
+      "argument_exact_given_tool": null,
+      "call_gold": 0,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 1.0,
+      "records": 967,
+      "tool_selection_accuracy": null
+    }
+  },
+  "per_tool": {
+    "media_control": {
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "count": 226,
+      "tool_selection_accuracy": 0.0
+    },
+    "volume_adjust": {
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "count": 741,
+      "tool_selection_accuracy": 0.0
+    }
+  },
+  "predictions": "results/fsc_ultrasmall_always_abstain_official.predictions.jsonl",
+  "records": 1934,
+  "split": "test",
+  "statistical_methods": {
+    "abstention_f1_interval": "deterministic bootstrap percentile, 2000 resamples, seed 20260830",
+    "proportion_intervals": "Wilson score, 95%"
+  }
+}

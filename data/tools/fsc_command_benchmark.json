@@ -1,0 +1,41 @@
+{
+  "schema_version": "fsc-command-benchmark-en/0.2.0",
+  "locale": "en-US",
+  "description": "Narrow text-to-command contract derived from the Fluent Speech Commands benchmark.",
+  "execution_note": "This contract is an evaluation target only. It does not grant permissions or execute actions.",
+  "provenance_note": "Only media-control and relative media-volume examples are mapped from the source labels. All other source intents are treated as unsupported and mapped to abstain by policy.",
+  "tools": [
+    {
+      "name": "media_control",
+      "description": "Controls active media playback.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["play", "pause"],
+            "description": "Start or pause media playback."
+          }
+        },
+        "required": ["action"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "volume_adjust",
+      "description": "Adjusts media volume by one relative step.",
+      "arguments": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": ["up", "down"],
+            "description": "Whether to increase or decrease media volume."
+          }
+        },
+        "required": ["direction"],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

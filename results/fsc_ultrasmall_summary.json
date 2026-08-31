@@ -1,0 +1,762 @@
+{
+  "baselines": {
+    "always_abstain": {
+      "official": {
+        "cluster_confidence_intervals_95": {
+          "abstention_f1": {
+            "lower": 0.601215,
+            "upper": 0.733426
+          },
+          "action_accuracy": {
+            "lower": 0.429812,
+            "upper": 0.579063
+          },
+          "exact_match_rate": {
+            "lower": 0.429812,
+            "upper": 0.579063
+          }
+        },
+        "grouped_metrics": {
+          "group_size": {
+            "max": 19,
+            "median": 6,
+            "min": 1
+          },
+          "groups": 247,
+          "macro": {
+            "abstention_f1": 0.757085,
+            "action_accuracy": 0.757085,
+            "exact_match_rate": 0.757085
+          },
+          "records": 1934,
+          "strict_group_exact_match_rate": 0.757085
+        },
+        "metrics": {
+          "abstention_f1": 0.666667,
+          "abstention_precision": 0.5,
+          "abstention_recall": 1.0,
+          "action_accuracy": 0.5,
+          "argument_exact_accuracy": 0.0,
+          "argument_exact_given_tool": null,
+          "canonical_valid_rate": 1.0,
+          "exact_match_rate": 0.5,
+          "json_valid_rate": 1.0,
+          "parseable_rate": 1.0,
+          "tool_selection_accuracy": 0.0
+        },
+        "records": 1934
+      },
+      "phrase_disjoint": {
+        "cluster_confidence_intervals_95": {
+          "abstention_f1": {
+            "lower": 0.499465,
+            "upper": 0.815781
+          },
+          "action_accuracy": {
+            "lower": 0.332858,
+            "upper": 0.688877
+          },
+          "exact_match_rate": {
+            "lower": 0.332858,
+            "upper": 0.688877
+          }
+        },
+        "grouped_metrics": {
+          "group_size": {
+            "max": 139,
+            "median": 43,
+            "min": 26
+          },
+          "groups": 38,
+          "macro": {
+            "abstention_f1": 0.763158,
+            "action_accuracy": 0.763158,
+            "exact_match_rate": 0.763158
+          },
+          "records": 2296,
+          "strict_group_exact_match_rate": 0.763158
+        },
+        "metrics": {
+          "abstention_f1": 0.666667,
+          "abstention_precision": 0.5,
+          "abstention_recall": 1.0,
+          "action_accuracy": 0.5,
+          "argument_exact_accuracy": 0.0,
+          "argument_exact_given_tool": null,
+          "canonical_valid_rate": 1.0,
+          "exact_match_rate": 0.5,
+          "json_valid_rate": 1.0,
+          "parseable_rate": 1.0,
+          "tool_selection_accuracy": 0.0
+        },
+        "records": 2296
+      }
+    },
+    "lexical": {
+      "official": {
+        "cluster_confidence_intervals_95": {
+          "abstention_f1": {
+            "lower": 0.807997,
+            "upper": 0.916848
+          },
+          "action_accuracy": {
+            "lower": 0.779687,
+            "upper": 0.902747
+          },
+          "exact_match_rate": {
+            "lower": 0.708768,
+            "upper": 0.850873
+          }
+        },
+        "grouped_metrics": {
+          "group_size": {
+            "max": 19,
+            "median": 6,
+            "min": 1
+          },
+          "groups": 247,
+          "macro": {
+            "abstention_f1": 0.757085,
+            "action_accuracy": 0.923077,
+            "exact_match_rate": 0.890688
+          },
+          "records": 1934,
+          "strict_group_exact_match_rate": 0.890688
+        },
+        "metrics": {
+          "abstention_f1": 0.864164,
+          "abstention_precision": 0.760818,
+          "abstention_recall": 1.0,
+          "action_accuracy": 0.842813,
+          "argument_exact_accuracy": 0.558428,
+          "argument_exact_given_tool": 0.81448,
+          "canonical_valid_rate": 1.0,
+          "exact_match_rate": 0.779214,
+          "json_valid_rate": 1.0,
+          "parseable_rate": 1.0,
+          "tool_selection_accuracy": 0.685626
+        },
+        "records": 1934
+      },
+      "phrase_disjoint": {
+        "cluster_confidence_intervals_95": {
+          "abstention_f1": {
+            "lower": 0.646259,
+            "upper": 0.95298
+          },
+          "action_accuracy": {
+            "lower": 0.585133,
+            "upper": 0.942605
+          },
+          "exact_match_rate": {
+            "lower": 0.585133,
+            "upper": 0.942605
+          }
+        },
+        "grouped_metrics": {
+          "group_size": {
+            "max": 139,
+            "median": 43,
+            "min": 26
+          },
+          "groups": 38,
+          "macro": {
+            "abstention_f1": 0.763158,
+            "action_accuracy": 0.894737,
+            "exact_match_rate": 0.894737
+          },
+          "records": 2296,
+          "strict_group_exact_match_rate": 0.894737
+        },
+        "metrics": {
+          "abstention_f1": 0.81563,
+          "abstention_precision": 0.688662,
+          "abstention_recall": 1.0,
+          "action_accuracy": 0.773955,
+          "argument_exact_accuracy": 0.547909,
+          "argument_exact_given_tool": 1.0,
+          "canonical_valid_rate": 1.0,
+          "exact_match_rate": 0.773955,
+          "json_valid_rate": 1.0,
+          "parseable_rate": 1.0,
+          "tool_selection_accuracy": 0.547909
+        },
+        "records": 2296
+      }
+    }
+  },
+  "benchmark": "fsc-ultrasmall-command-routing-v1",
+  "completeness": {
+    "all_predictions_complete": true,
+    "completed_model_protocol_pairs": 10,
+    "expected_model_protocol_pairs": 10
+  },
+  "models": [
+    {
+      "family": "Qwen2",
+      "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "name": "qwen25_0_5b",
+      "parameters": 494032768,
+      "protocols": {
+        "official": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "action_accuracy": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "exact_match_rate": {
+              "lower": 0.0,
+              "upper": 0.0
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 19,
+              "median": 6,
+              "min": 1
+            },
+            "groups": 247,
+            "macro": {
+              "abstention_f1": 0.0,
+              "action_accuracy": 0.0,
+              "exact_match_rate": 0.0
+            },
+            "records": 1934,
+            "strict_group_exact_match_rate": 0.0
+          },
+          "latency": {
+            "mean_ms": 77.574,
+            "median_ms": 88.622,
+            "p95_ms": 176.745
+          },
+          "metrics": {
+            "abstention_f1": null,
+            "abstention_precision": null,
+            "abstention_recall": 0.0,
+            "action_accuracy": 0.0,
+            "argument_exact_accuracy": 0.0,
+            "argument_exact_given_tool": null,
+            "canonical_valid_rate": 0.0,
+            "exact_match_rate": 0.0,
+            "json_valid_rate": 0.59152,
+            "parseable_rate": 0.59152,
+            "tool_selection_accuracy": 0.0
+          },
+          "missing_predictions": 0,
+          "records": 1934
+        },
+        "phrase_disjoint": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "action_accuracy": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "exact_match_rate": {
+              "lower": 0.0,
+              "upper": 0.0
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 139,
+              "median": 43,
+              "min": 26
+            },
+            "groups": 38,
+            "macro": {
+              "abstention_f1": 0.0,
+              "action_accuracy": 0.0,
+              "exact_match_rate": 0.0
+            },
+            "records": 2296,
+            "strict_group_exact_match_rate": 0.0
+          },
+          "latency": {
+            "mean_ms": 81.356,
+            "median_ms": 90.95,
+            "p95_ms": 175.988
+          },
+          "metrics": {
+            "abstention_f1": null,
+            "abstention_precision": null,
+            "abstention_recall": 0.0,
+            "action_accuracy": 0.0,
+            "argument_exact_accuracy": 0.0,
+            "argument_exact_given_tool": null,
+            "canonical_valid_rate": 0.0,
+            "exact_match_rate": 0.0,
+            "json_valid_rate": 0.701655,
+            "parseable_rate": 0.701655,
+            "tool_selection_accuracy": 0.0
+          },
+          "missing_predictions": 0,
+          "records": 2296
+        }
+      },
+      "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+    },
+    {
+      "family": "Qwen3.5",
+      "hf_id": "Qwen/Qwen3.5-0.8B",
+      "name": "qwen35_0_8b",
+      "parameters": 873438784,
+      "protocols": {
+        "official": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.583386,
+              "upper": 0.724603
+            },
+            "action_accuracy": {
+              "lower": 0.497048,
+              "upper": 0.641571
+            },
+            "exact_match_rate": {
+              "lower": 0.469377,
+              "upper": 0.617253
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 19,
+              "median": 6,
+              "min": 1
+            },
+            "groups": 247,
+            "macro": {
+              "abstention_f1": 0.433198,
+              "action_accuracy": 0.574899,
+              "exact_match_rate": 0.562753
+            },
+            "records": 1934,
+            "strict_group_exact_match_rate": 0.562753
+          },
+          "latency": {
+            "mean_ms": 342.871,
+            "median_ms": 332.104,
+            "p95_ms": 458.136
+          },
+          "metrics": {
+            "abstention_f1": 0.658056,
+            "abstention_precision": 0.811836,
+            "abstention_recall": 0.553257,
+            "action_accuracy": 0.572389,
+            "argument_exact_accuracy": 0.539814,
+            "argument_exact_given_tool": 1.0,
+            "canonical_valid_rate": 0.734747,
+            "exact_match_rate": 0.546536,
+            "json_valid_rate": 1.0,
+            "parseable_rate": 1.0,
+            "tool_selection_accuracy": 0.539814
+          },
+          "missing_predictions": 0,
+          "records": 1934
+        },
+        "phrase_disjoint": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.515896,
+              "upper": 0.839744
+            },
+            "action_accuracy": {
+              "lower": 0.31192,
+              "upper": 0.678811
+            },
+            "exact_match_rate": {
+              "lower": 0.260239,
+              "upper": 0.633477
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 139,
+              "median": 43,
+              "min": 26
+            },
+            "groups": 38,
+            "macro": {
+              "abstention_f1": 0.421053,
+              "action_accuracy": 0.526316,
+              "exact_match_rate": 0.5
+            },
+            "records": 2296,
+            "strict_group_exact_match_rate": 0.5
+          },
+          "latency": {
+            "mean_ms": 324.129,
+            "median_ms": 327.24,
+            "p95_ms": 448.93
+          },
+          "metrics": {
+            "abstention_f1": 0.69915,
+            "abstention_precision": 1.0,
+            "abstention_recall": 0.537456,
+            "action_accuracy": 0.496516,
+            "argument_exact_accuracy": 0.334495,
+            "argument_exact_given_tool": 1.0,
+            "canonical_valid_rate": 0.601481,
+            "exact_match_rate": 0.435976,
+            "json_valid_rate": 1.0,
+            "parseable_rate": 1.0,
+            "tool_selection_accuracy": 0.334495
+          },
+          "missing_predictions": 0,
+          "records": 2296
+        }
+      },
+      "revision": "2fc06364715b967f1860aea9cf38778875588b17"
+    },
+    {
+      "family": "Llama",
+      "hf_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "name": "tinyllama_1_1b",
+      "parameters": 1100048384,
+      "protocols": {
+        "official": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "action_accuracy": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "exact_match_rate": {
+              "lower": 0.0,
+              "upper": 0.0
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 19,
+              "median": 6,
+              "min": 1
+            },
+            "groups": 247,
+            "macro": {
+              "abstention_f1": 0.0,
+              "action_accuracy": 0.0,
+              "exact_match_rate": 0.0
+            },
+            "records": 1934,
+            "strict_group_exact_match_rate": 0.0
+          },
+          "latency": {
+            "mean_ms": 291.163,
+            "median_ms": 290.755,
+            "p95_ms": 301.642
+          },
+          "metrics": {
+            "abstention_f1": null,
+            "abstention_precision": null,
+            "abstention_recall": 0.0,
+            "action_accuracy": 0.0,
+            "argument_exact_accuracy": 0.0,
+            "argument_exact_given_tool": null,
+            "canonical_valid_rate": 0.0,
+            "exact_match_rate": 0.0,
+            "json_valid_rate": 0.432782,
+            "parseable_rate": 0.432782,
+            "tool_selection_accuracy": 0.0
+          },
+          "missing_predictions": 0,
+          "records": 1934
+        },
+        "phrase_disjoint": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "action_accuracy": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "exact_match_rate": {
+              "lower": 0.0,
+              "upper": 0.0
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 139,
+              "median": 43,
+              "min": 26
+            },
+            "groups": 38,
+            "macro": {
+              "abstention_f1": 0.0,
+              "action_accuracy": 0.0,
+              "exact_match_rate": 0.0
+            },
+            "records": 2296,
+            "strict_group_exact_match_rate": 0.0
+          },
+          "latency": {
+            "mean_ms": 301.485,
+            "median_ms": 300.18,
+            "p95_ms": 311.555
+          },
+          "metrics": {
+            "abstention_f1": null,
+            "abstention_precision": null,
+            "abstention_recall": 0.0,
+            "action_accuracy": 0.0,
+            "argument_exact_accuracy": 0.0,
+            "argument_exact_given_tool": null,
+            "canonical_valid_rate": 0.0,
+            "exact_match_rate": 0.0,
+            "json_valid_rate": 0.434233,
+            "parseable_rate": 0.434233,
+            "tool_selection_accuracy": 0.0
+          },
+          "missing_predictions": 0,
+          "records": 2296
+        }
+      },
+      "revision": "fe8a4ea1ffedaf415f4da2f062534de366a451e6"
+    },
+    {
+      "family": "SmolLM",
+      "hf_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "name": "smollm2_1_7b",
+      "parameters": 1711376384,
+      "protocols": {
+        "official": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "action_accuracy": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "exact_match_rate": {
+              "lower": 0.0,
+              "upper": 0.0
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 19,
+              "median": 6,
+              "min": 1
+            },
+            "groups": 247,
+            "macro": {
+              "abstention_f1": 0.0,
+              "action_accuracy": 0.0,
+              "exact_match_rate": 0.0
+            },
+            "records": 1934,
+            "strict_group_exact_match_rate": 0.0
+          },
+          "latency": {
+            "mean_ms": 125.824,
+            "median_ms": 105.249,
+            "p95_ms": 244.552
+          },
+          "metrics": {
+            "abstention_f1": null,
+            "abstention_precision": null,
+            "abstention_recall": 0.0,
+            "action_accuracy": 0.0,
+            "argument_exact_accuracy": 0.0,
+            "argument_exact_given_tool": null,
+            "canonical_valid_rate": 0.007756,
+            "exact_match_rate": 0.0,
+            "json_valid_rate": 0.970527,
+            "parseable_rate": 0.970527,
+            "tool_selection_accuracy": 0.0
+          },
+          "missing_predictions": 0,
+          "records": 1934
+        },
+        "phrase_disjoint": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "action_accuracy": {
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "exact_match_rate": {
+              "lower": 0.0,
+              "upper": 0.0
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 139,
+              "median": 43,
+              "min": 26
+            },
+            "groups": 38,
+            "macro": {
+              "abstention_f1": 0.0,
+              "action_accuracy": 0.0,
+              "exact_match_rate": 0.0
+            },
+            "records": 2296,
+            "strict_group_exact_match_rate": 0.0
+          },
+          "latency": {
+            "mean_ms": 122.864,
+            "median_ms": 106.709,
+            "p95_ms": 220.069
+          },
+          "metrics": {
+            "abstention_f1": null,
+            "abstention_precision": null,
+            "abstention_recall": 0.0,
+            "action_accuracy": 0.0,
+            "argument_exact_accuracy": 0.0,
+            "argument_exact_given_tool": null,
+            "canonical_valid_rate": 0.0,
+            "exact_match_rate": 0.0,
+            "json_valid_rate": 0.964721,
+            "parseable_rate": 0.964721,
+            "tool_selection_accuracy": 0.0
+          },
+          "missing_predictions": 0,
+          "records": 2296
+        }
+      },
+      "revision": "31b70e2e869a7173562077fd711b654946d38674"
+    },
+    {
+      "family": "Qwen3.5",
+      "hf_id": "Qwen/Qwen3.5-2B",
+      "name": "qwen35_2b",
+      "parameters": 2274069824,
+      "protocols": {
+        "official": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.605435,
+              "upper": 0.73637
+            },
+            "action_accuracy": {
+              "lower": 0.438433,
+              "upper": 0.585977
+            },
+            "exact_match_rate": {
+              "lower": 0.438433,
+              "upper": 0.585977
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 19,
+              "median": 6,
+              "min": 1
+            },
+            "groups": 247,
+            "macro": {
+              "abstention_f1": 0.757085,
+              "action_accuracy": 0.761134,
+              "exact_match_rate": 0.761134
+            },
+            "records": 1934,
+            "strict_group_exact_match_rate": 0.761134
+          },
+          "latency": {
+            "mean_ms": 346.371,
+            "median_ms": 338.612,
+            "p95_ms": 396.288
+          },
+          "metrics": {
+            "abstention_f1": 0.671062,
+            "abstention_precision": 0.504961,
+            "abstention_recall": 1.0,
+            "action_accuracy": 0.509824,
+            "argument_exact_accuracy": 0.019648,
+            "argument_exact_given_tool": 1.0,
+            "canonical_valid_rate": 1.0,
+            "exact_match_rate": 0.509824,
+            "json_valid_rate": 1.0,
+            "parseable_rate": 1.0,
+            "tool_selection_accuracy": 0.019648
+          },
+          "missing_predictions": 0,
+          "records": 1934
+        },
+        "phrase_disjoint": {
+          "cluster_confidence_intervals_95": {
+            "abstention_f1": {
+              "lower": 0.499465,
+              "upper": 0.815781
+            },
+            "action_accuracy": {
+              "lower": 0.332858,
+              "upper": 0.688877
+            },
+            "exact_match_rate": {
+              "lower": 0.332858,
+              "upper": 0.688877
+            }
+          },
+          "duplicate_predictions": 0,
+          "grouped_metrics": {
+            "group_size": {
+              "max": 139,
+              "median": 43,
+              "min": 26
+            },
+            "groups": 38,
+            "macro": {
+              "abstention_f1": 0.763158,
+              "action_accuracy": 0.763158,
+              "exact_match_rate": 0.763158
+            },
+            "records": 2296,
+            "strict_group_exact_match_rate": 0.763158
+          },
+          "latency": {
+            "mean_ms": 345.143,
+            "median_ms": 338.35,
+            "p95_ms": 395.905
+          },
+          "metrics": {
+            "abstention_f1": 0.666667,
+            "abstention_precision": 0.5,
+            "abstention_recall": 1.0,
+            "action_accuracy": 0.5,
+            "argument_exact_accuracy": 0.0,
+            "argument_exact_given_tool": null,
+            "canonical_valid_rate": 1.0,
+            "exact_match_rate": 0.5,
+            "json_valid_rate": 1.0,
+            "parseable_rate": 1.0,
+            "tool_selection_accuracy": 0.0
+          },
+          "missing_predictions": 0,
+          "records": 2296
+        }
+      },
+      "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc"
+    }
+  ],
+  "parameter_cap": 3000000000
+}

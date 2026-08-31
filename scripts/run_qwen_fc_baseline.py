@@ -14,20 +14,25 @@ from pathlib import Path
 from typing import Any
 
 import torch
-from transformers import AutoModelForImageTextToText, AutoTokenizer
+from transformers import (
+    AutoConfig,
+    AutoModelForCausalLM,
+    AutoModelForImageTextToText,
+    AutoTokenizer,
+)
 
 from fc_common import load_json, load_registry
 from peft import PeftModel
 
 
-SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos Android em português brasileiro.
+SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos em português brasileiro.
 Escolha no máximo uma ferramenta do catálogo fornecido.
 Responda somente com a chamada de ferramenta exigida pelo template ou com:
 {\"action\":\"abstain\",\"tool\":null,\"arguments\":{}}.
 Abstenha-se quando o pedido for ambíguo, estiver incompleto, fora do catálogo ou não puder ser executado com segurança.
 Não explique sua decisão e não invente argumentos."""
 
-CANONICAL_SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos Android em português brasileiro.
+CANONICAL_SYSTEM_PROMPT_PTBR = """Você é um roteador estrito de comandos em um benchmark de modelos pequenos.
 Escolha no máximo uma ferramenta do catálogo.
 Responda somente com JSON válido e exatamente estes campos: action, tool, arguments.
 Para uma ação válida use action=call, o nome da ferramenta e os argumentos exigidos.
@@ -37,22 +42,41 @@ Catálogo de ferramentas:
 {catalog}
 """
 
-SYSTEM_PROMPT_EN = """You are a strict Android command router.
+SYSTEM_PROMPT_EN = """You are a strict command router for a small-model benchmark.
 Choose at most one tool from the provided catalog.
 Respond only with the tool call required by the template or:
 {\"action\":\"abstain\",\"tool\":null,\"arguments\":{}}.
 Abstain when the request is ambiguous, incomplete, unsupported, out of catalog, or unsafe.
 Do not explain your decision or invent arguments."""
 
-CANONICAL_SYSTEM_PROMPT_EN = """You are a strict Android command router.
+CANONICAL_SYSTEM_PROMPT_EN = """You are a strict command router for a small-model benchmark.
 Choose at most one tool from the catalog.
 Respond only with valid JSON containing exactly these fields: action, tool, arguments.
 For a valid request use action=call, the tool name, and the required arguments.
 For an ambiguous, incomplete, unsupported, out-of-catalog, or unsafe request use action=abstain, tool=null, and arguments={}.
 Do not explain your decision, use markdown, or invent arguments.
-Tool catalog:
+Operation catalog:
 {catalog}
 """
+
+
+def load_text_model(model_id: str, dtype: torch.dtype) -> tuple[Any, str]:
+    """Load transcript-capable checkpoints without requiring one architecture."""
+
+    config = AutoConfig.from_pretrained(model_id)
+    architectures = getattr(config, "architectures", None) or []
+    if getattr(config, "model_type", "") == "qwen3_5" or any(
+        "ConditionalGeneration" in architecture for architecture in architectures
+    ):
+        model_class = AutoModelForImageTextToText
+    else:
+        model_class = AutoModelForCausalLM
+    model = model_class.from_pretrained(
+        model_id,
+        torch_dtype=dtype,
+        low_cpu_mem_usage=False,
+    )
+    return model, model_class.__name__
 
 
 def build_system_prompt(locale: str, canonical: bool, catalog: str) -> str:
@@ -199,7 +223,7 @@ def main() -> int:
     parser.add_argument(
         "--registry",
         type=Path,
-        default=root / "data" / "tools" / "android_tools.json",
+        default=root / "data" / "tools" / "fsc_command_benchmark.json",
     )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--split", default="test")
@@ -224,11 +248,7 @@ def main() -> int:
     print(f"model={args.model}")
 
     tokenizer = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModelForImageTextToText.from_pretrained(
-        args.model,
-        torch_dtype=dtype,
-        low_cpu_mem_usage=False,
-    )
+    model, model_class = load_text_model(args.model, dtype)
     if args.adapter:
         model = PeftModel.from_pretrained(model, args.adapter)
     model.to(device)
@@ -236,7 +256,8 @@ def main() -> int:
     tools = as_openai_tools(registry)
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
-    with args.output.open("w", encoding="utf-8") as handle:
+    partial_output = args.output.with_name(args.output.name + ".partial")
+    with partial_output.open("w", encoding="utf-8") as handle:
         for index, record in enumerate(records, start=1):
             encoded_cpu, template_mode = tokenize_request(
                 tokenizer, record["text"], tools, registry, args.prompt_mode, args.locale
@@ -258,6 +279,7 @@ def main() -> int:
                 "id": record["id"],
                 "raw": raw,
                 "model": str(args.model),
+                "model_class": model_class,
                 "adapter": args.adapter,
                 "locale": args.locale,
                 "prompt_mode": args.prompt_mode,
@@ -270,6 +292,7 @@ def main() -> int:
             handle.write(json.dumps(output_record, ensure_ascii=False, sort_keys=True) + "\n")
             handle.flush()
             print(f"{index}/{len(records)} id={record['id']} latency_ms={elapsed_ms:.1f} template={template_mode}")
+    partial_output.replace(args.output)
     print(f"predictions={args.output}")
     return 0
 

@@ -1,0 +1,351 @@
+{
+  "cluster_confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.515896,
+      "upper": 0.839744
+    },
+    "action_accuracy": {
+      "lower": 0.31192,
+      "upper": 0.678811
+    },
+    "exact_match_rate": {
+      "lower": 0.260239,
+      "upper": 0.633477
+    }
+  },
+  "confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.675233,
+      "upper": 0.724039
+    },
+    "abstention_precision": {
+      "lower": 0.993812,
+      "upper": 1.0
+    },
+    "abstention_recall": {
+      "lower": 0.508537,
+      "upper": 0.566126
+    },
+    "action_accuracy": {
+      "lower": 0.476087,
+      "upper": 0.516956
+    },
+    "argument_exact_accuracy": {
+      "lower": 0.307794,
+      "upper": 0.3623
+    },
+    "argument_exact_given_tool": {
+      "lower": 0.990095,
+      "upper": 1.0
+    },
+    "canonical_valid_rate": {
+      "lower": 0.581301,
+      "upper": 0.621321
+    },
+    "exact_match_rate": {
+      "lower": 0.415816,
+      "upper": 0.456349
+    },
+    "json_valid_rate": {
+      "lower": 0.99833,
+      "upper": 1.0
+    },
+    "parseable_rate": {
+      "lower": 0.99833,
+      "upper": 1.0
+    },
+    "tool_selection_accuracy": {
+      "lower": 0.307794,
+      "upper": 0.3623
+    }
+  },
+  "counts": {
+    "abstain_false_negative": 531,
+    "abstain_false_positive": 0,
+    "abstain_gold": 1148,
+    "abstain_true_positive": 617,
+    "call_gold": 1148
+  },
+  "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+  "duplicate_predictions": 0,
+  "extra_predictions": 0,
+  "group_field": "template_id",
+  "grouped_metrics": {
+    "group_size": {
+      "max": 139,
+      "median": 43,
+      "min": 26
+    },
+    "groups": 38,
+    "macro": {
+      "abstention_f1": 0.421053,
+      "action_accuracy": 0.526316,
+      "exact_match_rate": 0.5
+    },
+    "records": 2296,
+    "strict_group_exact_match_rate": 0.5
+  },
+  "invalid_examples_sample": [
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_003f3970ba24c219"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_00879e8f6e22d5e5"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_01186d8329c08fee"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_0144642df4f003bd"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_0160c9f6fab8387f"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_01f98285d783ddd7"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_0276c37512c0e864"
+    },
+    {
+      "errors": [
+        "target.arguments.action: valor fora do enum ['play', 'pause']"
+      ],
+      "id": "fsc_032a49b796da180a"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_03695ac92aa8b428"
+    },
+    {
+      "errors": [
+        "target.arguments.action: valor fora do enum ['play', 'pause']"
+      ],
+      "id": "fsc_04366ba14c6700dc"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_043c7dca7d0593c9"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_044b0c1ebcdf57de"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_0495ab1e62e0692c"
+    },
+    {
+      "errors": [
+        "target.arguments.action: valor fora do enum ['play', 'pause']"
+      ],
+      "id": "fsc_04fce3f4e661cab7"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_05036609ea19f782"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_051b808b19169cc8"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: action",
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_055dc0babe7b4a65"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_057f93143e82128d"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: action",
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_05839c6c3275742c"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_05b02cac26340027"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_05fdd4ed5eaccafc"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_071bc0c97c42e2f7"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_076895f366f54ba4"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_0833de6d92f483e8"
+    },
+    {
+      "errors": [
+        "target.tool: deve ser null quando action=abstain"
+      ],
+      "id": "fsc_085d85dd833ab8dc"
+    }
+  ],
+  "metrics": {
+    "abstention_f1": 0.69915,
+    "abstention_precision": 1.0,
+    "abstention_recall": 0.537456,
+    "action_accuracy": 0.496516,
+    "argument_exact_accuracy": 0.334495,
+    "argument_exact_given_tool": 1.0,
+    "canonical_valid_rate": 0.601481,
+    "exact_match_rate": 0.435976,
+    "json_valid_rate": 1.0,
+    "parseable_rate": 1.0,
+    "tool_selection_accuracy": 0.334495
+  },
+  "missing_predictions": 0,
+  "per_mapping_rule": {
+    "activate_music_to_media_play": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 1.0,
+      "argument_exact_accuracy": 1.0,
+      "argument_exact_given_tool": 1.0,
+      "call_gold": 122,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 1.0,
+      "records": 122,
+      "tool_selection_accuracy": 1.0
+    },
+    "deactivate_music_to_media_pause": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 1.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 139,
+      "canonical_valid_rate": 1.0,
+      "exact_match_rate": 0.0,
+      "records": 139,
+      "tool_selection_accuracy": 0.0
+    },
+    "decrease_volume_to_volume_down": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 0.265469,
+      "argument_exact_accuracy": 0.265469,
+      "argument_exact_given_tool": 1.0,
+      "call_gold": 501,
+      "canonical_valid_rate": 0.265469,
+      "exact_match_rate": 0.265469,
+      "records": 501,
+      "tool_selection_accuracy": 0.265469
+    },
+    "increase_volume_to_volume_up": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 0.334197,
+      "argument_exact_accuracy": 0.334197,
+      "argument_exact_given_tool": 1.0,
+      "call_gold": 386,
+      "canonical_valid_rate": 0.334197,
+      "exact_match_rate": 0.334197,
+      "records": 386,
+      "tool_selection_accuracy": 0.334197
+    },
+    "unsupported_fsc_semantics_to_policy_abstain": {
+      "abstain_gold": 1148,
+      "abstention_f1": 0.69915,
+      "abstention_precision": 1.0,
+      "abstention_recall": 0.537456,
+      "action_accuracy": 0.537456,
+      "argument_exact_accuracy": null,
+      "argument_exact_given_tool": null,
+      "call_gold": 0,
+      "canonical_valid_rate": 0.747387,
+      "exact_match_rate": 0.537456,
+      "records": 1148,
+      "tool_selection_accuracy": null
+    }
+  },
+  "per_tool": {
+    "media_control": {
+      "argument_exact_accuracy": 0.467433,
+      "argument_exact_given_tool": 1.0,
+      "count": 261,
+      "tool_selection_accuracy": 0.467433
+    },
+    "volume_adjust": {
+      "argument_exact_accuracy": 0.295378,
+      "argument_exact_given_tool": 1.0,
+      "count": 887,
+      "tool_selection_accuracy": 0.295378
+    }
+  },
+  "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_base_phrase_disjoint.predictions.jsonl",
+  "records": 2296,
+  "split": "test",
+  "statistical_methods": {
+    "abstention_f1_interval": "deterministic bootstrap percentile, 2000 resamples, seed 20260830",
+    "proportion_intervals": "Wilson score, 95%"
+  }
+}

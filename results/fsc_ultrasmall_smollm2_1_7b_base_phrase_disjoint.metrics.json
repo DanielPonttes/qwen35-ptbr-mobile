@@ -1,0 +1,371 @@
+{
+  "cluster_confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.0,
+      "upper": 0.0
+    },
+    "action_accuracy": {
+      "lower": 0.0,
+      "upper": 0.0
+    },
+    "exact_match_rate": {
+      "lower": 0.0,
+      "upper": 0.0
+    }
+  },
+  "confidence_intervals_95": {
+    "abstention_f1": {
+      "lower": 0.0,
+      "upper": 0.0
+    },
+    "abstention_precision": null,
+    "abstention_recall": {
+      "lower": 0.0,
+      "upper": 0.003335
+    },
+    "action_accuracy": {
+      "lower": 0.0,
+      "upper": 0.00167
+    },
+    "argument_exact_accuracy": {
+      "lower": 0.0,
+      "upper": 0.003335
+    },
+    "argument_exact_given_tool": null,
+    "canonical_valid_rate": {
+      "lower": 0.0,
+      "upper": 0.00167
+    },
+    "exact_match_rate": {
+      "lower": 0.0,
+      "upper": 0.00167
+    },
+    "json_valid_rate": {
+      "lower": 0.956365,
+      "upper": 0.971525
+    },
+    "parseable_rate": {
+      "lower": 0.956365,
+      "upper": 0.971525
+    },
+    "tool_selection_accuracy": {
+      "lower": 0.0,
+      "upper": 0.003335
+    }
+  },
+  "counts": {
+    "abstain_false_negative": 1148,
+    "abstain_false_positive": 0,
+    "abstain_gold": 1148,
+    "abstain_true_positive": 0,
+    "call_gold": 1148
+  },
+  "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+  "duplicate_predictions": 0,
+  "extra_predictions": 0,
+  "group_field": "template_id",
+  "grouped_metrics": {
+    "group_size": {
+      "max": 139,
+      "median": 43,
+      "min": 26
+    },
+    "groups": 38,
+    "macro": {
+      "abstention_f1": 0.0,
+      "action_accuracy": 0.0,
+      "exact_match_rate": 0.0
+    },
+    "records": 2296,
+    "strict_group_exact_match_rate": 0.0
+  },
+  "invalid_examples_sample": [
+    {
+      "errors": [
+        "target: campo obrigatório ausente: action",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: name"
+      ],
+      "id": "fsc_0018152614602fb0"
+    },
+    {
+      "errors": [
+        "target.arguments.direction: valor fora do enum ['up', 'down']"
+      ],
+      "id": "fsc_003f3970ba24c219"
+    },
+    {
+      "errors": [
+        "target.arguments: argumento obrigatório ausente: action",
+        "target.arguments: argumento não permitido: properties",
+        "target.arguments: argumento não permitido: type"
+      ],
+      "id": "fsc_004b6729f65dd65f"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments"
+      ],
+      "id": "fsc_0053ff6e591bdd3a"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: direction"
+      ],
+      "id": "fsc_00879e8f6e22d5e5"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments"
+      ],
+      "id": "fsc_00cd149a153aee25"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: direction"
+      ],
+      "id": "fsc_00dab67606331591"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: direction"
+      ],
+      "id": "fsc_01186d8329c08fee"
+    },
+    {
+      "errors": [
+        "target.arguments: argumento obrigatório ausente: action",
+        "target.arguments: argumento não permitido: properties",
+        "target.arguments: argumento não permitido: type"
+      ],
+      "id": "fsc_012d1237ab56b8af"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_0134ff76b73e2c97"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: direction"
+      ],
+      "id": "fsc_0144642df4f003bd"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_0160c9f6fab8387f"
+    },
+    {
+      "errors": [
+        "target.arguments: argumento obrigatório ausente: action",
+        "target.arguments: argumento não permitido: properties",
+        "target.arguments: argumento não permitido: type"
+      ],
+      "id": "fsc_019f0649c339ba7a"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments"
+      ],
+      "id": "fsc_01a513c138b22374"
+    },
+    {
+      "errors": [
+        "target.action: esperado call ou abstain"
+      ],
+      "id": "fsc_01f98285d783ddd7"
+    },
+    {
+      "errors": [
+        "target.arguments: argumento obrigatório ausente: action",
+        "target.arguments: argumento não permitido: type"
+      ],
+      "id": "fsc_026e8572c9ef08e7"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool"
+      ],
+      "id": "fsc_0276c37512c0e864"
+    },
+    {
+      "errors": [
+        "target.arguments: argumento obrigatório ausente: action",
+        "target.arguments: argumento não permitido: properties",
+        "target.arguments: argumento não permitido: type"
+      ],
+      "id": "fsc_02bdb4c8307ea348"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: direction"
+      ],
+      "id": "fsc_02c228e6872a89df"
+    },
+    {
+      "errors": [
+        "nenhum objeto JSON foi encontrado"
+      ],
+      "id": "fsc_02f8ae0446532c2b"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: direction"
+      ],
+      "id": "fsc_02fd71b5893bb673"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments"
+      ],
+      "id": "fsc_032a49b796da180a"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: direction"
+      ],
+      "id": "fsc_033735c1dd01c074"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments"
+      ],
+      "id": "fsc_03374205b318cd44"
+    },
+    {
+      "errors": [
+        "target: campo obrigatório ausente: arguments",
+        "target: campo obrigatório ausente: tool",
+        "target: campo não permitido: direction"
+      ],
+      "id": "fsc_03695ac92aa8b428"
+    }
+  ],
+  "metrics": {
+    "abstention_f1": null,
+    "abstention_precision": null,
+    "abstention_recall": 0.0,
+    "action_accuracy": 0.0,
+    "argument_exact_accuracy": 0.0,
+    "argument_exact_given_tool": null,
+    "canonical_valid_rate": 0.0,
+    "exact_match_rate": 0.0,
+    "json_valid_rate": 0.964721,
+    "parseable_rate": 0.964721,
+    "tool_selection_accuracy": 0.0
+  },
+  "missing_predictions": 0,
+  "per_mapping_rule": {
+    "activate_music_to_media_play": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 122,
+      "canonical_valid_rate": 0.0,
+      "exact_match_rate": 0.0,
+      "records": 122,
+      "tool_selection_accuracy": 0.0
+    },
+    "deactivate_music_to_media_pause": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 139,
+      "canonical_valid_rate": 0.0,
+      "exact_match_rate": 0.0,
+      "records": 139,
+      "tool_selection_accuracy": 0.0
+    },
+    "decrease_volume_to_volume_down": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 501,
+      "canonical_valid_rate": 0.0,
+      "exact_match_rate": 0.0,
+      "records": 501,
+      "tool_selection_accuracy": 0.0
+    },
+    "increase_volume_to_volume_up": {
+      "abstain_gold": 0,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": null,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "call_gold": 386,
+      "canonical_valid_rate": 0.0,
+      "exact_match_rate": 0.0,
+      "records": 386,
+      "tool_selection_accuracy": 0.0
+    },
+    "unsupported_fsc_semantics_to_policy_abstain": {
+      "abstain_gold": 1148,
+      "abstention_f1": null,
+      "abstention_precision": null,
+      "abstention_recall": 0.0,
+      "action_accuracy": 0.0,
+      "argument_exact_accuracy": null,
+      "argument_exact_given_tool": null,
+      "call_gold": 0,
+      "canonical_valid_rate": 0.0,
+      "exact_match_rate": 0.0,
+      "records": 1148,
+      "tool_selection_accuracy": null
+    }
+  },
+  "per_tool": {
+    "media_control": {
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "count": 261,
+      "tool_selection_accuracy": 0.0
+    },
+    "volume_adjust": {
+      "argument_exact_accuracy": 0.0,
+      "argument_exact_given_tool": null,
+      "count": 887,
+      "tool_selection_accuracy": 0.0
+    }
+  },
+  "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_base_phrase_disjoint.predictions.jsonl",
+  "records": 2296,
+  "split": "test",
+  "statistical_methods": {
+    "abstention_f1_interval": "deterministic bootstrap percentile, 2000 resamples, seed 20260830",
+    "proportion_intervals": "Wilson score, 95%"
+  }
+}

@@ -13,8 +13,8 @@
 
 % Double-blind review: author and institution intentionally omitted.
 
-\title{From Human Speech Transcripts to Conservative Android Function Calls:\\
-A Leakage-Audited Evaluation of a Small Language Model}
+\title{A Leakage-Aware Benchmark for Ultra-Small Language Models on\\
+Structured Speech-Command Routing}
 
 \author{[Removed for double-blind review]}
 \address{[Removed for double-blind review]}
@@ -24,51 +24,30 @@ A Leakage-Audited Evaluation of a Small Language Model}
 \maketitle
 
 \begin{abstract}
-Voice interfaces for mobile devices must distinguish a supported command from an unsupported or ambiguous request before any Android API is invoked. This paper presents a reproducible, deliberately narrow evaluation of a Qwen3.5-2B language model as a text-to-function router for two Android-aligned operations: media play/pause and volume up/down. To obtain human-origin English command text without claiming that an existing corpus is an Android corpus, we derive an auditable benchmark from Fluent Speech Commands (FSC). Only four native FSC semantic combinations are mapped to calls; all other source examples are retained as explicit policy-abstention negatives. We compare zero-shot prompting with a LoRA adapter on the official speaker-disjoint split and on a stricter phrase-disjoint split that prevents normalized templates from crossing train, development, and test. The experiment consumes transcriptions, not waveforms, and therefore does not evaluate automatic speech recognition, physical Android execution, or on-device inference. On the official test, the zero-shot model reaches 39.97\% exact match and the adapted model reaches 100\%; because 244--247 normalized templates overlap across the official split pairs, this result is treated as a leakage warning rather than broad evidence of robustness. On the phrase-disjoint test, zero-shot reaches 40.33\% exact match and LoRA reaches 100\%. The contribution is a measurement protocol and an auditable baseline, not a claim of general Android command understanding.
+Small language models are attractive for local command interfaces, but a valid-looking response can still be semantically wrong or impossible to execute. We present a reproducible benchmark of five instruction-tuned checkpoints with at most three billion parameters on a transcript-to-command task. The benchmark derives a narrow two-operation contract from Fluent Speech Commands (FSC), a human-recorded English speech-command corpus: four native semantic combinations map to \texttt{media\_control} or \texttt{volume\_adjust}, while all other examples receive an explicitly derived policy-abstention target. We evaluate Qwen2.5-0.5B, Qwen3.5-0.8B, TinyLlama-1.1B, SmolLM2-1.7B, and Qwen3.5-2B with the same canonical prompt and greedy decoding on an NVIDIA RTX 5090. Two balanced protocols separate official speaker disjointness from normalized-template disjointness, and all reports include item-level and template-cluster statistics. On the phrase-disjoint test, a transparent lexical control reaches 77.40\% exact match, whereas the best model reaches 50.00\% exact match; its 100\% contract-valid rate is explained by near-universal abstention rather than successful call routing. Qwen3.5-0.8B reaches 43.60\% exact match and 60.15\% contract validity, while the other three models obtain zero exact matches under the strict contract. The result is a benchmark and leakage audit, not evidence of Android control, automatic speech recognition, or on-device performance. It shows that structured-output compliance and conservative policy behavior must be measured separately from semantic accuracy in the ultra-small regime.
 \end{abstract}
 
-\noindent\textbf{Keywords:} function calling; Android; speech commands; small language models; abstention; data leakage.
+\noindent\textbf{Keywords:} ultra-small language models; structured prediction; speech commands; function routing; abstention; data leakage; reproducible benchmarking.
 
 %------------------------------------------------------------------------
-\section{Motivation and Scope}
+\section{Scope and Research Questions}
 %------------------------------------------------------------------------
 
-The original project goal is a specialized small language model for Android commands in Brazilian Portuguese. The available human command corpus, however, is not a native Android or Brazilian-Portuguese corpus. This phase therefore uses English human speech data as a temporary benchmark and makes the resulting scope explicit. The historical Portuguese synthetic data in the repository is retained as a software harness, not presented as human evidence.
+This article deliberately narrows the original mobile-assistant project to a benchmark of ultra-small language models. The parameter cap is strict: no checkpoint with more than 3,000,000,000 parameters is included. The input is an English human speech transcription, and the output is a validated JSON object. The benchmark does not claim Brazilian-Portuguese coverage, Android execution, automatic speech recognition (ASR) quality, battery behavior, thermal behavior, or smartphone latency. The phone is not required.
 
-The operational question is narrower than whether a language model can control Android. We ask whether a small model can transform a human-origin command transcription into a validated canonical object, or abstain when the source semantics do not belong to the evaluated contract. No generated object is executed. Android API names identify an intended integration boundary only.
-
-The phase addresses four research questions:
-
-\begin{enumerate}
-\item Can Qwen3.5-2B produce valid canonical JSON for a two-tool Android-aligned contract?
-\item What improvement does a LoRA adapter provide over the same model and prompt without adaptation?
-\item How does performance change when normalized phrase templates are held out, rather than only speakers?
-\item Does the abstention policy prevent unsupported FSC semantics from being silently converted into calls?
-\end{enumerate}
+We ask: (i) how do checkpoints below the parameter cap differ in JSON compliance and canonical command accuracy under one declared contract? (ii) how much does exact-match performance change when normalized transcription templates are held out, rather than only speakers? (iii) do simple controls provide a meaningful reference for the models? and (iv) how different are item-level and template-cluster summaries when repeated phrasings occur across speakers?
 
 %------------------------------------------------------------------------
-\section{Related Work}
+\section{Human Corpus and Derived Task}
 %------------------------------------------------------------------------
 
-Small language models are increasingly used as structured routers around deterministic software components. This setting differs from open-ended dialogue: a syntactically valid but semantically wrong call can be more harmful than a refusal. Parameter-efficient adaptation with LoRA~\cite{hu2022} provides a practical way to specialize a local checkpoint while preserving a reproducible base model.
+We use Fluent Speech Commands (FSC), introduced as a corpus for end-to-end spoken-language understanding~\cite{lugosch2019}. It contains 30,043 human recordings, 97 speakers, and 31 native intents, with official train, validation, and test partitions. We use the transcriptions and split metadata, not the waveforms. The raw archive remains outside Git and is identified by SHA-256 in the server-local manifest.
 
-Fluent Speech Commands is a human-recorded English speech-command corpus introduced for spoken-language understanding~\cite{lugosch2019}. Its native intents concern a smart-home assistant rather than Android APIs. Consequently, a direct use of its labels as Android gold would conflate source annotation with an experimenter's semantic interpretation. Our protocol keeps the source labels and records every bridge rule explicitly.
-
-The data-splitting issue is central in command corpora: multiple speakers may repeat the same short template. An official speaker-disjoint split evaluates speaker transfer, but it does not necessarily evaluate lexical generalization. We therefore add a template-disjoint audit and report the two protocols separately.
-
-%------------------------------------------------------------------------
-\section{Methodology}
-%------------------------------------------------------------------------
-
-\subsection{Corpus and Conservative Semantic Bridge}
-
-We use Fluent Speech Commands (FSC), containing 30,043 human recordings, 97 speakers, and 31 native intents. The source provides official train, validation, and test files with speaker separation. The archive and source CSV hashes are recorded in the project manifest; the raw data is kept outside the Git repository.
-
-The corpus is not an Android command dataset. We define a two-tool registry and a deterministic bridge that accepts only four native semantic combinations, shown in Table~\ref{tab:mapping}.
+FSC is not a command-routing or Android corpus. We therefore define an explicit, generic two-operation contract. Only the following four native combinations become calls:
 
 \begin{table}[ht]
 \centering
-\caption{Only four native FSC combinations are mapped to calls.}
+\caption{The four deterministic FSC-to-contract bridge rules.}
 \label{tab:mapping}
 \small
 \begin{tabular}{lll}
@@ -83,13 +62,15 @@ decrease & volume & \texttt{volume\_adjust(direction=down)} \\
 \end{tabular}
 \end{table}
 
-Every other FSC example receives the policy target \texttt{abstain}, with a null tool and empty arguments. This is a derived policy label, not a native FSC gold annotation. The benchmark balances supported calls and unsupported policy negatives independently within each split, avoiding domination by the larger set of unrelated smart-home intents.
+Every other retained example receives \texttt{\{action: abstain, tool: null, arguments: \{\}\}}. This is an experimenter-defined policy label, not a human FSC annotation. To prevent the larger set of unsupported intents from dominating the score, the generator samples a balanced 1:1 mixture of calls and policy abstentions within each split. Each derived dataset contains 14,956 records: 7,478 calls and 7,478 abstentions.
 
-The registry is intentionally narrow. \texttt{media\_control} represents the Android \texttt{MediaSessionManager} boundary and accepts \texttt{play} or \texttt{pause}; \texttt{volume\_adjust} represents the \texttt{AudioManager.adjustStreamVolume} boundary and accepts \texttt{up} or \texttt{down}. The experiment does not request permissions, call either API, or claim that the model is safe to deploy without a validator and policy layer.
+The contract checks exactly three top-level fields (\texttt{action}, \texttt{tool}, and \texttt{arguments}), restricts tool names to the two declared operations, and validates the required argument enums. It is an evaluation target only; it does not execute a tool or grant any permission.
 
-\subsection{Leakage-Audited Splits}
+%------------------------------------------------------------------------
+\section{Leakage-Audited Protocols}
+%------------------------------------------------------------------------
 
-We preserve the official speaker-disjoint split and construct a phrase-disjoint split. A template is the Unicode-normalized, case-folded, whitespace-normalized, punctuation-stripped transcription; its stable SHA-256 prefix is stored as \texttt{template\_id}. A template group is assigned to only one split within its native FSC label. Speakers may occur in several splits in the phrase-disjoint protocol by design.
+The first protocol preserves FSC's official speaker-disjoint split. It measures transfer to held-out speakers but does not prevent repeated normalized transcriptions from crossing partitions. The second protocol assigns each Unicode-normalized, case-folded, whitespace-normalized and punctuation-stripped transcription template to one split within its native FSC label. Speakers may occur in more than one split in this second protocol by design.
 
 \begin{table}[ht]
 \centering
@@ -106,120 +87,177 @@ Phrase-disjoint & 10,458 & 2,202 & 2,296 & 14,956 & templates \\
 \end{tabular}
 \end{table}
 
-Both datasets contain 7,478 call examples and 7,478 abstention examples. The official test contains 967 calls and 967 policy negatives. The phrase-disjoint test contains 1,148 calls and 1,148 policy negatives. Dataset validation checks schema, target validity, duplicate IDs, expected locale, split assignment, and the selected group-disjointness invariant. The official split has no speaker intersection but has 244--247 template intersections across split pairs; the phrase-disjoint split has no template intersection.
+The official protocol has zero speaker intersections but 245, 247, and 244 template intersections for train--dev, train--test, and dev--test, respectively. The phrase-disjoint protocol has zero template intersections. It contains only 38 test template clusters, so cluster intervals are intentionally wide; this is a limitation to report, not a reason to pool clusters with individual examples.
 
-\subsection{Model and Training Protocol}
+%------------------------------------------------------------------------
+\section{Models and Execution}
+%------------------------------------------------------------------------
 
-The base checkpoint is Qwen3.5-2B loaded from the local Hugging Face cache. The model receives an English system instruction, the compact two-tool catalog, and one transcription. It must emit exactly \texttt{action}, \texttt{tool}, and \texttt{arguments} as JSON. The baseline uses the canonical prompt without adapter weights.
+The matrix contains five checkpoints. Parameter counts are computed by summing tensor shapes in the local safetensors files; this makes the cap auditable and includes all checkpoint components. Qwen3.5 checkpoints are exposed by Transformers as multimodal conditional-generation models, but no image or video input is supplied in this transcript-only experiment.
 
-The adapted model uses LoRA with rank 16, alpha 32, dropout 0.05, and all-linear target modules. Training uses two epochs, batch size 4, gradient accumulation 4, learning rate $2\times10^{-4}$, maximum sequence length 1,024, bf16 autocast, and seed 20260830. The official run used 11,442 training records and 1,432 optimizer steps per epoch on an NVIDIA RTX 5090 with 32~GB VRAM. The phrase-disjoint run uses the same hyperparameters and hardware, changing only the split protocol.
+\begin{table}[ht]
+\centering
+\caption{Checkpoints included in the strict ultra-small matrix.}
+\label{tab:models}
+\scriptsize
+\begin{tabular}{lrrl}
+\toprule
+\textbf{Checkpoint} & \textbf{Parameters} & \textbf{Family} & \textbf{Revision} \\
+\midrule
+Qwen2.5-0.5B-Instruct & 494,032,768 & Qwen2 & \texttt{7ae5576} \\
+Qwen3.5-0.8B & 873,438,784 & Qwen3.5 & \texttt{2fc0636} \\
+TinyLlama-1.1B-Chat & 1,100,048,384 & Llama & \texttt{fe8a4ea} \\
+SmolLM2-1.7B-Instruct & 1,711,376,384 & SmolLM & \texttt{31b70e2} \\
+Qwen3.5-2B & 2,274,069,824 & Qwen3.5 & \texttt{15852e8} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-The model is evaluated as a server-side text router. There is no microphone input, ASR stage, Android APK execution, permission flow, battery test, thermal test, or physical-device latency result in this phase.
+The excluded Qwen2.5-3B-Instruct checkpoint has 3,085,938,688 measured parameters and therefore exceeds the strict cap. Qwen3.5-4B-Base is also excluded. Complete IDs, revisions, licenses, and counts are recorded in \texttt{benchmarks/ultrasmall\_models.json}.
 
-\subsection{Metrics}
+All models use their native chat template with the same English semantic instruction, compact catalog, greedy decoding (\texttt{do\_sample=false}), and a 64-token generation cap. The template mode and model class are recorded per prediction. Runs use Transformers 5.3.0, PyTorch 2.10.0+cu128, and one NVIDIA GeForce RTX 5090 with 32~GB VRAM. No fine-tuning is part of the main matrix. A previously completed Qwen2.5-0.5B LoRA run is retained as an exploratory artifact and is not used in the model comparison.
 
-For every test item we report JSON validity, canonical validity, exact match of the canonical target, action accuracy, tool-selection accuracy on call gold items, argument exactness overall and conditional on the selected tool, and abstention precision, recall, and F1. The evaluator also reports missing/extra predictions, invalid-output samples, and the same measurements grouped by explicit mapping rule. Wilson 95\% intervals are reported for proportions; abstention F1 uses deterministic bootstrap percentile intervals with 2,000 resamples and seed 20260830. Latency is recorded per generated request as an engineering observation, not as an on-device claim.
+%------------------------------------------------------------------------
+\section{Metrics and Controls}
+%------------------------------------------------------------------------
+
+The evaluator distinguishes parseability and JSON validity; contract validity, including action/tool/argument constraints; exact match against the derived target; action accuracy; tool and argument accuracy on call gold items; and abstention precision, recall, and F1.
+
+The primary accuracy comparison is item-level exact match accompanied by template-level summaries. For each \texttt{template\_id}, the evaluator computes mean exact-match rate, mean action accuracy, mean abstention F1, and the strict proportion of clusters whose items are all exact. Cluster-bootstrap 95\% intervals resample template IDs, not rows. Wilson intervals are retained as descriptive item-level intervals but are not treated as leakage-aware uncertainty.
+
+Two deterministic controls use only the transcription text and contract. \texttt{always\_abstain} returns policy abstention for every item. \texttt{lexical} uses transparent regular expressions over media/volume and play/pause/increase/decrease cues; it never reads FSC native labels or metadata.
 
 %------------------------------------------------------------------------
 \section{Results}
 %------------------------------------------------------------------------
 
-\subsection{Official Speaker-Disjoint Test}
-
-The zero-shot baseline produced 1,934 predictions. It achieved 100\% JSON parseability but only 68.77\% canonical validity and 39.97\% exact match. Abstention F1 was 61.08\%. Call selection was uneven: exact match was 57.85\% for play, 31.43\% for pause, and 0\% for both volume directions. On unsupported policy negatives, abstention recall was 69.29\%.
-
-The LoRA adapter produced 1,934 valid predictions and achieved 100\% on every reported point estimate in this test: exact match, canonical validity, action, tool, arguments, and abstention F1. The Wilson lower bound for exact match is 99.80\% with 1,934 observations.
+\subsection{Main Phrase-Disjoint Comparison}
 
 \begin{table}[ht]
 \centering
-\caption{Official speaker-disjoint test on 1,934 examples.}
+\caption{Phrase-disjoint test results. Percentages are item-level except for the final column.}
+\label{tab:phrase}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{System} & \textbf{Parse} & \textbf{Valid} & \textbf{Exact} & \textbf{Abstain F1} & \textbf{Template exact} \\
+\midrule
+Always abstain & 100.00 & 100.00 & 50.00 & 66.67 & 76.32 \\
+Lexical control & 100.00 & 100.00 & \textbf{77.40} & 81.56 & \textbf{89.47} \\
+Qwen2.5-0.5B & 70.17 & 0.00 & 0.00 & -- & 0.00 \\
+Qwen3.5-0.8B & 100.00 & 60.15 & 43.60 & 69.92 & 50.00 \\
+TinyLlama-1.1B & 43.42 & 0.00 & 0.00 & -- & 0.00 \\
+SmolLM2-1.7B & 96.47 & 0.00 & 0.00 & -- & 0.00 \\
+Qwen3.5-2B & 100.00 & 100.00 & 50.00 & 66.67 & 76.32 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The lexical control outperforms every zero-shot model on exact match. Qwen3.5-2B is contract-valid on every item but obtains only 50.00\% exact match: its output behavior is dominated by abstention, which is correct for policy negatives but wrong for calls. Qwen3.5-0.8B is the only model with a substantial mixture of valid calls and abstentions, yet its exact match remains below the lexical control. The other three checkpoints produce parseable text often enough to be measurable, but their responses do not satisfy the declared canonical schema.
+
+\subsection{Official Speaker-Disjoint Comparison}
+
+\begin{table}[ht]
+\centering
+\caption{Official speaker-disjoint test results.}
 \label{tab:official}
-\small
+\scriptsize
 \begin{tabular}{lrrr}
 \toprule
-\textbf{Metric} & \textbf{Zero-shot} & \textbf{LoRA} & \textbf{LoRA lower bound} \\
+\textbf{System} & \textbf{Valid} & \textbf{Exact} & \textbf{Template exact} \\
 \midrule
-JSON valid & 100.00\% & 100.00\% & 99.80\% \\
-Canonical valid & 68.77\% & 100.00\% & 99.80\% \\
-Exact match & 39.97\% & 100.00\% & 99.80\% \\
-Action accuracy & 39.97\% & 100.00\% & 99.80\% \\
-Tool selection (calls) & 10.65\% & 100.00\% & 99.60\% \\
-Argument exact (calls) & 10.65\% & 100.00\% & 99.60\% \\
-Abstention F1 & 61.08\% & 100.00\% & 100.00\% \\
+Always abstain & 100.00 & 50.00 & 75.71 \\
+Lexical control & 100.00 & \textbf{77.92} & \textbf{89.07} \\
+Qwen2.5-0.5B & 0.00 & 0.00 & 0.00 \\
+Qwen3.5-0.8B & 73.47 & 54.65 & 56.28 \\
+TinyLlama-1.1B & 0.00 & 0.00 & 0.00 \\
+SmolLM2-1.7B & 0.78 & 0.00 & 0.00 \\
+Qwen3.5-2B & 100.00 & 50.98 & 76.11 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-This apparent perfect result is not sufficient evidence of broad generalization. The official split is speaker-disjoint but has 244--247 normalized templates in common across split pairs. The adapted model can exploit lexical repetition while learning the mapping. This is the motivation for the phrase-disjoint run.
+The official split gives Qwen3.5-0.8B a higher exact-match rate than phrase-disjoint (54.65\% versus 43.60\%), a drop of 11.05 percentage points when template overlap is removed. Its template-cluster bootstrap interval for phrase-disjoint exact match is [26.02\%, 63.35\%]. Qwen3.5-2B changes from 50.98\% to 50.00\%, while the lexical control is comparatively stable (77.92\% to 77.40\%). The official split therefore cannot be read as lexical generalization.
 
-The recorded GPU generation latency was 361.7~ms on average for the adapted model (median 359.0~ms, 95th percentile 396.6~ms) and 312.5~ms on average for the baseline. These are server measurements for single-request text generation and must not be interpreted as smartphone performance.
+\subsection{Structural Error Audit and Latency}
 
-\subsection{Phrase-Disjoint Test}
+The failure modes are qualitatively different. Qwen2.5-0.5B frequently emits JSON-like objects with an operation name in \texttt{action}, rather than the required \texttt{action=call} plus a tool field. TinyLlama frequently explains the answer or reaches the 64-token cap before closing the object. SmolLM2 often emits a plausible JSON object with the wrong field structure. These cases explain why parseability is not interchangeable with contract validity.
 
-The phrase-disjoint adapter was trained and evaluated with the same code and hyperparameters. On 2,296 test items, the zero-shot baseline reached 74.09\% canonical validity, 40.33\% exact match, tool selection of 10.63\%, and abstention F1 of 58.97\%. The LoRA adapter reached 100\% on all point estimates: JSON validity, canonical validity, exact match, action, tool, arguments, and abstention F1. The Wilson lower bound for exact match is 99.83\%.
-
-The per-rule pattern is informative. Zero-shot exact match was 100\% for play, 0\% for pause, 0\% for decrease-volume, and 0\% for increase-volume; abstention recall on derived negatives was 70.03\%. LoRA reached 100\% on all four mapped rules and on the derived abstention policy.
-
-The two split protocols therefore agree on the narrow task, but they do not establish Android command understanding beyond the four manually declared semantic bridges. The absence of template overlap removes one important leakage channel; it does not replace an independently annotated Android test.
+Server-side single-request latency is reported only as an engineering observation. On phrase-disjoint, mean / median / p95 milliseconds were: Qwen2.5-0.5B 81.4 / 91.0 / 176.0; Qwen3.5-0.8B 324.1 / 327.2 / 448.9; TinyLlama 301.5 / 300.2 / 311.6; SmolLM2 122.9 / 106.7 / 220.1; and Qwen3.5-2B 345.1 / 338.4 / 395.9. These values depend on server load, Transformers implementation, prompt length, and decoding behavior; they are not smartphone measurements.
 
 %------------------------------------------------------------------------
 \section{Discussion}
 %------------------------------------------------------------------------
 
-The experiment separates three questions that are often conflated. First, a human-origin speech corpus can provide command text, but it does not become an Android corpus merely because a researcher writes a mapping. Second, a model can learn a strict JSON contract while still failing semantic routing, as the zero-shot volume results show. Third, a high score on an official speaker split can reflect repeated lexical templates rather than robustness to new wording.
+The benchmark does not support a monotonic ``more parameters is better'' conclusion. The 2.274B Qwen3.5 checkpoint is structurally compliant but conservative to the point of abstaining on calls. The 0.873B Qwen3.5 checkpoint routes more calls but loses both contract validity and exactness on unseen templates. The external-family checkpoints demonstrate that instruction tuning and model size alone do not guarantee compatibility with a strict output contract.
 
-The abstention target is useful as a safety-oriented interface, but it is also the most assumption-sensitive part of the benchmark. Unsupported FSC examples are not human-annotated Android refusals; they are policy negatives created by the experimenter. The correct claim is therefore ``abstention under a declared derived policy,'' not ``safe refusal for Android.''
+The lexical control is essential. Without it, the 50\% balanced abstention baseline could make a model that refuses everything appear competitive. Cluster analysis is also essential: repeated templates give some systems much larger effective row counts than the number of independent phrasings. The phrase-disjoint test has only 38 clusters, so its uncertainty is broad; nevertheless, it answers a different question from speaker transfer and should not be merged with the official result.
 
-The adapter's official-split perfect score should be treated as an overfit signal until compared with the phrase-disjoint protocol and, ultimately, with a held-out human evaluation designed for Android commands. Even after lexical control, text-only evaluation leaves the ASR error channel unmeasured. A production pipeline needs an ASR model, confidence thresholding, schema validation, permission checks, and a policy gate between generated JSON and Android APIs.
+The derived abstention labels require particular caution. They express the declared benchmark policy, not human judgments that a command is unsafe or unsupported in a production assistant. A deployed system would need an independent policy layer, schema validator, confidence handling, and execution authorization. The present experiment stops before all of those layers.
 
 %------------------------------------------------------------------------
 \section{Reproducibility and Data Governance}
 %------------------------------------------------------------------------
 
-The repository records the mapping contract, generator, source-file hashes, split summaries, validator, training script, baseline script, evaluator, tests, and aggregate metrics. The raw FSC archive and derived JSONL files remain server-local. Because the source is distributed under CC BY-NC-ND 4.0 for academic research, derived transcripts/labels and per-example predictions are ignored by Git and are not redistributed with the repository. The manifest preserves provenance without shipping restricted data.
+The Neuromancer repository records the model matrix, checkpoint revisions, parameter-count method, generic contract, deterministic FSC generator, both split manifests, validator, controls, common inference script, cluster-aware evaluator, runner, logs, and aggregate reports. The reproducible main command is:
 
-All phase-1 tests pass in the Neuromancer environment. Training and evaluation use the RTX 5090; the Android phone is not required for this phase.
+\begin{verbatim}
+cd /home/daniel/qwen35-ptbr-mobile
+HF_HUB_OFFLINE=1 /home/daniel/Área de trabalho/\
+  swarm-emotions-tag/python-ml/.venv/bin/python \\
+  scripts/run_ultrasmall_benchmark.py --skip-training --skip-existing
+\end{verbatim}
+
+The raw FSC archive and derived JSONL files remain server-local. The source license is recorded as CC BY-NC-ND 4.0 for academic research; no audio, transcript, or per-example prediction is redistributed in Git. Aggregate metrics are sufficient to audit the reported claims without publishing restricted data.
 
 %------------------------------------------------------------------------
 \section{Limitations and Next Gates}
 %------------------------------------------------------------------------
 
 \begin{enumerate}
-\item The only human corpus used in this phase is English FSC; no Brazilian-Portuguese human command set is claimed.
-\item FSC is not an Android corpus; four mappings are manually specified and all other targets are derived abstentions.
-\item The input is transcription text, not audio; ASR robustness is unmeasured.
-\item The official result is vulnerable to lexical repetition; the phrase-disjoint control was executed, but an independent Android test is still required before publication.
-\item The contract covers only play/pause and volume up/down.
-\item No Android API is called, no permission is exercised, and no safety guarantee is established.
-\item No on-device or physical-phone result is reported. The Qwen3.5-2B experiment runs on the RTX 5090.
-\item The source license requires an explicit redistribution audit before any public data release.
+\item FSC is an English smart-home/assistant corpus, not a native Android or Brazilian-Portuguese command corpus.
+\item The four call labels and all abstention labels are derived by a manually declared bridge.
+\item The task consumes transcriptions, so ASR errors and acoustic variability are not evaluated.
+\item The phrase-disjoint test has only 38 unique template clusters.
+\item Native chat templates differ across model families; this is logged but remains a possible prompt-format confound.
+\item The main matrix is zero-shot and uses one deterministic decoding setting and one checkpoint revision per model; it does not estimate training variance.
+\item No model output is executed, and no result is measured on the phone.
 \end{enumerate}
-
-The next critical gates are to add an independently annotated Android-command test, insert an ASR stage, benchmark the validator and policy layer, and only then connect the phone for physical execution and on-device measurements.
 
 %------------------------------------------------------------------------
 \section{Conclusion}
 %------------------------------------------------------------------------
 
-This phase establishes an auditable benchmark and an honest experimental boundary for the first article. The model reaches 100\% on both declared split protocols, while the zero-shot baseline remains near 40\% exact match; this is evidence that the model learns the narrow declared contract, not evidence of general Android command understanding. The article should still include an independent human/Android evaluation or be framed explicitly as a protocol and preliminary engineering report.
+We provide a leakage-aware, reproducible benchmark for five ultra-small language models on structured routing from human-origin speech transcriptions. The central result is negative but useful: under a strict canonical contract, a transparent lexical control outperforms every zero-shot model, while the largest model's perfect contract validity is mostly universal abstention. The benchmark therefore separates output compliance, policy abstention, and semantic exactness, and makes phrase leakage visible. It is a defensible first article for the ultra-small-model benchmark scope; Android deployment, ASR, Portuguese human data, and physical-device evaluation are future studies rather than claims of this paper.
 
 %------------------------------------------------------------------------
 \begin{thebibliography}{9}
+
+\bibitem{lugosch2019}
+L.~Lugosch, M.~Ravanelli, P.~Ignoto, V.~Naumovich, and Y.~Bengio.
+\newblock Speech model pre-training for end-to-end spoken language understanding.
+\newblock In \textit{Interspeech}, 2019. DOI: 10.21437/Interspeech.2019-2396.
 
 \bibitem{hu2022}
 E.~J.~Hu, Y.~Shen, P.~Wallis, Z.~Allen-Zhu, Y.~Li, S.~Wang, L.~Wang, and W.~Chen.
 \newblock LoRA: Low-rank adaptation of large language models.
 \newblock In \textit{International Conference on Learning Representations}, 2022.
 
-\bibitem{lugosch2019}
-S.~Lugosch et~al.
-\newblock How to train your own neural network for keyword spotting.
-\newblock In \textit{Interspeech}, 2019.
+\bibitem{tinyllama2024}
+P.~Zhang et~al.
+\newblock TinyLlama: An open-source small language model.
+\newblock arXiv:2401.02385, 2024.
 
-\bibitem{android}
-Google.
-\newblock Android developer documentation: Media sessions and audio management.
-\newblock Technical documentation, accessed 2026.
+\bibitem{smollm2025}
+L.~Lozhkov et~al.
+\newblock SmolLM2: When Smol Goes Big---Data-centric training of a small language model.
+\newblock arXiv:2502.02737, 2025.
+
+\bibitem{qwen35}
+Qwen Team.
+\newblock Qwen3.5 model card.
+\newblock Hugging Face, accessed 2026.
 
 \end{thebibliography}
 

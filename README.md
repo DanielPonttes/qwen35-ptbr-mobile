@@ -1,122 +1,69 @@
-# Qwen3.5 0.8B — Chat PT-BR Mobile
+# FSC Ultra-small Command-Routing Benchmark
 
-> **Status do artigo:** o conteúdo abaixo descreve o protótipo legado de chat.
-> O experimento atual de function calling está documentado em
-> docs/phase_1_english_dataset.md, com corpus humano Fluent Speech Commands em
-> inglês, contrato Android restrito, avaliação separada por falante/frase e
-> sem alegação de ASR end-to-end ou execução on-device antes do teste físico.
+**Status:** benchmark principal do artigo ERAMIA-RS 2026, fase experimental em 30 de agosto de 2026.
 
-Chat em português brasileiro rodando **localmente no celular** (offline, sem nuvem).
+Este repositório contém um benchmark reprodutível de modelos de linguagem ultrapequenos (corte estrito: no máximo 3.000.000.000 de parâmetros) para transformar transcrições humanas em inglês em objetos JSON canônicos de comando. A entrada é texto de transcrição; não há ASR, execução de ações, APK ou medição no celular nesta fase.
 
-**Modelo:** Qwen3.5 0.8B fine-tuned para PT-BR | **Hardware alvo:** Galaxy A54 (Exynos 1380, 6 GB RAM) | **Velocidade:** ~19.5 tok/s
+## Pergunta experimental
 
-## Download rápido
+Com o mesmo contrato, prompt, decodificação e hardware, como modelos ultrapequenos de famílias diferentes se comportam em roteamento estruturado e abstention sobre comandos humanos? O benchmark compara cinco checkpoints:
 
-```bash
-git clone https://github.com/<user>/qwen35-ptbr-mobile.git
-cd qwen35-ptbr-mobile
+| Modelo | Parâmetros medidos | Família |
+|---|---:|---|
+| Qwen2.5-0.5B-Instruct | 494.032.768 | Qwen2 |
+| Qwen3.5-0.8B | 873.438.784 | Qwen3.5 |
+| TinyLlama-1.1B-Chat-v1.0 | 1.100.048.384 | Llama |
+| SmolLM2-1.7B-Instruct | 1.711.376.384 | SmolLM |
+| Qwen3.5-2B | 2.274.069.824 | Qwen3.5 |
 
-# Baixe o modelo GGUF (494 MB) do HuggingFace:
-# https://huggingface.co/<user>/qwen35-ptbr-mobile/resolve/main/qwen35-ptbr-q4_k_m.gguf
-# Coloque em: model/qwen35-ptbr-q4_k_m.gguf
+Os pesos são baixados para o cache privado do Neuromancer e não são versionados.
 
-# Deploy no celular (requer ADB + depuração USB):
-bash scripts/deploy.sh
-```
+## Dados e leakage
 
-## O que está incluso
+O corpus humano é o Fluent Speech Commands (FSC), usado somente por suas transcrições. A derivação aceita quatro combinações nativas (`media_control` play/pause e `volume_adjust` up/down) e transforma as demais em abstention de política explicitamente derivada. O contrato está em `data/tools/fsc_command_benchmark.json`.
 
-```
-qwen35-ptbr-mobile/
-├── binaries/          # llama.cpp ARM64 otimizado (Cortex-A78 + DotProd + FP16)
-│   ├── llama-cli      # Chat via terminal
-│   ├── llama-server   # API REST + WebUI
-│   ├── llama-bench    # Benchmark
-│   └── *.so           # Bibliotecas nativas (libggml, libllama, libomp)
-├── model/             # Coloque o GGUF aqui (não versionado, use HF)
-├── scripts/
-│   ├── deploy.sh      # Deploy 1-clique via ADB
-│   └── finetune_qwen35_ptbr.sh  # Script de fine-tuning (RTX 5090)
-└── README.md
-```
+Há dois protocolos balanceados, cada um com 7.478 chamadas e 7.478 abstentions:
 
-## Modos de uso
+- `official`: split oficial disjunto por falante, usado para medir transferência de falante e revelar sobreposição lexical;
+- `phrase_disjoint`: grupos de transcrição normalizada não atravessam train/dev/test, usado como controle principal de leakage lexical.
 
-### 1. Navegador do celular (mais simples)
+O avaliador reporta métricas por item e métricas cluster-aware por `template_id`, incluindo bootstrap por grupo. Os controles `always_abstain` e `lexical` são obrigatórios.
 
-Após `deploy.sh`, abra `http://127.0.0.1:8080` no Chrome do celular.
-
-### 2. API REST (para apps)
+## Reprodução no Neuromancer
 
 ```bash
-# Port forward do PC
-adb forward tcp:9090 tcp:8080
+cd /home/daniel/qwen35-ptbr-mobile
+PY='/home/daniel/Área de trabalho/swarm-emotions-tag/python-ml/.venv/bin/python'
 
-# Chamada API
-curl http://127.0.0.1:9090/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "messages": [{"role": "user", "content": "Explique o que é pão de queijo."}],
-    "max_tokens": 128,
-    "temperature": 0.7
-  }'
+# validar os datasets privados derivados
+$PY scripts/validate_fc_dataset.py data/external/fluent_speech_commands_command_benchmark.jsonl \
+  --registry data/tools/fsc_command_benchmark.json --expected-locale en-US \
+  --allow-text-duplicates --group-field speaker_id --expected-total 14956
+$PY scripts/validate_fc_dataset.py data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl \
+  --registry data/tools/fsc_command_benchmark.json --expected-locale en-US \
+  --allow-text-duplicates --group-field template_id --expected-total 14956
+
+# executar a matriz zero-shot na RTX 5090; --skip-existing permite retomar
+HF_HUB_OFFLINE=1 $PY scripts/run_ultrasmall_benchmark.py --skip-training --skip-existing
 ```
 
-### 3. Termux (chat no terminal)
+O runner registra comandos em `logs/ultrasmall/` e a matriz em `results/fsc_ultrasmall_benchmark_manifest.json`. Métricas agregadas podem ser versionadas; predições por exemplo, adapters, transcrições derivadas e pesos permanecem ignorados pelo Git.
 
-```bash
-cd /data/local/tmp/qwen35-ptbr
-LD_LIBRARY_PATH=. ./llama-cli \
-  -m models/qwen35-ptbr-q4_k_m.gguf \
-  -t 3 -b 128 -c 2048 -cnv
+## Estrutura relevante
+
+```text
+benchmarks/ultrasmall_models.json       matriz, cap e revisões dos checkpoints
+data/tools/fsc_command_benchmark.json   contrato genérico de duas operações
+scripts/prepare_fsc_android_fc.py       derivação determinística do FSC
+scripts/run_fc_baselines.py             controles always-abstain e lexical
+scripts/run_qwen_fc_baseline.py         inferência comum aos checkpoints
+scripts/fc_eval.py                      métricas, grupos e intervalos
+scripts/run_ultrasmall_benchmark.py     runner da matriz
+paper/paper.tex                         manuscrito SBC
 ```
 
-## Performance (Galaxy A54)
+O nome histórico de `prepare_fsc_android_fc.py` é mantido por compatibilidade; o contrato e o artigo atuais não fazem alegação Android.
 
-| Métrica | Valor |
-|---|---|
-| Geração | **19.5 tok/s** |
-| Prefill | 108 tok/s |
-| RAM usada | ~500 MB |
-| Tamanho modelo | 494 MB (Q4_K_M) |
-| Binário | armv8.2-a+dotprod+fp16 -O3 |
+## Governança e escopo
 
-## Fine-tuning PT-BR
-
-O modelo base (Qwen3.5 0.8B Instruct) foi fine-tuned na RTX 5090 (32 GB VRAM):
-
-- **Dataset:** 2248 conversas sintéticas PT-BR (self-instruct)
-- **Método:** Full bf16 fine-tune, 3 épocas, ctx=512, lr=2e-5
-- **Loss:** 1.53 → 0.58 (treino), 1.57 → 1.61 (validação)
-
-Para reproduzir:
-
-```bash
-bash scripts/finetune_qwen35_ptbr.sh all
-```
-
-Requisitos: RTX 5090 32 GB (ou GPU ≥16 GB VRAM), CUDA 12.8, 50 GB disco.
-
-## Otimizações aplicadas
-
-| Camada | Técnica | Ganho |
-|---|---|---|
-| Compilador | `-march=armv8.2-a+dotprod+fp16 -O3 -flto` | +10-15% |
-| CPU affinity | `-t 3 -b 128` (3 threads nos A78) | +13% vs -t 4 |
-| KV cache | `-ctk q8_0 -ctv q8_0` | Libera ~300 MB |
-| Modelo | Q4_K_M (melhor custo-benefício ARM) | Base |
-| Prompt | Chat template Jinja embutido | Zero overhead |
-
-## Roadmap
-
-- [x] Fine-tuning PT-BR funcional
-- [x] Deploy ARM64 otimizado no A54
-- [x] API REST + WebUI
-- [ ] Vocab pruning (152K→32K, +16% velocidade)
-- [ ] LoRA adapter export (.gguf.lora)
-- [ ] APK nativo (WebView wrapper)
-- [ ] Speculative decoding (draft model 50M params)
-
-## Licença
-
-Modelo: Apache 2.0 (Qwen3.5 base) | Código: MIT
+O arquivo bruto FSC fica fora do repositório, com hashes no manifesto privado. A licença do FSC é registrada como CC BY-NC-ND 4.0 para pesquisa acadêmica; o projeto não redistribui transcrições, áudio ou predições por exemplo. O diretório `app/`, os binários ARM e `scripts/benchmark.sh` pertencem ao protótipo móvel legado e não fazem parte da evidência deste artigo.

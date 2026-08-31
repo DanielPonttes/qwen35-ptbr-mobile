@@ -1,0 +1,261 @@
+{
+  "benchmark": "fsc-ultrasmall-command-routing-v1",
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "torch": "2.10.0+cu128"
+  },
+  "jobs": [
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_base_official.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_base_official.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark.jsonl",
+      "finished_at": 1788149329.8309548,
+      "model": {
+        "family": "Qwen2",
+        "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
+        "license": "apache-2.0",
+        "name": "qwen25_0_5b",
+        "parameters": 494032768,
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+      },
+      "protocol": "official",
+      "started_at": 1788149329.8309276,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_lora_official_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_lora_official.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_lora_official.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_base_official.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_base_official.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark.jsonl",
+      "finished_at": 1788149329.831143,
+      "model": {
+        "family": "Qwen3.5",
+        "hf_id": "Qwen/Qwen3.5-0.8B",
+        "license": "apache-2.0",
+        "name": "qwen35_0_8b",
+        "parameters": 873438784,
+        "revision": "2fc06364715b967f1860aea9cf38778875588b17"
+      },
+      "protocol": "official",
+      "started_at": 1788149329.8311307,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_lora_official_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_lora_official.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_lora_official.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_base_official.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_base_official.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark.jsonl",
+      "finished_at": 1788149329.8319967,
+      "model": {
+        "family": "Llama",
+        "hf_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+        "license": "apache-2.0",
+        "name": "tinyllama_1_1b",
+        "parameters": 1100048384,
+        "revision": "fe8a4ea1ffedaf415f4da2f062534de366a451e6"
+      },
+      "protocol": "official",
+      "started_at": 1788149329.831978,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_lora_official_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_lora_official.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_lora_official.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_base_official.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_base_official.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark.jsonl",
+      "finished_at": 1788149329.8321302,
+      "model": {
+        "family": "SmolLM",
+        "hf_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+        "license": "apache-2.0",
+        "name": "smollm2_1_7b",
+        "parameters": 1711376384,
+        "revision": "31b70e2e869a7173562077fd711b654946d38674"
+      },
+      "protocol": "official",
+      "started_at": 1788149329.8321195,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_lora_official_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_lora_official.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_lora_official.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_base_official.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_base_official.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark.jsonl",
+      "finished_at": 1788149329.8323011,
+      "model": {
+        "family": "Qwen3.5",
+        "hf_id": "Qwen/Qwen3.5-2B",
+        "license": "apache-2.0",
+        "name": "qwen35_2b",
+        "parameters": 2274069824,
+        "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc"
+      },
+      "protocol": "official",
+      "started_at": 1788149329.8322914,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_lora_official_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_lora_official.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_lora_official.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_base_phrase_disjoint.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_base_phrase_disjoint.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+      "finished_at": 1788149329.832472,
+      "model": {
+        "family": "Qwen2",
+        "hf_id": "Qwen/Qwen2.5-0.5B-Instruct",
+        "license": "apache-2.0",
+        "name": "qwen25_0_5b",
+        "parameters": 494032768,
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+      },
+      "protocol": "phrase_disjoint",
+      "started_at": 1788149329.8324625,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_lora_phrase_disjoint_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_lora_phrase_disjoint.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen25_0_5b_lora_phrase_disjoint.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_base_phrase_disjoint.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_base_phrase_disjoint.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+      "finished_at": 1788149329.8326674,
+      "model": {
+        "family": "Qwen3.5",
+        "hf_id": "Qwen/Qwen3.5-0.8B",
+        "license": "apache-2.0",
+        "name": "qwen35_0_8b",
+        "parameters": 873438784,
+        "revision": "2fc06364715b967f1860aea9cf38778875588b17"
+      },
+      "protocol": "phrase_disjoint",
+      "started_at": 1788149329.8326583,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_lora_phrase_disjoint_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_lora_phrase_disjoint.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_0_8b_lora_phrase_disjoint.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_base_phrase_disjoint.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_base_phrase_disjoint.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+      "finished_at": 1788149329.8328643,
+      "model": {
+        "family": "Llama",
+        "hf_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+        "license": "apache-2.0",
+        "name": "tinyllama_1_1b",
+        "parameters": 1100048384,
+        "revision": "fe8a4ea1ffedaf415f4da2f062534de366a451e6"
+      },
+      "protocol": "phrase_disjoint",
+      "started_at": 1788149329.8328557,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_lora_phrase_disjoint_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_lora_phrase_disjoint.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_tinyllama_1_1b_lora_phrase_disjoint.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_base_phrase_disjoint.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_base_phrase_disjoint.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+      "finished_at": 1788149329.8330758,
+      "model": {
+        "family": "SmolLM",
+        "hf_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+        "license": "apache-2.0",
+        "name": "smollm2_1_7b",
+        "parameters": 1711376384,
+        "revision": "31b70e2e869a7173562077fd711b654946d38674"
+      },
+      "protocol": "phrase_disjoint",
+      "started_at": 1788149329.8330672,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_lora_phrase_disjoint_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_lora_phrase_disjoint.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_smollm2_1_7b_lora_phrase_disjoint.predictions.jsonl"
+      }
+    },
+    {
+      "base_metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_base_phrase_disjoint.metrics.json",
+      "base_predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_base_phrase_disjoint.predictions.jsonl",
+      "dataset": "/home/daniel/qwen35-ptbr-mobile/data/external/fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl",
+      "finished_at": 1788149329.8332129,
+      "model": {
+        "family": "Qwen3.5",
+        "hf_id": "Qwen/Qwen3.5-2B",
+        "license": "apache-2.0",
+        "name": "qwen35_2b",
+        "parameters": 2274069824,
+        "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc"
+      },
+      "protocol": "phrase_disjoint",
+      "started_at": 1788149329.8332045,
+      "status": "completed",
+      "training": {
+        "adapter": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_lora_phrase_disjoint_seed20260830",
+        "enabled": false,
+        "metrics": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_lora_phrase_disjoint.metrics.json",
+        "predictions": "/home/daniel/qwen35-ptbr-mobile/results/fsc_ultrasmall_qwen35_2b_lora_phrase_disjoint.predictions.jsonl"
+      }
+    }
+  ],
+  "models_manifest": "/home/daniel/qwen35-ptbr-mobile/benchmarks/ultrasmall_models.json",
+  "parameter_cap": 3000000000,
+  "protocols": [
+    "official",
+    "phrase_disjoint"
+  ],
+  "registry": "/home/daniel/qwen35-ptbr-mobile/data/tools/fsc_command_benchmark.json",
+  "seed": 20260830,
+  "settings": {
+    "baseline_requested": true,
+    "batch_size": 4,
+    "device": "cuda",
+    "epochs": 2,
+    "gradient_accumulation": 4,
+    "learning_rate": 0.0002,
+    "locale": "en-US",
+    "max_length": 1024,
+    "max_new_tokens": 64,
+    "prompt_mode": "canonical",
+    "training_requested": false
+  }
+}

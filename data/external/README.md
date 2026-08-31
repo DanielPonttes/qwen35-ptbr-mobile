@@ -3,11 +3,9 @@
 ## Current experimental scope
 
 The current human-data experiment uses Fluent Speech Commands (FSC) in
-English. The project does not treat FSC as an Android corpus. The derived
-Android-aligned benchmark uses only four conservative mappings and labels all
+English. The project does not treat FSC as an Android corpus. The derived command-routing benchmark uses only four conservative mappings and labels all
 other FSC intents as policy abstention. See
-fluent_speech_commands_android_fc_manifest.json and
-docs/phase_1_english_dataset.md for the audit trail.
+docs/ultrasmall_benchmark.md and data/external/fsc_command_benchmark_manifest.json for the current audit trail.
 
 ## LaPSMail (human PT-BR speech)
 
@@ -36,23 +34,23 @@ The directory [openvoiceos/](openvoiceos/) contains the pt-BR files from [OpenVo
 - Scope: 30,043 human recordings, 97 speakers, 31 intents, 16 kHz mono WAV, speaker-disjoint train/valid/test.
 - License: CC BY-NC-ND 4.0, academic research only.
 
-This is the best immediate English audio benchmark for command-like speech. Its semantics are smart-home/assistant commands, not Android tools, so it is suitable for transfer, robustness and external comparison—not direct gold labels for the Android contract.
+This is the best immediate English audio benchmark for command-like speech in the current transcript-routing study. Its semantics are smart-home/assistant commands, so it is suitable for the generic benchmark and future audio/ASR work—not direct gold labels for an Android contract.
 
 Official provenance: [Fluent.ai dataset page](https://fluent.ai/fluent-speech-commands-a-dataset-for-spoken-language-understanding-research/). The local archive was obtained from a public [Hugging Face mirror](https://huggingface.co/datasets/leo19941227/fluent_speech_commands) and checked by SHA-256.
 
-### Derived Android-aligned benchmark
+### Derived generic command-routing benchmark
 
-- Contract: android_tools_fsc.json
+- Contract: data/tools/fsc_command_benchmark.json
 - Official speaker-disjoint data:
-  fluent_speech_commands_android_fc.jsonl
+  fluent_speech_commands_command_benchmark.jsonl
 - Phrase-disjoint data:
-  fluent_speech_commands_android_fc_phrase_disjoint.jsonl
+  fluent_speech_commands_command_benchmark_phrase_disjoint.jsonl
 - Derivation: ../scripts/prepare_fsc_android_fc.py
 - Size of each balanced derivation: 14,956 rows, 7,478 calls and 7,478
   policy abstentions.
 
 Only activate/deactivate music and increase/decrease volume are mapped to
-Android-compatible tools. The mapping is a manually specified semantic bridge,
+generic tools. The mapping is a manually specified semantic bridge,
 not a source annotation. The benchmark consumes FSC transcriptions; it does
 not evaluate an end-to-end ASR model.
 
