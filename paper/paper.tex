@@ -113,7 +113,7 @@ Qwen3.5-2B & 2,274,069,824 & Qwen3.5 & \texttt{15852e8} \\
 \end{tabular}
 \end{table}
 
-The excluded Qwen2.5-3B-Instruct checkpoint has 3,085,938,688 measured parameters and therefore exceeds the strict cap. Qwen3.5-4B-Base is also excluded. Complete IDs, revisions, licenses, and counts are recorded in \texttt{benchmarks/ultrasmall\_models.json}.
+The excluded Qwen2.5-3B-Instruct checkpoint has 3,085,938,688 measured parameters and therefore exceeds the strict cap. Qwen3.5-4B-Base is also excluded. Complete IDs, revisions, licenses, and counts are recorded in \path{benchmarks/ultrasmall_models.json}.
 
 All models use their native chat template with the same English semantic instruction, compact catalog, greedy decoding (\texttt{do\_sample=false}), and a 64-token generation cap. The template mode and model class are recorded per prediction. Runs use Transformers 5.3.0, PyTorch 2.10.0+cu128, and one NVIDIA GeForce RTX 5090 with 32~GB VRAM. No fine-tuning is part of the main matrix. A previously completed Qwen2.5-0.5B LoRA run is retained as an exploratory artifact and is not used in the model comparison.
 
@@ -156,6 +156,13 @@ Qwen3.5-2B & 100.00 & 100.00 & 50.00 & 66.67 & 76.32 \\
 
 The lexical control outperforms every zero-shot model on exact match. Qwen3.5-2B is contract-valid on every item but obtains only 50.00\% exact match: its output behavior is dominated by abstention, which is correct for policy negatives but wrong for calls. Qwen3.5-0.8B is the only model with a substantial mixture of valid calls and abstentions, yet its exact match remains below the lexical control. The other three checkpoints produce parseable text often enough to be measurable, but their responses do not satisfy the declared canonical schema.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_pareto_frontier.pdf}
+\caption{Trade-off space on the phrase-disjoint test ($n=2{,}296$ items, 38 template clusters). $x$: contract validity (\%), $y$: exact match (item-level \%). Marker area $\propto$ exact call recall (proportion of gold calls with correct tool and arguments). Qwen3.5-2B attains 100\% validity via degenerate abstention (exact call recall 0\%); lexical control (100.0, 77.4) dominates the zero-shot systems; Qwen3.5-0.8B (60.2, 43.6) trades validity for calls. Three models overlap at (0,0) with 0\% validity and are jittered for legibility (values in parentheses are JSON-valid rates). Star: Qwen2.5-0.5B+LoRA adaptor (100, 100), non-zero-shot supervised reference.}
+\label{fig:tradeoff}
+\end{figure}
+
 \subsection{Official Speaker-Disjoint Comparison}
 
 \begin{table}[ht]
@@ -178,11 +185,25 @@ Qwen3.5-2B & 100.00 & 50.98 & 76.11 \\
 \end{tabular}
 \end{table}
 
-The official split gives Qwen3.5-0.8B a higher exact-match rate than phrase-disjoint (54.65\% versus 43.60\%), a drop of 11.05 percentage points when template overlap is removed. Its template-cluster bootstrap interval for phrase-disjoint exact match is [26.02\%, 63.35\%]. Qwen3.5-2B changes from 50.98\% to 50.00\%, while the lexical control is comparatively stable (77.92\% to 77.40\%). The official split therefore cannot be read as lexical generalization.
+The official split gives Qwen3.5-0.8B a higher exact-match rate than phrase-disjoint (54.65\% versus 43.60\%), an observed split gap of 11.05 percentage points when template overlap is removed. We treat this divergence as an observational comparison rather than a formal causal test: the template-cluster bootstrap 95\% CI for phrase-disjoint exact match is wide ([26.02\%, 63.35\%]), reflecting the sample of 38 held-out template clusters (9 call-only and 29 abstain-only clusters, due to the diversity of unsupported FSC intents mapped to abstention). Qwen3.5-2B changes from 50.98\% to 50.00\%, while the lexical control is comparatively stable (77.92\% to 77.40\%). The official split therefore cannot be interpreted as evidence of lexical generalization.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_leakage_and_confusion.pdf}
+\caption{Template leakage and policy collapse (phrase-disjoint test is 50\% call / 50\% abstain). \textbf{A}~Exact match on official (speaker-disjoint, $n=1{,}934$) vs.\ phrase-disjoint ($n=2{,}296$, 38 template clusters). Lexical: 77.92\% $\rightarrow$ 77.40\% ($-0.52$~pp, stable); Qwen3.5-2B: 50.98\% $\rightarrow$ 50.00\% (stable, degenerate abstention); Qwen3.5-0.8B: 54.65\% $\rightarrow$ 43.60\% ($-11.05$~pp, shaded gap) with template-cluster 95\% CI [26.02, 63.35] on phrase-disjoint. \textbf{B}~Predicted action distribution vs.\ balanced ground truth. Lexical: 27.4\% call / 72.6\% abstain; Qwen3.5-0.8B: 73.1\% call / 26.9\% abstain; Qwen3.5-2B: 0\% call / 100\% abstain (complete collapse, exact call recall 0).}
+\label{fig:leakage}
+\end{figure}
 
 \subsection{Structural Error Audit and Latency}
 
 The failure modes are qualitatively different. Qwen2.5-0.5B frequently emits JSON-like objects with an operation name in \texttt{action}, rather than the required \texttt{action=call} plus a tool field. TinyLlama frequently explains the answer or reaches the 64-token cap before closing the object. SmolLM2 often emits a plausible JSON object with the wrong field structure. These cases explain why parseability is not interchangeable with contract validity.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_structural_cascade.pdf}
+\caption{Structural cascade on the phrase-disjoint test ($n=2{,}296$). Each bar is 100\% of a system's predictions decomposed into four mutually exclusive stages: (1)~invalid JSON, (2)~valid JSON but contract-invalid, (3)~contract-valid but wrong decision, (4)~contract-valid and exact. Lexical and Qwen3.5-2B have no structural failure (stages 1--2 $=$ 0); Qwen3.5-0.8B loses 39.85~pp at stage~2, while Qwen2.5-0.5B, TinyLlama-1.1B and SmolLM2-1.7B obtain 0\% exact matches because all parseable output falls in stage~2. Labels shown only for slices $\geq 8\%$.}
+\label{fig:cascade}
+\end{figure}
 
 Server-side single-request latency is reported only as an engineering observation. On phrase-disjoint, mean / median / p95 milliseconds were: Qwen2.5-0.5B 81.4 / 91.0 / 176.0; Qwen3.5-0.8B 324.1 / 327.2 / 448.9; TinyLlama 301.5 / 300.2 / 311.6; SmolLM2 122.9 / 106.7 / 220.1; and Qwen3.5-2B 345.1 / 338.4 / 395.9. These values depend on server load, Transformers implementation, prompt length, and decoding behavior; they are not smartphone measurements.
 
@@ -196,18 +217,21 @@ The lexical control is essential. Without it, the 50\% balanced abstention basel
 
 The derived abstention labels require particular caution. They express the declared benchmark policy, not human judgments that a command is unsafe or unsupported in a production assistant. A deployed system would need an independent policy layer, schema validator, confidence handling, and execution authorization. The present experiment stops before all of those layers.
 
+In contrast, two techniques would change the reading of Figures~\ref{fig:tradeoff}--\ref{fig:cascade} but are deliberately kept outside the zero-shot matrix. The retained Qwen2.5-0.5B+LoRA adaptor \cite{hu2022} (star in Figure~\ref{fig:tradeoff}) reaches 100\% contract validity and 100\% exact match on the same phrase-disjoint split; as a supervised in-distribution adaptor it shows the contract is learnable, not that zero-shot routing is solved, and is therefore not commensurable with the greedy zero-shot results. Constrained decoding via grammar-enforced generation (GBNF grammars in \texttt{llama.cpp}, Outlines, Guidance) would likewise guarantee 100\% validity by construction and collapse stages~1--2 of Figure~\ref{fig:cascade} to zero. This enforces syntactic compliance without implying semantic correctness: a grammar can force a valid \texttt{\{action, tool, arguments\}} shape while leaving call-vs-abstain discrimination and argument exactness to the model. We therefore keep the main benchmark unconstrained and report validity separately from exact match, treating LoRA and grammar-constrained decoding as explicit, non-zero-shot baselines for future work.
+
 %------------------------------------------------------------------------
 \section{Reproducibility and Data Governance}
 %------------------------------------------------------------------------
 
-The Neuromancer repository records the model matrix, checkpoint revisions, parameter-count method, generic contract, deterministic FSC generator, both split manifests, validator, controls, common inference script, cluster-aware evaluator, runner, logs, and aggregate reports. The reproducible main command is:
+The Neuromancer repository records the model matrix, checkpoint revisions, parameter-count method, generic contract, deterministic FSC generator, both split manifests, validator, controls, common inference script, cluster-aware evaluator, runner, logs, and aggregate reports. From the repository root, the reproducible main command (offline, reusing cached predictions) is:
 
+{\small
 \begin{verbatim}
-cd /home/daniel/qwen35-ptbr-mobile
-HF_HUB_OFFLINE=1 /home/daniel/Área de trabalho/\
-  swarm-emotions-tag/python-ml/.venv/bin/python \\
-  scripts/run_ultrasmall_benchmark.py --skip-training --skip-existing
+HF_HUB_OFFLINE=1 python scripts/run_ultrasmall_benchmark.py \
+  --skip-training --skip-existing
 \end{verbatim}
+}
+\noindent If an isolated interpreter is required, prefix with the local environment, e.g., \path{.venv/bin/python} \path{scripts/run_ultrasmall_benchmark.py}.
 
 The raw FSC archive and derived JSONL files remain server-local. The source license is recorded as CC BY-NC-ND 4.0 for academic research; no audio, transcript, or per-example prediction is redistributed in Git. Aggregate metrics are sufficient to audit the reported claims without publishing restricted data.
 

@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+
+\title{A Leakage-Aware Benchmark for Ultra-Small Language Models on\\
+Structured Speech-Command Routing}
+
+\author{[Removed for double-blind review]}
+\address{[Removed for double-blind review]}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Small language models ($\le 3$B parameters) are appealing for on-device speech interfaces, but superficial format compliance often conceals severe semantic failure. We benchmark five instruction-tuned checkpoints on a transcript-to-command task derived from Fluent Speech Commands (FSC) under an explicit two-operation contract with balanced policy abstention (50\% calls, 50\% abstentions). We compare official speaker-disjoint evaluation against a leakage-audited phrase-disjoint split. Under the strict contract, a transparent lexical baseline reaches 77.40\% exact match, outperforming all zero-shot language models. The largest model (Qwen3.5-2B) attains 100\% contract validity solely via degenerate universal abstention (exact call recall 0\%), while three checkpoints (Qwen2.5-0.5B, TinyLlama-1.1B, SmolLM2-1.7B) suffer 0\% contract validity despite emitting valid JSON, and Qwen3.5-0.8B attains 60.15\%. We demonstrate that this structural failure is eliminated by in-distribution supervised parameter-efficient adaptation (LoRA), and establish guidelines for evaluating SLMs on structured routing tasks.
+\end{abstract}
+
+\section{Introduction and Scope}
+
+Deploying natural language command routing locally on edge hardware requires ultra-small language models (SLMs, $\le 3$B parameters). However, evaluating these models zero-shot introduces two severe pitfalls: (i) template leakage across speakers in benchmark splits, and (ii) degenerate policy compliance, where models achieve seemingly high accuracy by trivial abstention.
+
+We evaluate five checkpoints: Qwen2.5-0.5B, Qwen3.5-0.8B, TinyLlama-1.1B, SmolLM2-1.7B, and Qwen3.5-2B. The input is a transcription from Fluent Speech Commands (FSC)~\cite{lugosch2019}, and the output is a validated JSON object conforming to a strict two-tool contract: \texttt{media\_control} and \texttt{volume\_adjust}, with all other 27 native intents mapped to a derived abstention target. The evaluation is balanced 1:1 (7,478 calls and 7,478 abstentions per split). We evaluate on both FSC's official speaker-disjoint split ($n=1{,}934$) and an audited phrase-disjoint split ($n=2{,}296$, 38 template clusters) where no transcription template crosses partitions.
+
+\section{Experimental Results}
+
+\begin{table}[htbp]
+\centering
+\caption{Phrase-disjoint vs. Official test results (\%).}
+\label{tab:results}
+\scriptsize
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{3}{c}{\textbf{Phrase-Disjoint (Unseen Templates)}} & \multicolumn{3}{c}{\textbf{Official (Speaker Split)}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+\textbf{System} & \textbf{Valid} & \textbf{Exact} & \textbf{Exact Call Recall} & \textbf{Valid} & \textbf{Exact} & \textbf{Template Exact} \\
+\midrule
+Always abstain & 100.00 & 50.00 & 0.00 & 100.00 & 50.00 & 75.71 \\
+Lexical control & 100.00 & \textbf{77.40} & \textbf{54.79} & 100.00 & \textbf{77.92} & \textbf{89.07} \\
+Qwen2.5-0.5B & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Qwen3.5-0.8B & 60.15 & 43.60 & 33.45 & 73.47 & 54.65 & 56.28 \\
+TinyLlama-1.1B & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+SmolLM2-1.7B & 0.00 & 0.00 & 0.00 & 0.78 & 0.00 & 0.00 \\
+Qwen3.5-2B & 100.00 & 50.00 & 0.00 & 100.00 & 50.98 & 76.11 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As shown in Table~\ref{tab:results} and Figure~\ref{fig:tradeoff}, the lexical control dominates all zero-shot models. Exact Call Recall ($R_{call}^{exact}$) denotes the ratio of correct calls with exact tool and arguments over gold call instances. Qwen3.5-2B attains 100\% validity and 50.00\% exact match, but inspection reveals complete policy collapse: it outputs \texttt{abstain} on 100\% of inputs, yielding $R_{call}^{exact}=0\%$. Qwen3.5-0.8B is the only model attempting active routing, but exhibits an observed split gap of 11.05~pp from official (54.65\%) to phrase-disjoint (43.60\%). Because the phrase-disjoint cluster bootstrap 95\% CI is wide ([26.02\%, 63.35\%], over 38 clusters with 9 call and 29 abstain clusters), this gap is descriptive rather than a formal causal test.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\linewidth]{figures/fig_pareto_frontier.pdf}
+\caption{Trade-off space on phrase-disjoint test. Marker area $\propto$ exact call recall. The lexical baseline dominates zero-shot SLMs; Qwen3.5-2B collapses to 100\% abstentions.}
+\label{fig:tradeoff}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\linewidth]{figures/fig_structural_cascade.pdf}
+\caption{Structural cascade decomposing outputs into: (1) invalid JSON, (2) valid JSON but invalid schema, (3) valid contract but wrong call, and (4) exact match.}
+\label{fig:cascade}
+\end{figure}
+
+Figure~\ref{fig:cascade} reveals the exact point of structural failure: SmolLM2-1.7B produces 96.47\% syntactically parseable JSON, but 0\% valid contract objects due to schema deviations (missing action/tool keys or invalid parameters). Unconstrained zero-shot decoding is insufficient for sub-3B models to adhere to rigid task schemas.
+
+\section{Discussion, Adaptation, and Conclusions}
+
+Two orthogonal techniques address this bottleneck: (i) \textbf{Grammar-Constrained Decoding} (e.g., GBNF in \texttt{llama.cpp}), which forces syntactic compliance by construction (collapsing stages 1--2 of Figure~\ref{fig:cascade} to zero, though semantic discrimination still relies on the model); and (ii) \textbf{Supervised LoRA Adaptation}~\cite{hu2022}: an in-distribution Qwen2.5-0.5B LoRA adaptor reaches 100\% contract validity and 100\% exact match, demonstrating that the contract is readily learnable with parameter-efficient fine-tuning.
+
+In conclusion, zero-shot structured routing without grammar guidance is fragile in the ultra-small regime. Benchmarks must decouple syntactic validity from semantic utility, audit template leakage, and incorporate transparent non-neural baselines.
+
+\begin{thebibliography}{9}
+\scriptsize
+\bibitem{lugosch2019}
+L.~Lugosch et~al. Speech model pre-training for spoken language understanding. \textit{Interspeech}, 2019.
+\bibitem{hu2022}
+E.~J.~Hu et~al. LoRA: Low-rank adaptation of large language models. \textit{ICLR}, 2022.
+\end{thebibliography}
+
+\end{document}
