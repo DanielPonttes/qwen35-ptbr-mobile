@@ -115,7 +115,9 @@ def _save(fig, outdir: Path, basename: str, dpi: int = 300) -> None:
 
 def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -> None:
     configure_style()
-    fig, ax = plt.subplots(figsize=(6.8, 5.15))
+    # Extra vertical room keeps the data-space annotations separated from the
+    # title, the 50% baseline, and the marker-size legend.
+    fig, ax = plt.subplots(figsize=(6.8, 7.2))
 
     ax.set_xlim(-6, 106)
     ax.set_ylim(-6, 106)
@@ -141,8 +143,8 @@ def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -
         zorder=5,
     )
 
-    ax.text(25, 25, "Structural failure\n(contract invalid)", ha="center", va="center", fontsize=7, color="#7f2704", alpha=0.85, style="italic", zorder=2)
-    ax.text(78, 25, "Conservative\n(valid but\nover-abstaining)", ha="center", va="center", fontsize=7, color="#7f2704", alpha=0.85, style="italic", zorder=2)
+    ax.text(14, 37, "Structural failure\n(contract invalid)", ha="center", va="center", fontsize=7, color="#7f2704", alpha=0.85, style="italic", zorder=2)
+    ax.text(88, 26, "Conservative\n(valid but\nover-abstaining)", ha="center", va="center", fontsize=7, color="#7f2704", alpha=0.85, style="italic", zorder=2)
     ax.text(78, 78, "Ideal quadrant\n(high validity\n+ high accuracy)", ha="center", va="center", fontsize=7.5, color="#00441b", alpha=0.9, style="italic", weight="bold", zorder=2)
     ax.text(25, 78, "Unreachable\nin zero-shot", ha="center", va="center", fontsize=6.5, color="#525252", alpha=0.7, style="italic", zorder=2)
 
@@ -152,7 +154,7 @@ def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -
     ax.scatter(frontier_x, frontier_y, s=70, facecolors="none", edgecolors="#525252", linewidths=1.1, zorder=4, alpha=0.9)
 
     ax.annotate(
-        "Empirical trade-off\n(zero-shot frontier)", xy=(80, 60), xytext=(38, 88),
+        "Empirical trade-off\n(zero-shot frontier)", xy=(80, 60), xytext=(38, 84),
         ha="center", va="center", fontsize=6.8, color="#252525",
         arrowprops=dict(arrowstyle="-|>", color="#525252", lw=1.0, connectionstyle="arc3,rad=0.18"),
         bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#bdbdbd", alpha=0.96),
@@ -201,11 +203,11 @@ def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -
         offsets = {
             "Lexical": (14, 8),
             "Qwen3.5-2B": (14, -14),
-            "Qwen3.5-0.8B": (14, -16),
+            "Qwen3.5-0.8B": (14, -9),
             "SmolLM2-1.7B": (18, 26),
             "Qwen2.5-0.5B": (24, 15),
             "TinyLlama-1.1B": (28, 4),
-            "Qwen2.5-0.5B + LoRA": (-36, -8),
+            "Qwen2.5-0.5B + LoRA": (-18, -5),
         }
         ox, oy = offsets.get(name, (12, 12))
 
@@ -261,14 +263,14 @@ def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -
         ax.legend([lora_handle], ["Supervised LoRA reference"], loc="upper left", bbox_to_anchor=(0.02, 0.98), frameon=True, facecolor="#fff7fb", edgecolor="#c51b7d", handletextpad=0.4)
 
     ax.text(
-        0.5, -5.2, "\u2020 Three models at (0,0) jittered for visual clarity \u2014 all exhibit 0% contract validity (structural failure).",
+        0.5, -5.5, "\u2020 Three models at (0,0) jittered for visual clarity \u2014 all exhibit 0% contract validity (structural failure).",
         ha="left", va="top", fontsize=6.2, color="#525252", style="italic",
         bbox=dict(boxstyle="round,pad=0.25", facecolor="#f7f7f7", edgecolor="#d9d9d9", alpha=0.95),
     )
 
     ax.set_title("Trade-off Space: Contract Validity vs. Exact Match (Phrase-Disjoint)\nMarker area proportional to Exact Call Recall", fontsize=8.5, pad=10, loc="center")
 
-    fig.tight_layout(pad=0.6)
+    fig.tight_layout(pad=0.7)
     _save(fig, outdir, "fig_pareto_frontier", dpi=dpi)
 
 def plot_structural_cascade(outdir: Path, dpi: int = 300) -> None:
@@ -286,8 +288,7 @@ def plot_structural_cascade(outdir: Path, dpi: int = 300) -> None:
         rows.append((name, [s1, s2, s3, s4]))
 
     n = len(rows)
-    fig_h = 0.68 * n + 1.8
-    fig, ax = plt.subplots(figsize=(7.2, fig_h))
+    fig, ax = plt.subplots(figsize=(7.2, 5.88))  # 0.68 in/model x 6 models + 1.80 in
 
     y_pos = np.arange(n)
     bar_h = 0.58
@@ -330,12 +331,11 @@ def plot_structural_cascade(outdir: Path, dpi: int = 300) -> None:
 
     patches = [mpatches.Patch(facecolor=CASCADE_COLORS[i], edgecolor="white", linewidth=0.8, label=CASCADE_LABELS[i]) for i in range(4)]
     ax.legend(
-        handles=patches, loc="upper center", bbox_to_anchor=(0.5, 1.14),
+        handles=patches, loc="upper center", bbox_to_anchor=(0.5, 1.18),
         ncol=4, frameon=True, fancybox=True, shadow=False,
         facecolor="white", edgecolor="#bdbdbd", handlelength=1.4, handleheight=1.4, columnspacing=1.2, handletextpad=0.6,
-        fontsize=6.8,
+        fontsize=6.8, borderaxespad=0.0,
     )
-    ax.set_title("Structural Failure Cascade: 4-Stage Decomposition of Model Output\n100% = total test predictions per model", fontsize=8.5, pad=26, loc="center")
 
     ax.axvline(100, color="#525252", linewidth=0.8, alpha=0.6, zorder=2)
 
@@ -345,12 +345,14 @@ def plot_structural_cascade(outdir: Path, dpi: int = 300) -> None:
         ha="left", va="bottom", fontsize=6.2, color="#525252", style="italic",
     )
 
-    fig.tight_layout(rect=[0, 0.05, 1, 0.90])
+    # No embedded title/subtitle: the LaTeX caption is the single source of
+    # figure description. Reserve a clean band above the axes for the legend.
+    fig.subplots_adjust(left=0.17, right=0.99, bottom=0.16, top=0.72)
     _save(fig, outdir, "fig_structural_cascade", dpi=dpi)
 
 def plot_leakage_and_confusion(outdir: Path, dpi: int = 300) -> None:
     configure_style()
-    fig = plt.figure(figsize=(9.2, 4.2), layout="constrained")
+    fig = plt.figure(figsize=(9.2, 4.6), layout="constrained")
     gs = fig.add_gridspec(1, 2, width_ratios=[1.15, 1.0], wspace=0.32)
 
     axA = fig.add_subplot(gs[0, 0])
@@ -401,7 +403,7 @@ def plot_leakage_and_confusion(outdir: Path, dpi: int = 300) -> None:
     axA.text(0.0, 21.2, "n phrase-disjoint test = 2,296 (38 clusters)  \u00b7  n official test = 1,934", ha="left", va="center", fontsize=5.8, color="#636363", style="italic")
 
     # ---------------- Panel B: Action Distribution ----------------
-    axB.set_title("B \u2014 Predicted Action (Call vs. Abstain) vs. Ground Truth\n(Phrase-Disjoint Test)", fontsize=8.5, pad=8, loc="center")
+    axB.set_title("B \u2014 Predicted Action (Call vs. Abstain) vs. Ground Truth\n(Phrase-Disjoint Test)", fontsize=8.5, pad=14, loc="center")
 
     labels = ["Ground\nTruth", "Lexical", "Qwen3.5\n0.8B", "Qwen3.5\n2B"]
     keys = ["Ground Truth", "Lexical", "Qwen3.5-0.8B", "Qwen3.5-2B"]
@@ -419,7 +421,7 @@ def plot_leakage_and_confusion(outdir: Path, dpi: int = 300) -> None:
     axB.set_xticks(xB)
     axB.set_xticklabels(labels, fontsize=7.5)
     axB.set_ylabel("Proportion of predictions (%)", fontweight="bold", fontsize=8)
-    axB.set_ylim(0, 104)
+    axB.set_ylim(0, 116)
     axB.set_yticks([0, 25, 50, 75, 100])
     axB.set_yticklabels(["0%", "25%", "50%", "75%", "100%"])
     axB.grid(True, axis="y", color="#e6e6e6", linestyle="-", linewidth=0.6, alpha=0.9, zorder=0)
@@ -457,15 +459,15 @@ def plot_leakage_and_confusion(outdir: Path, dpi: int = 300) -> None:
     )
     axB.annotate("", xy=(xB[3], 50), xytext=(xB[3] - 0.45, 66), arrowprops=dict(arrowstyle="-|>", color="#b30000", lw=0.9, linestyle="--"), zorder=6)
 
-    axB.text(xB[1], 104.5, "72.6% abst.", ha="center", va="bottom", fontsize=6.2, color=ABSTAIN_COLOR, style="italic")
-    axB.text(xB[2], 104.5, "73.1% call", ha="center", va="bottom", fontsize=6.2, color=CALL_COLOR, style="italic")
+    axB.text(xB[1], 106.0, "72.6% abst.", ha="center", va="bottom", fontsize=6.2, color=ABSTAIN_COLOR, style="italic")
+    axB.text(xB[2], 106.0, "73.1% call", ha="center", va="bottom", fontsize=6.2, color=CALL_COLOR, style="italic")
 
     handles = [
         mpatches.Patch(facecolor=CALL_COLOR, edgecolor="white", label="Call action"),
         mpatches.Patch(facecolor=ABSTAIN_COLOR, edgecolor="white", label="Abstain policy"),
         mpatches.Patch(facecolor="#f0f0f0", edgecolor="#bdbdbd", hatch="///", label="Ground Truth (50/50 balanced)"),
     ]
-    axB.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.15), ncol=3, frameon=True, facecolor="white", edgecolor="#bdbdbd", fontsize=6.5, handlelength=1.2)
+    axB.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=3, frameon=True, facecolor="white", edgecolor="#bdbdbd", fontsize=6.5, handlelength=1.2, borderaxespad=0.0)
 
     for spine in axA.spines.values():
         spine.set_color("#bdbdbd"); spine.set_linewidth(0.8)
