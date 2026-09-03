@@ -6,36 +6,39 @@
 \citation{abdin2024phi3}
 \citation{schick2023toolformer}
 \citation{patil2025bfcl}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Scope and Research Questions}{1}{section.1}\protected@file@percent }
 \citation{lugosch2019}
 \citation{coucke2018snips}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Scope and Research Questions}{1}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {2}Human Corpus and Derived Task}{2}{section.2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces The four deterministic FSC-to-contract bridge rules.}}{2}{table.caption.1}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{tab:mapping}{{1}{2}{The four deterministic FSC-to-contract bridge rules}{table.caption.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Leakage-Audited Protocols}{2}{section.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Balanced derived datasets and leakage controls.}}{3}{table.caption.2}\protected@file@percent }
-\newlabel{tab:splits}{{2}{3}{Balanced derived datasets and leakage controls}{table.caption.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Balanced derived datasets and leakage controls.}}{2}{table.caption.2}\protected@file@percent }
+\newlabel{tab:splits}{{2}{2}{Balanced derived datasets and leakage controls}{table.caption.2}{}}
+\citation{qwen35}
+\citation{tinyllama2024}
+\citation{smollm2025}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Models and Execution}{3}{section.4}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Checkpoints included in the strict ultra-small matrix.}}{3}{table.caption.3}\protected@file@percent }
 \newlabel{tab:models}{{3}{3}{Checkpoints included in the strict ultra-small matrix}{table.caption.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Metrics and Controls}{3}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{4}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Main Phrase-Disjoint Comparison}{4}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{3}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Main Phrase-Disjoint Comparison}{3}{subsection.6.1}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Phrase-disjoint test results. Percentages are item-level except for the final column.}}{4}{table.caption.4}\protected@file@percent }
 \newlabel{tab:phrase}{{4}{4}{Phrase-disjoint test results. Percentages are item-level except for the final column}{table.caption.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Official Speaker-Disjoint Comparison}{4}{subsection.6.2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Official speaker-disjoint test results.}}{4}{table.caption.6}\protected@file@percent }
 \newlabel{tab:official}{{5}{4}{Official speaker-disjoint test results}{table.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Structural Error Audit and Latency}{4}{subsection.6.3}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Trade-off space on the phrase-disjoint test ($n=2{,}296$ items, 38 template clusters). $x$: contract validity (\%), $y$: exact match (item-level \%). Marker area $\propto $ exact call recall (proportion of gold calls with correct tool and arguments). Qwen3.5-2B attains 100\% validity via degenerate abstention (exact call recall 0\%); lexical control (100.0, 77.4) dominates the zero-shot systems; Qwen3.5-0.8B (60.2, 43.6) trades validity for calls. Three models overlap at (0,0) with 0\% validity and are jittered for legibility (values in parentheses are JSON-valid rates). Star: Qwen2.5-0.5B+LoRA adaptor (100, 100), non-zero-shot supervised reference.}}{5}{figure.caption.5}\protected@file@percent }
 \newlabel{fig:tradeoff}{{1}{5}{Trade-off space on the phrase-disjoint test ($n=2{,}296$ items, 38 template clusters). $x$: contract validity (\%), $y$: exact match (item-level \%). Marker area $\propto $ exact call recall (proportion of gold calls with correct tool and arguments). Qwen3.5-2B attains 100\% validity via degenerate abstention (exact call recall 0\%); lexical control (100.0, 77.4) dominates the zero-shot systems; Qwen3.5-0.8B (60.2, 43.6) trades validity for calls. Three models overlap at (0,0) with 0\% validity and are jittered for legibility (values in parentheses are JSON-valid rates). Star: Qwen2.5-0.5B+LoRA adaptor (100, 100), non-zero-shot supervised reference}{figure.caption.5}{}}
+\citation{geifman2017selective}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Template leakage and policy collapse (phrase-disjoint test is 50\% call / 50\% abstain). \textbf  {A}~Exact match on official (speaker-disjoint, $n=1{,}934$) vs.\ phrase-disjoint ($n=2{,}296$, 38 template clusters). Lexical: 77.92\% $\rightarrow $ 77.40\% ($-0.52$~pp, stable); Qwen3.5-2B: 50.98\% $\rightarrow $ 50.00\% (stable, degenerate abstention); Qwen3.5-0.8B: 54.65\% $\rightarrow $ 43.60\% ($-11.05$~pp, shaded gap) with template-cluster 95\% CI [26.02, 63.35] on phrase-disjoint. \textbf  {B}~Predicted action distribution vs.\ balanced ground truth. Lexical: 27.4\% call / 72.6\% abstain; Qwen3.5-0.8B: 73.1\% call / 26.9\% abstain; Qwen3.5-2B: 0\% call / 100\% abstain (complete collapse, exact call recall 0).}}{6}{figure.caption.7}\protected@file@percent }
 \newlabel{fig:leakage}{{2}{6}{Template leakage and policy collapse (phrase-disjoint test is 50\% call / 50\% abstain). \textbf {A}~Exact match on official (speaker-disjoint, $n=1{,}934$) vs.\ phrase-disjoint ($n=2{,}296$, 38 template clusters). Lexical: 77.92\% $\rightarrow $ 77.40\% ($-0.52$~pp, stable); Qwen3.5-2B: 50.98\% $\rightarrow $ 50.00\% (stable, degenerate abstention); Qwen3.5-0.8B: 54.65\% $\rightarrow $ 43.60\% ($-11.05$~pp, shaded gap) with template-cluster 95\% CI [26.02, 63.35] on phrase-disjoint. \textbf {B}~Predicted action distribution vs.\ balanced ground truth. Lexical: 27.4\% call / 72.6\% abstain; Qwen3.5-0.8B: 73.1\% call / 26.9\% abstain; Qwen3.5-2B: 0\% call / 100\% abstain (complete collapse, exact call recall 0)}{figure.caption.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Structural Error Audit and Latency}{6}{subsection.6.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{6}{section.7}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Structural cascade on the phrase-disjoint test ($n=2{,}296$). Each bar is 100\% of a system's predictions decomposed into four mutually exclusive stages: (1)~invalid JSON, (2)~valid JSON but contract-invalid, (3)~contract-valid but wrong decision, (4)~contract-valid and exact. Lexical and Qwen3.5-2B have no structural failure (stages 1--2 $=$ 0); Qwen3.5-0.8B loses 39.85~pp at stage~2, while Qwen2.5-0.5B, TinyLlama-1.1B and SmolLM2-1.7B obtain 0\% exact matches because all parseable output falls in stage~2. Labels shown only for slices $\geq 8\%$.}}{7}{figure.caption.8}\protected@file@percent }
 \newlabel{fig:cascade}{{3}{7}{Structural cascade on the phrase-disjoint test ($n=2{,}296$). Each bar is 100\% of a system's predictions decomposed into four mutually exclusive stages: (1)~invalid JSON, (2)~valid JSON but contract-invalid, (3)~contract-valid but wrong decision, (4)~contract-valid and exact. Lexical and Qwen3.5-2B have no structural failure (stages 1--2 $=$ 0); Qwen3.5-0.8B loses 39.85~pp at stage~2, while Qwen2.5-0.5B, TinyLlama-1.1B and SmolLM2-1.7B obtain 0\% exact matches because all parseable output falls in stage~2. Labels shown only for slices $\geq 8\%$}{figure.caption.8}{}}
-\citation{geifman2017selective}
 \citation{hu2022}
 \citation{willard2023outlines}
 \citation{ugur2025syncode}
@@ -52,9 +55,9 @@
 \bibcite{abdin2024phi3}{6}
 \bibcite{tinyllama2024}{7}
 \bibcite{smollm2025}{8}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{9}{section.10}\protected@file@percent }
 \bibcite{qwen35}{9}
 \bibcite{hu2022}{10}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{9}{section.10}\protected@file@percent }
 \bibcite{willard2023outlines}{11}
 \bibcite{ugur2025syncode}{12}
 \bibcite{schick2023toolformer}{13}

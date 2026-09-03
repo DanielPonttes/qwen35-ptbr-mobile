@@ -24,7 +24,7 @@ Structured Speech-Command Routing}
 \maketitle
 
 \begin{abstract}
-Small language models are attractive for local command interfaces, but a valid-looking response can still be semantically wrong or impossible to execute. We present a reproducible benchmark of five instruction-tuned checkpoints with at most three billion parameters on a transcript-to-command task. The benchmark derives a narrow two-operation contract from Fluent Speech Commands (FSC), a human-recorded English speech-command corpus: four native semantic combinations map to \texttt{media\_control} or \texttt{volume\_adjust}, while all other examples receive an explicitly derived policy-abstention target. We evaluate Qwen2.5-0.5B, Qwen3.5-0.8B, TinyLlama-1.1B, SmolLM2-1.7B, and Qwen3.5-2B with the same canonical prompt and greedy decoding on an NVIDIA RTX 5090. Two balanced protocols separate official speaker disjointness from normalized-template disjointness, and all reports include item-level and template-cluster statistics. On the phrase-disjoint test, a transparent lexical control reaches 77.40\% exact match, whereas the best model reaches 50.00\% exact match; its 100\% contract-valid rate is explained by near-universal abstention rather than successful call routing. Qwen3.5-0.8B reaches 43.60\% exact match and 60.15\% contract validity, while the other three models obtain zero exact matches under the strict contract. The result is a benchmark and leakage audit, not evidence of Android control, automatic speech recognition, or on-device performance. It shows that structured-output compliance and conservative policy behavior must be measured separately from semantic accuracy in the ultra-small regime.
+Deploying structured command routing locally on mobile devices requires ultra-small language models ($\le 3\text{B}$ parameters). We present a reproducible benchmark of five sub-3B instruction-tuned models on a transcript-to-JSON routing task derived from Fluent Speech Commands (FSC). We evaluate Qwen2.5-0.5B, Qwen3.5-0.8B, TinyLlama-1.1B, SmolLM2-1.7B, and Qwen3.5-2B under a canonical two-tool contract with policy-defined abstention, evaluating both official speaker-disjoint and audited phrase-disjoint partitions ($n=2{,}296$, 38 template clusters). On phrase-disjoint test, a transparent lexical baseline achieves 77.40\% exact match, outperforming every zero-shot neural model. Qwen3.5-2B attains 100\% contract validity but collapses to universal abstention (0\% exact call recall). Three models achieve 0\% contract validity due to unconstrained schema deviations, while Qwen3.5-0.8B reaches 60.15\% validity and 43.60\% exact match. Our audit shows that syntactic compliance, policy abstention, and semantic accuracy must be decoupled when evaluating edge SLMs.
 \end{abstract}
 
 \noindent\textbf{Keywords:} ultra-small language models; structured prediction; speech commands; function routing; abstention; data leakage; reproducible benchmarking.
@@ -62,15 +62,15 @@ decrease & volume & \texttt{volume\_adjust(direction=down)} \\
 \end{tabular}
 \end{table}
 
-Every other retained example receives \texttt{\{action: abstain, tool: null, arguments: \{\}\}}. This is an experimenter-defined policy label, not a human FSC annotation. To prevent the larger set of unsupported intents from dominating the score, the generator samples a balanced 1:1 mixture of calls and policy abstentions within each split. Each derived dataset contains 14,956 records: 7,478 calls and 7,478 abstentions.
+Every other retained utterance receives a canonical abstention target (\path{action="abstain"}, with empty tool and arguments). This is an experimenter-defined policy label, not a human FSC annotation. To prevent unsupported intents from dominating the score, the generator samples a balanced 1:1 mixture of calls and policy abstentions within each split. Each derived dataset contains 14,956 records: 7,478 calls and 7,478 abstentions.
 
-The contract checks exactly three top-level fields (\texttt{action}, \texttt{tool}, and \texttt{arguments}), restricts tool names to the two declared operations, and validates the required argument enums. It is an evaluation target only; it does not execute a tool or grant any permission.
+The contract validates three top-level keys (\texttt{action}, \texttt{tool}, and \texttt{arguments}), restricts tools to the two declared operations, and validates the required argument enums. It is an evaluation target only; it does not execute a tool or grant any system permission.
 
 %------------------------------------------------------------------------
 \section{Leakage-Audited Protocols}
 %------------------------------------------------------------------------
 
-The first protocol preserves FSC's official speaker-disjoint split. It measures transfer to held-out speakers but does not prevent repeated normalized transcriptions from crossing partitions. The second protocol assigns each Unicode-normalized, case-folded, whitespace-normalized and punctuation-stripped transcription template to one split within its native FSC label. Speakers may occur in more than one split in this second protocol by design.
+The first protocol preserves FSC's official speaker-disjoint split, measuring transfer to held-out speakers without preventing identical phrases across partitions. The second protocol partitions normalized transcriptions to ensure zero template overlap across splits, grouping instances by linguistic phrasing. Speakers may occur in more than one split in this second protocol by design.
 
 \begin{table}[ht]
 \centering
@@ -93,7 +93,7 @@ The official protocol has zero speaker intersections but 245, 247, and 244 templ
 \section{Models and Execution}
 %------------------------------------------------------------------------
 
-The matrix contains five checkpoints. Parameter counts are computed by summing tensor shapes in the local safetensors files; this makes the cap auditable and includes all checkpoint components. Qwen3.5 checkpoints are exposed by Transformers as multimodal conditional-generation models, but no image or video input is supplied in this transcript-only experiment.
+The matrix evaluates five open SLM checkpoints: Qwen2.5/3.5~\cite{qwen35}, TinyLlama~\cite{tinyllama2024}, and SmolLM2~\cite{smollm2025}. Model parameter counts are computed by summing tensor shapes in local safetensors files, ensuring an auditable cap that includes all weights. While Qwen3.5 checkpoints are exposed as multimodal architectures by Transformers, no visual input is supplied in this speech-transcript experiment.
 
 \begin{table}[ht]
 \centering
@@ -123,9 +123,9 @@ All models use their native chat template with the same English semantic instruc
 
 The evaluator distinguishes parseability and JSON validity; contract validity, including action/tool/argument constraints; exact match against the derived target; action accuracy; tool and argument accuracy on call gold items; and abstention precision, recall, and F1.
 
-The primary accuracy comparison is item-level exact match accompanied by template-level summaries. For each \texttt{template\_id}, the evaluator computes mean exact-match rate, mean action accuracy, mean abstention F1, and the strict proportion of clusters whose items are all exact. Cluster-bootstrap 95\% intervals resample template IDs, not rows. Wilson intervals are retained as descriptive item-level intervals but are not treated as leakage-aware uncertainty.
+The primary metric is item-level exact match accompanied by cluster-level summaries. For each template cluster, the evaluator computes mean exact-match rate, action accuracy, abstention F1, and strict cluster match (clusters where 100\% of items are correct). Cluster-bootstrap 95\% confidence intervals resample template clusters rather than individual rows. Standard Wilson intervals are reported as descriptive row-level statistics but do not capture cluster dependency.
 
-Two deterministic controls use only the transcription text and contract. \texttt{always\_abstain} returns policy abstention for every item. \texttt{lexical} uses transparent regular expressions over media/volume and play/pause/increase/decrease cues; it never reads FSC native labels or metadata.
+Two deterministic non-neural controls provide baseline references under the contract: \texttt{always\_abstain} returns policy rejection for every item; \texttt{lexical} matches domain keywords (\textit{play, pause, volume, up, down}) without accessing dataset metadata.
 
 %------------------------------------------------------------------------
 \section{Results}
@@ -154,7 +154,7 @@ Qwen3.5-2B & 100.00 & 100.00 & 50.00 & 66.67 & 76.32 \\
 \end{tabular}}
 \end{table}
 
-The lexical control outperforms every zero-shot model on exact match. Qwen3.5-2B is contract-valid on every item but obtains only 50.00\% exact match: its output behavior is dominated by abstention, which is correct for policy negatives but wrong for calls. Qwen3.5-0.8B is the only model with a substantial mixture of valid calls and abstentions, yet its exact match remains below the lexical control. The other three checkpoints produce parseable text often enough to be measurable, but their responses do not satisfy the declared canonical schema.
+The lexical control outperforms every zero-shot model on exact match. Qwen3.5-2B is contract-valid on every item but obtains only 50.00\% exact match: its output behavior collapses universally to abstention on 100\% of test instances, which matches policy negatives but yields zero correct calls ($R_{call}^{exact}=0\%$). Qwen3.5-0.8B is the only model with a substantial mixture of valid calls and abstentions, yet its exact match remains below the lexical control. The other three checkpoints produce parseable text often enough to be measurable, but their responses do not satisfy the declared canonical schema.
 
 \begin{figure}[htbp]
 \centering
@@ -185,7 +185,7 @@ Qwen3.5-2B & 100.00 & 50.98 & 76.11 \\
 \end{tabular}
 \end{table}
 
-The official split gives Qwen3.5-0.8B a higher exact-match rate than phrase-disjoint (54.65\% versus 43.60\%), an observed split gap of 11.05 percentage points when template overlap is removed. We treat this divergence as an observational comparison rather than a formal causal test: the template-cluster bootstrap 95\% CI for phrase-disjoint exact match is wide ([26.02\%, 63.35\%]), reflecting the sample of 38 held-out template clusters (9 call-only and 29 abstain-only clusters, due to the diversity of unsupported FSC intents mapped to abstention). Qwen3.5-2B changes from 50.98\% to 50.00\%, while the lexical control is comparatively stable (77.92\% to 77.40\%). The official split therefore cannot be interpreted as evidence of lexical generalization.
+The official split gives Qwen3.5-0.8B a higher exact match than phrase-disjoint (54.65\% vs.\ 43.60\%), an observed gap of 11.05~pp when template leakage is eliminated. We treat this divergence as an observational comparison rather than a formal causal test: the template-cluster bootstrap 95\% confidence interval for phrase-disjoint exact match is wide ($[26.02\%, 63.35\%]$), reflecting the sample size of 38 held-out clusters (9 call-only and 29 abstain-only). Meanwhile, Qwen3.5-2B stays at 50.98\% $\rightarrow$ 50.00\% (due to universal abstention), and the lexical control is stable (77.92\% $\rightarrow$ 77.40\%). The official split therefore overestimates generalizability.
 
 \begin{figure}[htbp]
 \centering
@@ -211,19 +211,19 @@ Server-side single-request latency is reported only as an engineering observatio
 \section{Discussion}
 %------------------------------------------------------------------------
 
-The benchmark does not support a monotonic ``more parameters is better'' conclusion. The 2.274B Qwen3.5 checkpoint is structurally compliant but conservative to the point of abstaining on calls. The 0.873B Qwen3.5 checkpoint routes more calls but loses both contract validity and exactness on unseen templates. The external-family checkpoints demonstrate that instruction tuning and model size alone do not guarantee compatibility with a strict output contract.
+The benchmark does not support a monotonic conclusion that larger scale implies better performance. The 2.274B Qwen3.5 checkpoint is structurally compliant but conservative to the point of abstaining on calls. The 0.873B Qwen3.5 checkpoint routes more calls but loses both contract validity and exactness on unseen templates. The external-family checkpoints demonstrate that instruction tuning and model size alone do not guarantee compatibility with a strict output contract.
 
 The lexical control is essential. Without it, the 50\% balanced abstention baseline could make a model that refuses everything appear competitive. Cluster analysis is also essential: repeated templates give some systems much larger effective row counts than the number of independent phrasings. The phrase-disjoint test has only 38 clusters, so its uncertainty is broad; nevertheless, it answers a different question from speaker transfer and should not be merged with the official result.
 
 The derived abstention labels require particular caution. They express the declared benchmark policy, not human judgments that a command is unsafe or unsupported in a production assistant. In the framing of selective classification~\cite{geifman2017selective}, our evaluation assesses policy-defined contract rejection under a fixed schema rather than dynamic risk-coverage optimization based on output logits. A deployed system would require an independent policy layer, schema validator, confidence calibration, and execution authorization. The present experiment intentionally stops before all of those layers.
 
-In contrast, two techniques would change the reading of Figures~\ref{fig:tradeoff}--\ref{fig:cascade} but are deliberately kept outside the zero-shot matrix. The retained Qwen2.5-0.5B+LoRA adaptor \cite{hu2022} (star in Figure~\ref{fig:tradeoff}) reaches 100\% contract validity and 100\% exact match on the same phrase-disjoint split; as a supervised in-distribution adaptor it shows the contract is learnable, not that zero-shot routing is solved, and is therefore not commensurable with the greedy zero-shot results. Constrained decoding via grammar-enforced generation (GBNF grammars in \texttt{llama.cpp}, Outlines~\cite{willard2023outlines}, SynCode~\cite{ugur2025syncode}) would likewise guarantee 100\% validity by construction and collapse stages~1--2 of Figure~\ref{fig:cascade} to zero. This enforces syntactic compliance without implying semantic correctness: a grammar can force a valid \texttt{\{action, tool, arguments\}} shape while leaving call-vs-abstain discrimination and argument exactness to the model. We therefore keep the main benchmark unconstrained and report validity separately from exact match, treating LoRA and grammar-constrained decoding as explicit, non-zero-shot baselines for future work.
+In contrast, two techniques would change the reading of Figures~\ref{fig:tradeoff}--\ref{fig:cascade} but are deliberately kept outside the zero-shot matrix. The retained Qwen2.5-0.5B+LoRA adaptor \cite{hu2022} (star in Figure~\ref{fig:tradeoff}) reaches 100\% contract validity and 100\% exact match on the official test split ($n=1{,}934$); as an in-distribution supervised adaptor it demonstrates that the contract is readily learnable, not that zero-shot routing is solved, and is therefore not commensurable with the greedy zero-shot results. Constrained decoding via grammar-enforced generation (GBNF grammars in \texttt{llama.cpp}, Outlines~\cite{willard2023outlines}, SynCode~\cite{ugur2025syncode}) would likewise guarantee 100\% validity by construction and collapse stages~1--2 of Figure~\ref{fig:cascade} to zero. This enforces syntactic compliance without implying semantic correctness: a grammar can force a valid \texttt{\{action, tool, arguments\}} shape while leaving call-vs-abstain discrimination and argument exactness to the model. We therefore keep the main benchmark unconstrained and report validity separately from exact match, treating LoRA and grammar-constrained decoding as explicit, non-zero-shot baselines for future work.
 
 %------------------------------------------------------------------------
 \section{Reproducibility and Data Governance}
 %------------------------------------------------------------------------
 
-The Neuromancer repository records the model matrix, checkpoint revisions, parameter-count method, generic contract, deterministic FSC generator, both split manifests, validator, controls, common inference script, cluster-aware evaluator, runner, logs, and aggregate reports. From the repository root, the reproducible main command (offline, reusing cached predictions) is:
+The companion benchmark repository records the model matrix, checkpoint revisions, parameter-count method, generic contract, deterministic FSC generator, both split manifests, validator, controls, common inference script, cluster-aware evaluator, runner, logs, and aggregate reports. From the repository root, the reproducible main command (offline, reusing cached predictions) is:
 
 {\small
 \begin{verbatim}
@@ -302,7 +302,7 @@ L.~Lozhkov, L.~Tunstall, A.~Mustafa, et~al.
 \bibitem{qwen35}
 Qwen Team.
 \newblock Qwen3.5 model card.
-\newblock \textit{Hugging Face}, 2026.
+\newblock \textit{Hugging Face}, 2026. \url{https://huggingface.co/Qwen/Qwen3.5-2B}.
 
 \bibitem{hu2022}
 E.~J.~Hu, Y.~Shen, P.~Wallis, Z.~Allen-Zhu, Y.~Li, S.~Wang, L.~Wang, and W.~Chen.
