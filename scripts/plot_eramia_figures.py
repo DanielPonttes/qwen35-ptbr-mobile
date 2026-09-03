@@ -168,7 +168,7 @@ def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -
         )
 
     def marker_size(recall: float) -> float:
-        return 75 + 445 * (recall / 100.0)
+        return 36 + 144 * (recall / 100.0)
 
     jitter = {
         "SmolLM2-1.7B": (-2.6, 2.2),
@@ -250,8 +250,7 @@ def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -
         size_handles, size_labels,
         title="Marker Size \u221d Exact Call Recall",
         loc="lower right", bbox_to_anchor=(0.98, 0.02),
-        frameon=True, fancybox=True, shadow=False,
-        handletextpad=0.8, borderpad=0.6, labelspacing=1.0,
+        ncol=2, columnspacing=1.2, handletextpad=0.8, borderpad=0.6, labelspacing=1.5,
         facecolor="white", edgecolor="#bdbdbd",
     )
     leg1.get_title().set_fontsize(7)
