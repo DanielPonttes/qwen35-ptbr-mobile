@@ -205,7 +205,7 @@ def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -
             "SmolLM2-1.7B": (18, 26),
             "Qwen2.5-0.5B": (24, 15),
             "TinyLlama-1.1B": (28, 4),
-            "Qwen2.5-0.5B + LoRA": (-36, -14),
+            "Qwen2.5-0.5B + LoRA": (-36, -8),
         }
         ox, oy = offsets.get(name, (12, 12))
 
@@ -330,7 +330,7 @@ def plot_structural_cascade(outdir: Path, dpi: int = 300) -> None:
 
     patches = [mpatches.Patch(facecolor=CASCADE_COLORS[i], edgecolor="white", linewidth=0.8, label=CASCADE_LABELS[i]) for i in range(4)]
     ax.legend(
-        handles=patches, loc="upper center", bbox_to_anchor=(0.5, 1.12),
+        handles=patches, loc="upper center", bbox_to_anchor=(0.5, 1.14),
         ncol=4, frameon=True, fancybox=True, shadow=False,
         facecolor="white", edgecolor="#bdbdbd", handlelength=1.4, handleheight=1.4, columnspacing=1.2, handletextpad=0.6,
         fontsize=6.8,
@@ -345,7 +345,7 @@ def plot_structural_cascade(outdir: Path, dpi: int = 300) -> None:
         ha="left", va="bottom", fontsize=6.2, color="#525252", style="italic",
     )
 
-    fig.tight_layout(rect=[0, 0.04, 1, 0.90])
+    fig.tight_layout(rect=[0, 0.05, 1, 0.90])
     _save(fig, outdir, "fig_structural_cascade", dpi=dpi)
 
 def plot_leakage_and_confusion(outdir: Path, dpi: int = 300) -> None:

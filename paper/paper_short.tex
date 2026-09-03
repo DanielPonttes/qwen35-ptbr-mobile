@@ -27,7 +27,7 @@ Small language models ($\le 3$B parameters) are appealing for on-device speech i
 
 Deploying natural language command routing locally on edge hardware requires ultra-small language models (SLMs, $\le 3$B parameters). However, evaluating these models zero-shot introduces two severe pitfalls: (i) template leakage across speakers in benchmark splits, and (ii) degenerate policy compliance, where models achieve seemingly high accuracy by trivial abstention.
 
-We evaluate five checkpoints: Qwen2.5-0.5B, Qwen3.5-0.8B, TinyLlama-1.1B, SmolLM2-1.7B, and Qwen3.5-2B. The input is a transcription from Fluent Speech Commands (FSC)~\cite{lugosch2019}, and the output is a validated JSON object conforming to a strict two-tool contract: \texttt{media\_control} and \texttt{volume\_adjust}, with all other 27 native intents mapped to a derived abstention target. The evaluation is balanced 1:1 (7,478 calls and 7,478 abstentions per split). We evaluate on both FSC's official speaker-disjoint split ($n=1{,}934$) and an audited phrase-disjoint split ($n=2{,}296$, 38 template clusters) where no transcription template crosses partitions.
+We evaluate five checkpoints within the sub-3B on-device regime~\cite{liu2024mobilellm}: Qwen2.5-0.5B, Qwen3.5-0.8B/2B~\cite{qwen35}, TinyLlama-1.1B~\cite{tinyllama2024}, and SmolLM2-1.7B~\cite{smollm2025}. The input is a transcription from Fluent Speech Commands (FSC)~\cite{lugosch2019}, and the output is a validated JSON object conforming to a strict two-tool contract: \texttt{media\_control} and \texttt{volume\_adjust}, with all other 27 native intents mapped to a derived abstention target. The evaluation is balanced 1:1 (7,478 calls and 7,478 abstentions per split). We evaluate on both FSC's official speaker-disjoint split ($n=1{,}934$) and an audited phrase-disjoint split ($n=2{,}296$, 38 template clusters) where no transcription template crosses partitions.
 
 \section{Experimental Results}
 
@@ -86,7 +86,13 @@ E.~Bastianelli et~al. SLURP: A Spoken Language Understanding Resource Package. \
 \bibitem{tomasello2023stop}
 P.~Tomasello et~al. STOP: A dataset for spoken task-oriented semantic parsing. \textit{IEEE SLT}, 2023.
 \bibitem{liu2024mobilellm}
-Z.~Liu et~al. MobileLLM: Optimizing sub-billion parameter language models for on-device use cases. \textit{ICML}, 2024.
+Z.~Liu et~al. MobileLLM: Optimizing sub-billion parameter models for on-device. \textit{ICML}, 2024.
+\bibitem{tinyllama2024}
+P.~Zhang et~al. TinyLlama: An open-source small language model. \textit{arXiv:2401.02385}, 2024.
+\bibitem{smollm2025}
+L.~Lozhkov et~al. SmolLM2: When Smol Goes Big. \textit{arXiv:2502.02737}, 2025.
+\bibitem{qwen35}
+Qwen Team. Qwen3.5 model card. \textit{Hugging Face}, 2026.
 \bibitem{hu2022}
 E.~J.~Hu et~al. LoRA: Low-rank adaptation of large language models. \textit{ICLR}, 2022.
 \bibitem{willard2023outlines}
