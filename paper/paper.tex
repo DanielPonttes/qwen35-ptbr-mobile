@@ -135,21 +135,21 @@ Two deterministic non-neural controls provide baseline references under the cont
 
 \begin{table}[ht]
 \centering
-\caption{Phrase-disjoint test results. Percentages are item-level except for the final column.}
+\caption{Phrase-disjoint test results (\%, $n=2{,}296$, 38 template clusters). $R_{call}^{exact}$: exact call recall; ``--'' indicates undefined $F_1$ due to zero predicted abstentions.}
 \label{tab:phrase}
 \scriptsize
 \resizebox{\columnwidth}{!}{%
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrrrrr}
 \toprule
-\textbf{System} & \textbf{Parse} & \textbf{Valid} & \textbf{Exact} & \textbf{Abstain F1} & \textbf{Template exact} \\
+\textbf{System} & \textbf{Parse} & \textbf{Valid} & \textbf{Exact} & \textbf{$R_{call}^{exact}$} & \textbf{Abstain F1} & \textbf{Template exact} \\
 \midrule
-Always abstain & 100.00 & 100.00 & 50.00 & 66.67 & 76.32 \\
-Lexical control & 100.00 & 100.00 & \textbf{77.40} & 81.56 & \textbf{89.47} \\
-Qwen2.5-0.5B & 70.17 & 0.00 & 0.00 & -- & 0.00 \\
-Qwen3.5-0.8B & 100.00 & 60.15 & 43.60 & 69.92 & 50.00 \\
-TinyLlama-1.1B & 43.42 & 0.00 & 0.00 & -- & 0.00 \\
-SmolLM2-1.7B & 96.47 & 0.00 & 0.00 & -- & 0.00 \\
-Qwen3.5-2B & 100.00 & 100.00 & 50.00 & 66.67 & 76.32 \\
+Always abstain & 100.00 & 100.00 & 50.00 & 0.00 & 66.67 & 76.32 \\
+Lexical control & 100.00 & 100.00 & \textbf{77.40} & \textbf{54.79} & 81.56 & \textbf{89.47} \\
+Qwen2.5-0.5B & 70.17 & 0.00 & 0.00 & 0.00 & -- & 0.00 \\
+Qwen3.5-0.8B & 100.00 & 60.15 & 43.60 & 33.45 & 69.92 & 50.00 \\
+TinyLlama-1.1B & 43.42 & 0.00 & 0.00 & 0.00 & -- & 0.00 \\
+SmolLM2-1.7B & 96.47 & 0.00 & 0.00 & 0.00 & -- & 0.00 \\
+Qwen3.5-2B & 100.00 & 100.00 & 50.00 & 0.00 & 66.67 & 76.32 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -167,22 +167,23 @@ The lexical control outperforms every zero-shot model on exact match. Qwen3.5-2B
 
 \begin{table}[ht]
 \centering
-\caption{Official speaker-disjoint test results.}
+\caption{Official speaker-disjoint test results (\%, $n=1{,}934$).}
 \label{tab:official}
 \scriptsize
-\begin{tabular}{lrrr}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lrrrrr}
 \toprule
-\textbf{System} & \textbf{Valid} & \textbf{Exact} & \textbf{Template exact} \\
+\textbf{System} & \textbf{Parse} & \textbf{Valid} & \textbf{Exact} & \textbf{$R_{call}^{exact}$} & \textbf{Template exact} \\
 \midrule
-Always abstain & 100.00 & 50.00 & 75.71 \\
-Lexical control & 100.00 & \textbf{77.92} & \textbf{89.07} \\
-Qwen2.5-0.5B & 0.00 & 0.00 & 0.00 \\
-Qwen3.5-0.8B & 73.47 & 54.65 & 56.28 \\
-TinyLlama-1.1B & 0.00 & 0.00 & 0.00 \\
-SmolLM2-1.7B & 0.78 & 0.00 & 0.00 \\
-Qwen3.5-2B & 100.00 & 50.98 & 76.11 \\
+Always abstain & 100.00 & 100.00 & 50.00 & 0.00 & 75.71 \\
+Lexical control & 100.00 & 100.00 & \textbf{77.92} & \textbf{55.84} & \textbf{89.07} \\
+Qwen2.5-0.5B & 59.15 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Qwen3.5-0.8B & 100.00 & 73.47 & 54.65 & 53.98 & 56.28 \\
+TinyLlama-1.1B & 53.67 & 0.00 & 0.00 & 0.00 & 0.00 \\
+SmolLM2-1.7B & 93.64 & 0.78 & 0.00 & 0.00 & 0.00 \\
+Qwen3.5-2B & 100.00 & 100.00 & 50.98 & 1.96 & 76.11 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 The official split gives Qwen3.5-0.8B a higher exact match than phrase-disjoint (54.65\% vs.\ 43.60\%), an observed gap of 11.05~pp when template leakage is eliminated. We treat this divergence as an observational comparison rather than a formal causal test: the template-cluster bootstrap 95\% confidence interval for phrase-disjoint exact match is wide ($[26.02\%, 63.35\%]$), reflecting the sample size of 38 held-out clusters (9 call-only and 29 abstain-only). Meanwhile, Qwen3.5-2B stays at 50.98\% $\rightarrow$ 50.00\% (due to universal abstention), and the lexical control is stable (77.92\% $\rightarrow$ 77.40\%). The official split therefore overestimates generalizability.

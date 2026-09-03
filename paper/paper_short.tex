@@ -33,22 +33,23 @@ We evaluate five checkpoints within the sub-3B on-device regime~\cite{liu2024mob
 
 \begin{table}[htbp]
 \centering
-\caption{Phrase-disjoint vs. Official test results (\%).}
+\caption{Phrase-disjoint vs. Official test results (\%, JSON = parseable JSON).}
 \label{tab:results}
 \scriptsize
-\begin{tabular}{lrrrrrr}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrrrrrr}
 \toprule
-& \multicolumn{3}{c}{\textbf{Phrase-Disjoint (Unseen Templates)}} & \multicolumn{3}{c}{\textbf{Official (Speaker Split)}} \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-\textbf{System} & \textbf{Valid} & \textbf{Exact} & \textbf{Exact Call Recall} & \textbf{Valid} & \textbf{Exact} & \textbf{Template Exact} \\
+& \multicolumn{4}{c}{\textbf{Phrase-Disjoint (Unseen Templates)}} & \multicolumn{3}{c}{\textbf{Official (Speaker Split)}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-8}
+\textbf{System} & \textbf{JSON} & \textbf{Valid} & \textbf{Exact} & \textbf{$R_{call}^{exact}$} & \textbf{Valid} & \textbf{Exact} & \textbf{Template Exact} \\
 \midrule
-Always abstain & 100.00 & 50.00 & 0.00 & 100.00 & 50.00 & 75.71 \\
-Lexical control & 100.00 & \textbf{77.40} & \textbf{54.79} & 100.00 & \textbf{77.92} & \textbf{89.07} \\
-Qwen2.5-0.5B & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
-Qwen3.5-0.8B & 60.15 & 43.60 & 33.45 & 73.47 & 54.65 & 56.28 \\
-TinyLlama-1.1B & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
-SmolLM2-1.7B & 0.00 & 0.00 & 0.00 & 0.78 & 0.00 & 0.00 \\
-Qwen3.5-2B & 100.00 & 50.00 & 0.00 & 100.00 & 50.98 & 76.11 \\
+Always abstain & 100.00 & 100.00 & 50.00 & 0.00 & 100.00 & 50.00 & 75.71 \\
+Lexical control & 100.00 & 100.00 & \textbf{77.40} & \textbf{54.79} & 100.00 & \textbf{77.92} & \textbf{89.07} \\
+Qwen2.5-0.5B & 70.17 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Qwen3.5-0.8B & 100.00 & 60.15 & 43.60 & 33.45 & 73.47 & 54.65 & 56.28 \\
+TinyLlama-1.1B & 43.42 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+SmolLM2-1.7B & 96.47 & 0.00 & 0.00 & 0.00 & 0.78 & 0.00 & 0.00 \\
+Qwen3.5-2B & 100.00 & 100.00 & 50.00 & 0.00 & 100.00 & 50.98 & 76.11 \\
 \bottomrule
 \end{tabular}
 \end{table}
