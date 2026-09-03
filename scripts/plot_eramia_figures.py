@@ -199,13 +199,13 @@ def plot_pareto_frontier(outdir: Path, dpi: int = 300, with_lora: bool = True) -
         ax.scatter(px, py, s=s, c=color, edgecolors=edgec, linewidths=lw, zorder=5, marker=marker, alpha=0.97)
 
         offsets = {
-            "Lexical": (18, 10),
-            "Qwen3.5-2B": (18, -14),
-            "Qwen3.5-0.8B": (-42, 18),
-            "SmolLM2-1.7B": (-46, 14),
-            "TinyLlama-1.1B": (16, -18),
-            "Qwen2.5-0.5B": (18, 8),
-            "Qwen2.5-0.5B + LoRA": (-38, -14),
+            "Lexical": (14, 8),
+            "Qwen3.5-2B": (14, -14),
+            "Qwen3.5-0.8B": (14, -16),
+            "SmolLM2-1.7B": (18, 26),
+            "Qwen2.5-0.5B": (24, 15),
+            "TinyLlama-1.1B": (28, 4),
+            "Qwen2.5-0.5B + LoRA": (-36, -14),
         }
         ox, oy = offsets.get(name, (12, 12))
 
@@ -432,18 +432,21 @@ def plot_leakage_and_confusion(outdir: Path, dpi: int = 300) -> None:
         if c >= 8:
             y_c = c / 2
             txt_c = f"{c:.1f}%" if c != 100 else "100%"
-            axB.text(xB[i], y_c, txt_c, ha="center", va="center", fontsize=7, color="white" if keys[i] != "Ground Truth" else "#1a1a1a", weight="bold", zorder=5)
-            if c >= 15:
-                axB.text(xB[i], y_c - 8, "Call", ha="center", va="center", fontsize=5.5, color="white" if keys[i] != "Ground Truth" else "#525252", style="italic", zorder=5)
+            col_c = "white" if keys[i] != "Ground Truth" else "#1a1a1a"
+            if c >= 18:
+                axB.text(xB[i], y_c + 4, txt_c, ha="center", va="center", fontsize=7, color=col_c, weight="bold", zorder=5)
+                axB.text(xB[i], y_c - 4, "Call", ha="center", va="center", fontsize=5.5, color=col_c, style="italic", zorder=5)
+            else:
+                axB.text(xB[i], y_c, txt_c, ha="center", va="center", fontsize=6.8, color=col_c, weight="bold", zorder=5)
         if a >= 8:
             y_a = c + a / 2
             txt_a = f"{a:.1f}%" if a != 100 else "100%"
-            col_a = "white" if keys[i] != "Ground Truth" and a > 30 else "#1a1a1a"
-            if keys[i] == "Qwen3.5-2B":
-                col_a = "white"
-            axB.text(xB[i], y_a, txt_a, ha="center", va="center", fontsize=7, color=col_a, weight="bold", zorder=5)
-            if a >= 15:
-                axB.text(xB[i], y_a - 8 if a < 100 else y_a, "Abstain", ha="center", va="center", fontsize=5.5, color=col_a, style="italic", zorder=5)
+            col_a = "white" if (keys[i] != "Ground Truth" and a > 30) or keys[i] == "Qwen3.5-2B" else "#1a1a1a"
+            if a >= 18:
+                axB.text(xB[i], y_a + 4, txt_a, ha="center", va="center", fontsize=7, color=col_a, weight="bold", zorder=5)
+                axB.text(xB[i], y_a - 4, "Abstain", ha="center", va="center", fontsize=5.5, color=col_a, style="italic", zorder=5)
+            else:
+                axB.text(xB[i], y_a, txt_a, ha="center", va="center", fontsize=6.8, color=col_a, weight="bold", zorder=5)
 
     axB.annotate(
         "Complete collapse:\n100% abstentions\nR$_{call}^{exact}$=0%", xy=(xB[3], 92), xytext=(xB[2] - 0.15, 88),

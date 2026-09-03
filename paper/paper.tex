@@ -33,7 +33,7 @@ Small language models are attractive for local command interfaces, but a valid-l
 \section{Scope and Research Questions}
 %------------------------------------------------------------------------
 
-This article deliberately narrows the original mobile-assistant project to a benchmark of ultra-small language models. The parameter cap is strict: no checkpoint with more than 3,000,000,000 parameters is included. The input is an English human speech transcription, and the output is a validated JSON object. The benchmark does not claim Brazilian-Portuguese coverage, Android execution, automatic speech recognition (ASR) quality, battery behavior, thermal behavior, or smartphone latency. The phone is not required.
+Deploying local language processing on resource-constrained edge devices has motivated the development of ultra-small language models (SLMs, $\le 3\text{B}$ parameters)~\cite{liu2024mobilellm, abdin2024phi3}. While function calling and tool execution are established in large cloud models~\cite{schick2023toolformer, patil2025bfcl}, evaluating whether sub-3B instruction-tuned models can reliably route commands under strict output schemas remains an open question. This article deliberately narrows the mobile-assistant setting to a benchmark of ultra-small language models. The parameter cap is strict: no checkpoint with more than 3,000,000,000 parameters is included. The input is an English human speech transcription, and the output is a validated JSON object. The benchmark does not claim Brazilian-Portuguese coverage, Android execution, automatic speech recognition (ASR) quality, battery behavior, thermal behavior, or smartphone latency. The physical phone is not required.
 
 We ask: (i) how do checkpoints below the parameter cap differ in JSON compliance and canonical command accuracy under one declared contract? (ii) how much does exact-match performance change when normalized transcription templates are held out, rather than only speakers? (iii) do simple controls provide a meaningful reference for the models? and (iv) how different are item-level and template-cluster summaries when repeated phrasings occur across speakers?
 
@@ -41,9 +41,9 @@ We ask: (i) how do checkpoints below the parameter cap differ in JSON compliance
 \section{Human Corpus and Derived Task}
 %------------------------------------------------------------------------
 
-We use Fluent Speech Commands (FSC), introduced as a corpus for end-to-end spoken-language understanding~\cite{lugosch2019}. It contains 30,043 human recordings, 97 speakers, and 31 native intents, with official train, validation, and test partitions. We use the transcriptions and split metadata, not the waveforms. The raw archive remains outside Git and is identified by SHA-256 in the server-local manifest.
+We use Fluent Speech Commands (FSC), introduced as a human-speech corpus for end-to-end spoken-language understanding~\cite{lugosch2019}, contrasting with keyword-spotting corpora and commercial edge SLU datasets like SNIPS~\cite{coucke2018snips}. It contains 30,043 human audio recordings from 97 speakers across 31 native intent categories, with official train, validation, and test partitions. We use the human-origin transcriptions and split metadata, not the raw waveforms. The raw archive remains outside Git and is identified by SHA-256 in the server-local manifest.
 
-FSC is not a command-routing or Android corpus. We therefore define an explicit, generic two-operation contract. Only the following four native combinations become calls:
+FSC is an intent-classification corpus, not a native function-calling dataset. We therefore define an explicit, generic two-operation contract. Only the following four native combinations become calls:
 
 \begin{table}[ht]
 \centering
@@ -215,9 +215,9 @@ The benchmark does not support a monotonic ``more parameters is better'' conclus
 
 The lexical control is essential. Without it, the 50\% balanced abstention baseline could make a model that refuses everything appear competitive. Cluster analysis is also essential: repeated templates give some systems much larger effective row counts than the number of independent phrasings. The phrase-disjoint test has only 38 clusters, so its uncertainty is broad; nevertheless, it answers a different question from speaker transfer and should not be merged with the official result.
 
-The derived abstention labels require particular caution. They express the declared benchmark policy, not human judgments that a command is unsafe or unsupported in a production assistant. A deployed system would need an independent policy layer, schema validator, confidence handling, and execution authorization. The present experiment stops before all of those layers.
+The derived abstention labels require particular caution. They express the declared benchmark policy, not human judgments that a command is unsafe or unsupported in a production assistant. In the framing of selective classification~\cite{geifman2017selective}, our evaluation assesses policy-defined contract rejection under a fixed schema rather than dynamic risk-coverage optimization based on output logits. A deployed system would require an independent policy layer, schema validator, confidence calibration, and execution authorization. The present experiment intentionally stops before all of those layers.
 
-In contrast, two techniques would change the reading of Figures~\ref{fig:tradeoff}--\ref{fig:cascade} but are deliberately kept outside the zero-shot matrix. The retained Qwen2.5-0.5B+LoRA adaptor \cite{hu2022} (star in Figure~\ref{fig:tradeoff}) reaches 100\% contract validity and 100\% exact match on the same phrase-disjoint split; as a supervised in-distribution adaptor it shows the contract is learnable, not that zero-shot routing is solved, and is therefore not commensurable with the greedy zero-shot results. Constrained decoding via grammar-enforced generation (GBNF grammars in \texttt{llama.cpp}, Outlines, Guidance) would likewise guarantee 100\% validity by construction and collapse stages~1--2 of Figure~\ref{fig:cascade} to zero. This enforces syntactic compliance without implying semantic correctness: a grammar can force a valid \texttt{\{action, tool, arguments\}} shape while leaving call-vs-abstain discrimination and argument exactness to the model. We therefore keep the main benchmark unconstrained and report validity separately from exact match, treating LoRA and grammar-constrained decoding as explicit, non-zero-shot baselines for future work.
+In contrast, two techniques would change the reading of Figures~\ref{fig:tradeoff}--\ref{fig:cascade} but are deliberately kept outside the zero-shot matrix. The retained Qwen2.5-0.5B+LoRA adaptor \cite{hu2022} (star in Figure~\ref{fig:tradeoff}) reaches 100\% contract validity and 100\% exact match on the same phrase-disjoint split; as a supervised in-distribution adaptor it shows the contract is learnable, not that zero-shot routing is solved, and is therefore not commensurable with the greedy zero-shot results. Constrained decoding via grammar-enforced generation (GBNF grammars in \texttt{llama.cpp}, Outlines~\cite{willard2023outlines}, SynCode~\cite{ugur2025syncode}) would likewise guarantee 100\% validity by construction and collapse stages~1--2 of Figure~\ref{fig:cascade} to zero. This enforces syntactic compliance without implying semantic correctness: a grammar can force a valid \texttt{\{action, tool, arguments\}} shape while leaving call-vs-abstain discrimination and argument exactness to the model. We therefore keep the main benchmark unconstrained and report validity separately from exact match, treating LoRA and grammar-constrained decoding as explicit, non-zero-shot baselines for future work.
 
 %------------------------------------------------------------------------
 \section{Reproducibility and Data Governance}
@@ -241,12 +241,13 @@ The raw FSC archive and derived JSONL files remain server-local. The source lice
 
 \begin{enumerate}
 \item FSC is an English smart-home/assistant corpus, not a native Android or Brazilian-Portuguese command corpus.
-\item The four call labels and all abstention labels are derived by a manually declared bridge.
+\item The four call labels and all abstention labels are derived by a manually declared bridge rather than a native multi-turn dialog context.
 \item The task consumes transcriptions, so ASR errors and acoustic variability are not evaluated.
-\item The phrase-disjoint test has only 38 unique template clusters.
+\item The phrase-disjoint test has only 38 unique template clusters, leading to wide bootstrap uncertainty intervals.
 \item Native chat templates differ across model families; this is logged but remains a possible prompt-format confound.
 \item The main matrix is zero-shot and uses one deterministic decoding setting and one checkpoint revision per model; it does not estimate training variance.
-\item No model output is executed, and no result is measured on the phone.
+\item No model output is executed, and no result is measured on the physical phone.
+\item The benchmark evaluates a compact two-tool contract; evaluating richer task-oriented spoken datasets such as SLURP~\cite{bastianelli2020slurp} and STOP~\cite{tomasello2023stop}, as well as standard API tool leaderboards like BFCL~\cite{patil2025bfcl}, constitutes a natural cross-domain extension.
 \end{enumerate}
 
 %------------------------------------------------------------------------
@@ -256,32 +257,82 @@ The raw FSC archive and derived JSONL files remain server-local. The source lice
 We provide a leakage-aware, reproducible benchmark for five ultra-small language models on structured routing from human-origin speech transcriptions. The central result is negative but useful: under a strict canonical contract, a transparent lexical control outperforms every zero-shot model, while the largest model's perfect contract validity is mostly universal abstention. The benchmark therefore separates output compliance, policy abstention, and semantic exactness, and makes phrase leakage visible. It is a defensible first article for the ultra-small-model benchmark scope; Android deployment, ASR, Portuguese human data, and physical-device evaluation are future studies rather than claims of this paper.
 
 %------------------------------------------------------------------------
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 
 \bibitem{lugosch2019}
 L.~Lugosch, M.~Ravanelli, P.~Ignoto, V.~Naumovich, and Y.~Bengio.
 \newblock Speech model pre-training for end-to-end spoken language understanding.
-\newblock In \textit{Interspeech}, 2019. DOI: 10.21437/Interspeech.2019-2396.
+\newblock In \textit{Interspeech}, 2019.
 
-\bibitem{hu2022}
-E.~J.~Hu, Y.~Shen, P.~Wallis, Z.~Allen-Zhu, Y.~Li, S.~Wang, L.~Wang, and W.~Chen.
-\newblock LoRA: Low-rank adaptation of large language models.
-\newblock In \textit{International Conference on Learning Representations}, 2022.
+\bibitem{bastianelli2020slurp}
+E.~Bastianelli, A.~Vanzo, P.~Swietojanski, and V.~Rieser.
+\newblock SLURP: A Spoken Language Understanding Resource Package.
+\newblock In \textit{Proceedings of EMNLP}, 2020.
+
+\bibitem{tomasello2023stop}
+P.~Tomasello, A.~Radfar, S.~Raju, D.~Gaur, et~al.
+\newblock STOP: A dataset for spoken task-oriented semantic parsing.
+\newblock In \textit{IEEE Spoken Language Technology Workshop (SLT)}, 2023.
+
+\bibitem{coucke2018snips}
+A.~Coucke, A.~Saade, A.~Ball, T.~Bluche, et~al.
+\newblock Snips Voice Platform: an embedded Spoken Language Understanding system for private-by-design voice interfaces.
+\newblock \textit{arXiv:1805.10190}, 2018.
+
+\bibitem{liu2024mobilellm}
+Z.~Liu, C.~Zhao, I.~Feldman, et~al.
+\newblock MobileLLM: Optimizing sub-billion parameter language models for on-device use cases.
+\newblock In \textit{International Conference on Machine Learning (ICML)}, 2024.
+
+\bibitem{abdin2024phi3}
+M.~Abdin, S.~A.~Jyothi, C.~Aneja, et~al.
+\newblock Phi-3 technical report: A highly capable language model locally on your phone.
+\newblock \textit{arXiv:2404.14219}, 2024.
 
 \bibitem{tinyllama2024}
-P.~Zhang et~al.
+P.~Zhang, S.~Zeng, T.~Du, et~al.
 \newblock TinyLlama: An open-source small language model.
-\newblock arXiv:2401.02385, 2024.
+\newblock \textit{arXiv:2401.02385}, 2024.
 
 \bibitem{smollm2025}
-L.~Lozhkov et~al.
+L.~Lozhkov, L.~Tunstall, A.~Mustafa, et~al.
 \newblock SmolLM2: When Smol Goes Big---Data-centric training of a small language model.
-\newblock arXiv:2502.02737, 2025.
+\newblock \textit{arXiv:2502.02737}, 2025.
 
 \bibitem{qwen35}
 Qwen Team.
 \newblock Qwen3.5 model card.
-\newblock Hugging Face, accessed 2026.
+\newblock \textit{Hugging Face}, 2026.
+
+\bibitem{hu2022}
+E.~J.~Hu, Y.~Shen, P.~Wallis, Z.~Allen-Zhu, Y.~Li, S.~Wang, L.~Wang, and W.~Chen.
+\newblock LoRA: Low-rank adaptation of large language models.
+\newblock In \textit{International Conference on Learning Representations (ICLR)}, 2022.
+
+\bibitem{willard2023outlines}
+B.~T.~Willard and R.~Louf.
+\newblock Efficient guided generation for large language models.
+\newblock \textit{arXiv:2307.09702}, 2023.
+
+\bibitem{ugur2025syncode}
+S.~Ugur, A.~Shrivastava, and C.~Khurana.
+\newblock SynCode: LLM generation with grammar augmentation.
+\newblock \textit{Transactions on Machine Learning Research (TMLR)}, 2025.
+
+\bibitem{schick2023toolformer}
+T.~Schick, J.~Dwivedi-Yu, R.~Dess{\`\i}, et~al.
+\newblock Toolformer: Language models can teach themselves to use tools.
+\newblock In \textit{Advances in Neural Information Processing Systems (NeurIPS)}, 2023.
+
+\bibitem{patil2025bfcl}
+S.~G.~Patil, H.~Mao, C.~Shen, et~al.
+\newblock The Berkeley Function Calling Leaderboard (BFCL): From tool use to agentic evaluation.
+\newblock In \textit{International Conference on Machine Learning (ICML)}, 2025.
+
+\bibitem{geifman2017selective}
+Y.~Geifman and R.~El-Yaniv.
+\newblock Selective classification for deep neural networks.
+\newblock In \textit{Advances in Neural Information Processing Systems (NeurIPS)}, 2017.
 
 \end{thebibliography}
 

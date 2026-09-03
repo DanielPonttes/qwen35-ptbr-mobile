@@ -149,12 +149,13 @@ The raw FSC archive and derived JSONL files remain server-local. The source lice
 ## 9. Limitations and next gates
 
 1. FSC is an English smart-home/assistant corpus, not a native Android or Brazilian-Portuguese command corpus.
-2. The four call labels and all abstention labels are derived by a manually declared bridge.
+2. The four call labels and all abstention labels are derived by a manually declared bridge rather than a native multi-turn dialog context.
 3. The task consumes transcriptions, so ASR errors and acoustic variability are not evaluated.
-4. The phrase-disjoint test has only 38 unique template clusters.
+4. The phrase-disjoint test has only 38 unique template clusters, leading to wide bootstrap uncertainty intervals.
 5. Native chat templates differ across model families; this is logged but remains a possible prompt-format confound.
 6. The main matrix is zero-shot and uses one deterministic decoding setting and one checkpoint revision per model; it does not estimate training variance.
-7. No model output is executed, and no result is measured on the phone.
+7. No model output is executed, and no result is measured on the physical phone.
+8. The benchmark evaluates a compact two-tool contract; evaluating richer task-oriented spoken datasets such as SLURP [2] and STOP [3], as well as standard API tool leaderboards like BFCL [14], constitutes a natural cross-domain extension.
 
 ## 10. Conclusion
 
@@ -162,12 +163,18 @@ We provide a leakage-aware, reproducible benchmark for five ultra-small language
 
 ## References
 
-[1] L. Lugosch, M. Ravanelli, P. Ignoto, V. Naumovich, and Y. Bengio. “Speech Model Pre-Training for End-to-End Spoken Language Understanding.” Interspeech, 2019. DOI: 10.21437/Interspeech.2019-2396.
-
-[2] E. J. Hu et al. “LoRA: Low-Rank Adaptation of Large Language Models.” ICLR, 2022.
-
-[3] P. Zhang et al. “TinyLlama: An Open-Source Small Language Model.” arXiv:2401.02385, 2024.
-
-[4] L. Lozhkov et al. “SmolLM2: When Smol Goes Big — Data-Centric Training of a Small Language Model.” arXiv:2502.02737, 2025.
-
-[5] Qwen Team. “Qwen3.5 Model Card.” Hugging Face, accessed 2026.
+[1] L. Lugosch et al. “Speech Model Pre-Training for End-to-End Spoken Language Understanding.” *Interspeech*, 2019.
+[2] E. Bastianelli et al. “SLURP: A Spoken Language Understanding Resource Package.” *EMNLP*, 2020.
+[3] P. Tomasello et al. “STOP: A Dataset for Spoken Task-Oriented Semantic Parsing.” *IEEE SLT*, 2023.
+[4] A. Coucke et al. “Snips Voice Platform: An Embedded Spoken Language Understanding System for Private-by-Design Voice Interfaces.” *arXiv:1805.10190*, 2018.
+[5] Z. Liu et al. “MobileLLM: Optimizing Sub-Billion Parameter Language Models for On-Device Use Cases.” *ICML*, 2024.
+[6] M. Abdin et al. “Phi-3 Technical Report: A Highly Capable Language Model Locally on Your Phone.” *arXiv:2404.14219*, 2024.
+[7] P. Zhang et al. “TinyLlama: An Open-Source Small Language Model.” *arXiv:2401.02385*, 2024.
+[8] L. Lozhkov et al. “SmolLM2: When Smol Goes Big — Data-Centric Training of a Small Language Model.” *arXiv:2502.02737*, 2025.
+[9] Qwen Team. “Qwen3.5 Model Card.” *Hugging Face*, 2026.
+[10] E. J. Hu et al. “LoRA: Low-Rank Adaptation of Large Language Models.” *ICLR*, 2022.
+[11] B. T. Willard and R. Louf. “Efficient Guided Generation for Large Language Models.” *arXiv:2307.09702*, 2023.
+[12] S. Ugur et al. “SynCode: LLM Generation with Grammar Augmentation.” *Transactions on Machine Learning Research (TMLR)*, 2025.
+[13] T. Schick et al. “Toolformer: Language Models Can Teach Themselves to Use Tools.” *NeurIPS*, 2023.
+[14] S. G. Patil et al. “The Berkeley Function Calling Leaderboard (BFCL): From Tool Use to Agentic Evaluation.” *ICML*, 2025.
+[15] Y. Geifman and R. El-Yaniv. “Selective Classification for Deep Neural Networks.” *NeurIPS*, 2017.

@@ -73,16 +73,24 @@ Figure~\ref{fig:cascade} reveals the exact point of structural failure: SmolLM2-
 
 \section{Discussion, Adaptation, and Conclusions}
 
-Two orthogonal techniques address this bottleneck: (i) \textbf{Grammar-Constrained Decoding} (e.g., GBNF in \texttt{llama.cpp}), which forces syntactic compliance by construction (collapsing stages 1--2 of Figure~\ref{fig:cascade} to zero, though semantic discrimination still relies on the model); and (ii) \textbf{Supervised LoRA Adaptation}~\cite{hu2022}: an in-distribution Qwen2.5-0.5B LoRA adaptor reaches 100\% contract validity and 100\% exact match, demonstrating that the contract is readily learnable with parameter-efficient fine-tuning.
+Two orthogonal techniques address this bottleneck: (i) \textbf{Grammar-Constrained Decoding} (e.g., GBNF in \texttt{llama.cpp}, Outlines~\cite{willard2023outlines}), which forces syntactic compliance by construction (collapsing stages 1--2 of Figure~\ref{fig:cascade} to zero, though semantic discrimination still relies on the model); and (ii) \textbf{Supervised LoRA Adaptation}~\cite{hu2022}: an in-distribution Qwen2.5-0.5B LoRA adaptor reaches 100\% contract validity and 100\% exact match, demonstrating that the contract is readily learnable with parameter-efficient fine-tuning.
 
-In conclusion, zero-shot structured routing without grammar guidance is fragile in the ultra-small regime. Benchmarks must decouple syntactic validity from semantic utility, audit template leakage, and incorporate transparent non-neural baselines.
+In conclusion, zero-shot structured routing without grammar guidance is fragile in the ultra-small regime. Benchmarks must decouple syntactic validity from semantic utility, audit template leakage, and incorporate transparent non-neural baselines. Extending this evaluation to multi-domain SLU benchmarks like SLURP~\cite{bastianelli2020slurp} and compositional parsing corpora like STOP~\cite{tomasello2023stop} represents an essential next step.
 
 \begin{thebibliography}{9}
 \scriptsize
 \bibitem{lugosch2019}
 L.~Lugosch et~al. Speech model pre-training for spoken language understanding. \textit{Interspeech}, 2019.
+\bibitem{bastianelli2020slurp}
+E.~Bastianelli et~al. SLURP: A Spoken Language Understanding Resource Package. \textit{EMNLP}, 2020.
+\bibitem{tomasello2023stop}
+P.~Tomasello et~al. STOP: A dataset for spoken task-oriented semantic parsing. \textit{IEEE SLT}, 2023.
+\bibitem{liu2024mobilellm}
+Z.~Liu et~al. MobileLLM: Optimizing sub-billion parameter language models for on-device use cases. \textit{ICML}, 2024.
 \bibitem{hu2022}
 E.~J.~Hu et~al. LoRA: Low-rank adaptation of large language models. \textit{ICLR}, 2022.
+\bibitem{willard2023outlines}
+B.~T.~Willard and R.~Louf. Efficient guided generation for large language models. \textit{arXiv:2307.09702}, 2023.
 \end{thebibliography}
 
 \end{document}
